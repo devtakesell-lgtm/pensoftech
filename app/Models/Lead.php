@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\LeadStatus;
+use Database\Factories\LeadFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Lead extends Model
 {
-    /** @use HasFactory<\Database\Factories\LeadFactory> */
+    /** @use HasFactory<LeadFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -66,7 +67,7 @@ class Lead extends Model
     // A lead can be interested in multiple services.
     public function services(): BelongsToMany
     {
-        return $this->belongsToMany(Service::class, 'lead_service');
+        return $this->belongsToMany(Service::class, 'lead_service')->withTimestamps();
     }
 
     public function quotes(): HasMany
