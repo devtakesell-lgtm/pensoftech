@@ -19,7 +19,7 @@ class Job extends Model
     protected $table = 'jobs_listings';
 
     protected $fillable = [
-        'category_id',
+        'job_category_id',
         'title',
         'slug',
         'employment_type',
@@ -42,7 +42,7 @@ class Job extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(JobCategory::class, 'category_id');
+        return $this->belongsTo(JobCategory::class, 'job_category_id');
     }
 
     public function applications(): HasMany

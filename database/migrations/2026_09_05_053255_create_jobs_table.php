@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('jobs_listings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->nullable()->constrained('job_categories')->nullOnDelete();
+            $table->foreignId('job_category_id')->nullable()->constrained('job_categories')->nullOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('employment_type')->nullable();
