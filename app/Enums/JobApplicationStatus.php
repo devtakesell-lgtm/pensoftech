@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum CareerApplicationStatus: string
+enum JobApplicationStatus: string
 {
     case Applied = 'applied';
     case Shortlisted = 'shortlisted';

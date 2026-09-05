@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCareerApplicationRequest extends FormRequest
+class StoreJobRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

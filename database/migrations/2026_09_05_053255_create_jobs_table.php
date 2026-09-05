@@ -9,9 +9,9 @@ return new class extends Migration
 
     public function up(): void
     {
-        Schema::create('careers', function (Blueprint $table) {
+        Schema::create('jobs_listings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('career_category_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('category_id')->nullable()->constrained('job_categories')->nullOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('employment_type')->nullable();
@@ -27,8 +27,9 @@ return new class extends Migration
         });
     }
 
+
     public function down(): void
     {
-        Schema::dropIfExists('careers');
+        Schema::dropIfExists('jobs_listings');
     }
 };

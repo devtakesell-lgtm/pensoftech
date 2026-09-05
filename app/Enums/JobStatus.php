@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum CareerStatus: string
+enum JobStatus: string
 {
     case Draft = 'draft';
     case Open = 'open';

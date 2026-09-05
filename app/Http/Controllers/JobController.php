@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CareerCategory;
-use App\Http\Requests\StoreCareerCategoryRequest;
-use App\Http\Requests\UpdateCareerCategoryRequest;
+use App\Models\Job;
+use App\Http\Requests\StoreJobRequest;
+use App\Http\Requests\UpdateJobRequest;
 
-class CareerCategoryController extends Controller
+class JobController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class CareerCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCareerCategoryRequest $request)
+    public function store(StoreJobRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class CareerCategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CareerCategory $careerCategory)
+    public function show(Job $job)
     {
         //
     }
@@ -43,7 +43,7 @@ class CareerCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CareerCategory $careerCategory)
+    public function edit(Job $job)
     {
         //
     }
@@ -51,7 +51,7 @@ class CareerCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCareerCategoryRequest $request, CareerCategory $careerCategory)
+    public function update(UpdateJobRequest $request, Job $job)
     {
         //
     }
@@ -59,7 +59,7 @@ class CareerCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CareerCategory $careerCategory)
+    public function destroy(Job $job)
     {
         //
     }
