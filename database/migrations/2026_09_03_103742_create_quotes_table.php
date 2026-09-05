@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('budget_min', 15, 2)->nullable();
             $table->decimal('budget_max', 15, 2)->nullable();
-            $table->string('status')->default('draft'); // App\Enums\QuoteStatus
+            $table->string('status')->default('draft');
             $table->date('valid_until')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
