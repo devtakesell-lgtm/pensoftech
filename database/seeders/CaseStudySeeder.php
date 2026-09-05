@@ -17,7 +17,6 @@ class CaseStudySeeder extends Seeder
         $projects->take(8)->each(function (Project $project) {
             CaseStudy::factory()->create([
                 'project_id' => $project->id,
-                // No client_id — use $caseStudy->project->client to access the client
             ]);
         });
     }

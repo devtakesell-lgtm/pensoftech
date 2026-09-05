@@ -14,11 +14,9 @@ class QuoteFactory extends Factory
     public function definition(): array
     {
         $budgetMin = fake()->randomElement([1000, 2500, 5000, 10000, 20000]);
-        // budget_max is always higher than budget_min
         $budgetMax = $budgetMin * fake()->randomFloat(1, 1.2, 2.0);
 
         return [
-            // lead_id and currency_id are assigned by QuoteSeeder from existing records
             'lead_id' => null,
             'currency_id' => null,
             'quote_number' => 'QT-'.strtoupper(fake()->bothify('####??')),
@@ -35,7 +33,7 @@ class QuoteFactory extends Factory
             'budget_max' => round($budgetMax, 2),
             'status' => fake()->randomElement(QuoteStatus::cases()),
             'valid_until' => fake()->dateTimeBetween('now', '+3 months'),
-            'created_by' => null, // assigned by seeder
+            'created_by' => null, 
         ];
     }
 }

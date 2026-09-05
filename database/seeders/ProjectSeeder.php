@@ -19,14 +19,13 @@ class ProjectSeeder extends Seeder
 
         // Create 20 projects, each linked to an existing client and industry
         Project::factory(20)
-            ->make() // make() creates the objects without saving yet
+            ->make() 
             ->each(function (Project $project) use ($clients, $industries, $services) {
                 // Assign a real existing client and industry
                 $project->client_id = $clients->random()->id;
                 $project->industry_id = $industries->random()->id;
                 $project->save();
 
-                // Attach 1 to 3 services to each project (pivot table)
                 $randomServices = $services->random(rand(1, 3));
                 $project->services()->attach($randomServices->pluck('id')->toArray());
             });

@@ -18,9 +18,7 @@ class LeadFactory extends Factory
         $types = ['new_project', 'retainer', 'consultation', 'maintenance'];
 
         return [
-            // client_id is nullable: a fresh lead hasn't been converted to a client yet
             'client_id' => null,
-            // industry_id and currency_id are set by LeadSeeder from existing records
             'industry_id' => null,
             'assigned_to' => null,
             'currency_id' => null,

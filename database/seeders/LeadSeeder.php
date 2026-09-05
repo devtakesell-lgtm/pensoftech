@@ -25,7 +25,6 @@ class LeadSeeder extends Seeder
                 // Assign real industry and currency
                 $lead->industry_id = $industries->random()->id;
                 $lead->currency_id = $currencies->random()->id;
-                // Assign to a random team member (sales staff)
                 $lead->assigned_to = $users->random()->id;
                 $lead->save();
 

@@ -14,7 +14,7 @@ class CaseStudyFactory extends Factory
 {
     public function definition(): array
     {
-        // We append a number so we can create more case studies than title templates.
+
         $title = fake()->randomElement([
             'How We Boosted Conversions by 200% for a Healthcare Brand',
             'Rebuilding a Legacy E-Commerce Platform in 90 Days',
@@ -25,7 +25,6 @@ class CaseStudyFactory extends Factory
         ]).' #'.fake()->numberBetween(1, 9999);
 
         return [
-            // project_id is assigned by CaseStudySeeder from existing projects
             'project_id' => null,
             'title' => $title,
             'slug' => Str::slug($title),

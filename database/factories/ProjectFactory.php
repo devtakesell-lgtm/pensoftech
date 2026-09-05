@@ -38,9 +38,6 @@ class ProjectFactory extends Factory
         $startDate = fake()->dateTimeBetween('-2 years', '-3 months');
 
         return [
-            // These are set by ProjectSeeder using existing records.
-            // Industry::factory() and Client::factory() are intentionally NOT used here
-            // because their slugs are unique and seeded records already exist.
             'client_id' => null,
             'industry_id' => null,
             'title' => $title,

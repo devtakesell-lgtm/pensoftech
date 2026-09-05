@@ -12,7 +12,6 @@ class CaseStudyMetricSeeder extends Seeder
     {
         // Load all case studies and add 2-4 metrics to each one
         CaseStudy::all()->each(function (CaseStudy $caseStudy) {
-            // Pick 2-4 random metrics for this case study
             $metricData = [
                 ['metric_name' => 'Conversion Rate Increase', 'metric_value' => rand(20, 200), 'metric_suffix' => '%'],
                 ['metric_name' => 'Page Load Time Reduction',  'metric_value' => rand(30, 70),  'metric_suffix' => '%'],

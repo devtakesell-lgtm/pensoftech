@@ -13,7 +13,6 @@ class CaseStudyMetricFactory extends Factory
 {
     public function definition(): array
     {
-        // These look like real results you'd showcase in a portfolio
         $metrics = [
             ['name' => 'Conversion Rate Increase', 'value' => fake()->numberBetween(20, 300), 'suffix' => '%'],
             ['name' => 'Page Load Time Reduction',  'value' => fake()->numberBetween(30, 80),  'suffix' => '%'],

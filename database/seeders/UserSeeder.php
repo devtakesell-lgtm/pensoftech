@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'role_id' => $adminRole?->id,
             'name' => 'Admin User',
             'email' => 'admin@pensoftech.com',
-            'phone' => '+880 1700-000001',
+            'phone' => '+880 1700-000000',
             'is_active' => true,
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
@@ -30,9 +30,9 @@ class UserSeeder extends Seeder
         // 2. Create a sales manager
         User::create([
             'role_id' => $salesRole?->id,
-            'name' => 'Sarah Ahmed',
-            'email' => 'sarah@pensoftech.com',
-            'phone' => '+880 1700-000002',
+            'name' => 'Manchur Iqbal',
+            'email' => 'manchur@pensoftech.com',
+            'phone' => '+880 1700-000001',
             'is_active' => true,
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
@@ -41,9 +41,9 @@ class UserSeeder extends Seeder
         // 3. Create a project manager
         User::create([
             'role_id' => $pmRole?->id,
-            'name' => 'Rafiq Hassan',
-            'email' => 'rafiq@pensoftech.com',
-            'phone' => '+880 1700-000003',
+            'name' => 'Shihan Rahman',
+            'email' => 'shihan@pensoftech.com',
+            'phone' => '+880 1700-000002',
             'is_active' => true,
             'email_verified_at' => now(),
             'password' => Hash::make('password'),

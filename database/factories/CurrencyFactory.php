@@ -12,7 +12,6 @@ class CurrencyFactory extends Factory
 {
     public function definition(): array
     {
-        // Real currencies an international agency might use.
         $currencies = [
             ['name' => 'US Dollar',       'code' => 'USD', 'symbol' => '$',  'exchange_rate' => 1.0000],
             ['name' => 'Euro',            'code' => 'EUR', 'symbol' => '€',  'exchange_rate' => 0.9200],
@@ -29,7 +28,7 @@ class CurrencyFactory extends Factory
             'code' => $currency['code'],
             'symbol' => $currency['symbol'],
             'exchange_rate' => $currency['exchange_rate'],
-            'is_default' => false, // The seeder sets one as default
+            'is_default' => false,
             'is_active' => true,
         ];
     }

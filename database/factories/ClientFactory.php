@@ -13,7 +13,6 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            // user_id is nullable — a client doesn't have to have a portal login
             'user_id' => null,
             'company_name' => fake()->company(),
             'contact_person' => fake()->name(),
