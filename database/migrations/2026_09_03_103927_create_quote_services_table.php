@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('quote_services', function (Blueprint $table) {
             $table->id();
             $table->foreignId('quote_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('service_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('service_id')->constrained()->restrictOnDelete();
             $table->unsignedInteger('quantity')->default(1);
             $table->decimal('unit_price', 15, 2);
             $table->decimal('total_price', 15, 2);

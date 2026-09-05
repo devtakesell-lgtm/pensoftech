@@ -2,16 +2,25 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
+        // Create the core roles your agency needs
+        $roles = [
+            ['name' => 'Administrator',    'slug' => 'administrator',     'description' => 'Full access to everything.'],
+            ['name' => 'Sales Manager',    'slug' => 'sales-manager',     'description' => 'Manages leads and quotes.'],
+            ['name' => 'Project Manager',  'slug' => 'project-manager',   'description' => 'Manages projects and clients.'],
+            ['name' => 'Developer',        'slug' => 'developer',         'description' => 'Works on development tasks.'],
+            ['name' => 'Designer',         'slug' => 'designer',          'description' => 'Works on design tasks.'],
+            ['name' => 'Content Writer',   'slug' => 'content-writer',    'description' => 'Writes blog posts and content.'],
+        ];
+
+        foreach ($roles as $role) {
+            Role::create(array_merge($role, ['is_active' => true]));
+        }
     }
 }

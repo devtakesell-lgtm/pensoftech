@@ -16,4 +16,9 @@ enum JobStatus: string
             self::Closed => 'Closed',
         };
     }
+
+    public static function options(): array
+    {
+        return array_map(fn ($case) => ['value' => $case->value, 'label' => $case->label()], self::cases());
+    }
 }

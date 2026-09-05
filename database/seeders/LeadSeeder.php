@@ -2,16 +2,36 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Currency;
+use App\Models\Industry;
+use App\Models\Lead;
+use App\Models\Service;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class LeadSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
+        $users = User::all();
+        $industries = Industry::all();
+        $currencies = Currency::all();
+        $services = Service::all();
+
+        // Create 30 leads
+        Lead::factory(30)
+            ->make()
+            ->each(function (Lead $lead) use ($users, $industries, $currencies, $services) {
+                // Assign real industry and currency
+                $lead->industry_id = $industries->random()->id;
+                $lead->currency_id = $currencies->random()->id;
+                // Assign to a random team member (sales staff)
+                $lead->assigned_to = $users->random()->id;
+                $lead->save();
+
+                // Attach 1 to 3 services the lead is interested in
+                $randomServices = $services->random(rand(1, 3));
+                $lead->services()->attach($randomServices->pluck('id')->toArray());
+            });
     }
 }

@@ -10,15 +10,18 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ClientFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            // user_id is nullable — a client doesn't have to have a portal login
+            'user_id' => null,
+            'company_name' => fake()->company(),
+            'contact_person' => fake()->name(),
+            'website' => fake()->url(),
+            'address' => fake()->streetAddress(),
+            'city' => fake()->city(),
+            'country' => fake()->country(),
+            'is_active' => true,
         ];
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     public function up(): void
     {
         Schema::create('jobs_listings', function (Blueprint $table) {
@@ -24,9 +23,9 @@ return new class extends Migration
             $table->date('deadline')->nullable();
             $table->string('status')->default('draft');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
-
 
     public function down(): void
     {

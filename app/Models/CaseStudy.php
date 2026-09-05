@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ContentStatus;
+use Database\Factories\CaseStudyFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,13 +13,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CaseStudy extends Model
 {
-    /** @use HasFactory<\Database\Factories\CaseStudyFactory> */
+    /** @use HasFactory<CaseStudyFactory> */
     use HasFactory;
+
     use SoftDeletes;
 
     protected $fillable = [
         'project_id',
-        'client_id',
         'title',
         'slug',
         'challenge',
@@ -40,10 +41,8 @@ class CaseStudy extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function client(): BelongsTo
-    {
-        return $this->belongsTo(Client::class);
-    }
+    // Note: to get the client, use $caseStudy->project->client
+    // We removed the direct client_id column to avoid two sources of truth.
 
     public function metrics(): HasMany
     {

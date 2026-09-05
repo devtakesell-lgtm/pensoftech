@@ -2,16 +2,14 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Client;
 use Illuminate\Database\Seeder;
 
 class ClientSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
+        // Create 15 fake agency clients
+        Client::factory(15)->create();
     }
 }

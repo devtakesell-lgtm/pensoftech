@@ -6,12 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     public function up(): void
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('service_category_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('service_category_id')->constrained()->restrictOnDelete();
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('short_description')->nullable();

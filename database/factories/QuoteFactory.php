@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\QuoteStatus;
 use App\Models\Quote;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -10,15 +11,31 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class QuoteFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        $budgetMin = fake()->randomElement([1000, 2500, 5000, 10000, 20000]);
+        // budget_max is always higher than budget_min
+        $budgetMax = $budgetMin * fake()->randomFloat(1, 1.2, 2.0);
+
         return [
-            //
+            // lead_id and currency_id are assigned by QuoteSeeder from existing records
+            'lead_id' => null,
+            'currency_id' => null,
+            'quote_number' => 'QT-'.strtoupper(fake()->bothify('####??')),
+            'title' => fake()->randomElement([
+                'Website Redesign Proposal',
+                'Mobile App Development Quote',
+                'Digital Marketing Retainer Proposal',
+                'E-Commerce Platform Quote',
+                'Brand Identity Package',
+                'SEO & Content Strategy Proposal',
+            ]),
+            'description' => fake()->paragraph(),
+            'budget_min' => $budgetMin,
+            'budget_max' => round($budgetMax, 2),
+            'status' => fake()->randomElement(QuoteStatus::cases()),
+            'valid_until' => fake()->dateTimeBetween('now', '+3 months'),
+            'created_by' => null, // assigned by seeder
         ];
     }
 }
