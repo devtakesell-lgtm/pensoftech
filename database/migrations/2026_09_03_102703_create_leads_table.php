@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     // Nullable: a fresh inquiry isn't a client yet. Once converted, link it
     // to the existing (or newly created) client record.
     public function up(): void

@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['role_id', 'name', 'email', 'phone', 'password', 'avatar', 'is_active',])]
+#[Fillable(['role_id', 'name', 'email', 'phone', 'password', 'avatar', 'is_active'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -26,7 +26,6 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-
     protected $casts = [
         'email_verified_at' => 'datetime',
         'is_active' => 'boolean',

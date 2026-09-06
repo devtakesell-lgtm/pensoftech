@@ -45,7 +45,7 @@ class ServiceFactory extends Factory
             'featured_image' => 'https://picsum.photos/seed/'.$slug.'/1200/630',
             'banner_image' => 'https://picsum.photos/seed/'.$slug.'-banner/1920/600',
             'status' => ContentStatus::Published,
-            'is_featured' => fake()->boolean(30), 
+            'is_featured' => fake()->boolean(30),
             'sort_order' => fake()->numberBetween(1, 50),
         ];
     }

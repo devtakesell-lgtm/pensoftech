@@ -25,7 +25,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'role_id' => null, 
+            'role_id' => null,
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->phoneNumber(),
@@ -36,7 +36,6 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
         ];
     }
-
 
     public function unverified(): static
     {

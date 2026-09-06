@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Industry;
 use App\Http\Requests\StoreIndustryRequest;
 use App\Http\Requests\UpdateIndustryRequest;
+use App\Models\Industry;
 
 class IndustryController extends Controller
 {

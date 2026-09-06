@@ -19,7 +19,7 @@ class ProjectSeeder extends Seeder
 
         // Create 20 projects, each linked to an existing client and industry
         Project::factory(20)
-            ->make() 
+            ->make()
             ->each(function (Project $project) use ($clients, $industries, $services) {
                 // Assign a real existing client and industry
                 $project->client_id = $clients->random()->id;

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ServiceCategory;
 use App\Http\Requests\StoreServiceCategoryRequest;
 use App\Http\Requests\UpdateServiceCategoryRequest;
+use App\Models\ServiceCategory;
 
 class ServiceCategoryController extends Controller
 {

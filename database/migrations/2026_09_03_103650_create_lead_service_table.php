@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     public function up(): void
     {
         Schema::create('lead_service', function (Blueprint $table) {
@@ -18,7 +17,6 @@ return new class extends Migration
             $table->unique(['lead_id', 'service_id']);
         });
     }
-
 
     public function down(): void
     {

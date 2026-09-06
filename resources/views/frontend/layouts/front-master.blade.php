@@ -22,13 +22,13 @@
     @stack('styles')
 </head>
 <body>
-    @include('partials.header')
+    @include('frontend.partials.header')
 
     <main>
         @yield('content')
     </main>
 
-    @include('partials.footer')
+    @include('frontend.partials.footer')
 
     @stack('scripts')
 </body>

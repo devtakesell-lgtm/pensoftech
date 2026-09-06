@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SeoMeta;
 use App\Http\Requests\StoreSeoMetaRequest;
 use App\Http\Requests\UpdateSeoMetaRequest;
+use App\Models\SeoMeta;
 
 class SeoMetaController extends Controller
 {

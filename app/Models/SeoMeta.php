@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\SeoMetaFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class SeoMeta extends Model
 {
-    /** @use HasFactory<\Database\Factories\SeoMetaFactory> */
+    /** @use HasFactory<SeoMetaFactory> */
     use HasFactory;
 
     protected $table = 'seo_metas';

@@ -33,7 +33,7 @@ class QuoteFactory extends Factory
             'budget_max' => round($budgetMax, 2),
             'status' => fake()->randomElement(QuoteStatus::cases()),
             'valid_until' => fake()->dateTimeBetween('now', '+3 months'),
-            'created_by' => null, 
+            'created_by' => null,
         ];
     }
 }

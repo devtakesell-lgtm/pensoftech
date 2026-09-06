@@ -16,7 +16,6 @@ class BlogSeeder extends Seeder
         $tags = BlogTag::all();
         $users = User::all();
 
-
         Blog::factory(15)
             ->make()
             ->each(function (Blog $blog) use ($categories, $tags, $users) {

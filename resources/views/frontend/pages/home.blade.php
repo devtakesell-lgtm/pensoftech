@@ -1,5 +1,5 @@
 
-@extends('layouts.app')
+@extends('frontend.layouts.front-master')
 
 @section('title', 'Home')
 
@@ -131,7 +131,7 @@
   </section>
 
   <!-- STATS -->
-  <x-ui.status-band/>
+  <x-frontend.components.ui.status-band/>
 
   <!-- PROCESS -->
   <section class="section">

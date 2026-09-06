@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BlogTag;
 use App\Http\Requests\StoreBlogTagRequest;
 use App\Http\Requests\UpdateBlogTagRequest;
+use App\Models\BlogTag;
 
 class BlogTagController extends Controller
 {

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CaseStudyMetric;
 use App\Http\Requests\StoreCaseStudyMetricRequest;
 use App\Http\Requests\UpdateCaseStudyMetricRequest;
+use App\Models\CaseStudyMetric;
 
 class CaseStudyMetricController extends Controller
 {

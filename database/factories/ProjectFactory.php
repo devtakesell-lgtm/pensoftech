@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\ProjectStatus;
-use App\Models\Client;
-use App\Models\Industry;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;

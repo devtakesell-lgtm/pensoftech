@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lead;
 use App\Http\Requests\StoreLeadRequest;
 use App\Http\Requests\UpdateLeadRequest;
+use App\Models\Lead;
 
 class LeadController extends Controller
 {

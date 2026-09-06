@@ -27,13 +27,12 @@ class BlogFactory extends Factory
             'How We Delivered a Complex Platform in Half the Expected Time',
         ];
 
-       
         $title = fake()->randomElement($titles).' #'.fake()->numberBetween(1, 9999);
         $publishedAt = fake()->dateTimeBetween('-1 year', 'now');
 
         return [
             'blog_category_id' => null,
-            'author_id' => null, 
+            'author_id' => null,
             'title' => $title,
             'slug' => Str::slug($title),
             'excerpt' => fake()->sentences(2, true),
@@ -41,7 +40,7 @@ class BlogFactory extends Factory
             'featured_image' => 'https://picsum.photos/seed/'.Str::slug($title).'/1200/630',
             'status' => ContentStatus::Published,
             'published_at' => $publishedAt,
-            'reading_time' => fake()->numberBetween(3, 15), 
+            'reading_time' => fake()->numberBetween(3, 15),
             'views' => fake()->numberBetween(0, 5000),
         ];
     }

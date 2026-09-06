@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('frontend.layouts.front-master')
 
 @section('title', 'Digital Marketing')
 

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Currency;
 use App\Http\Requests\StoreCurrencyRequest;
 use App\Http\Requests\UpdateCurrencyRequest;
+use App\Models\Currency;
 
 class CurrencyController extends Controller
 {

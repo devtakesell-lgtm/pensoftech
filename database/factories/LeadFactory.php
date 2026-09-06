@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\LeadStatus;
-use App\Models\Client;
 use App\Models\Lead;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

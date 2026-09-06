@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\QuoteService;
 use App\Http\Requests\StoreQuoteServiceRequest;
 use App\Http\Requests\UpdateQuoteServiceRequest;
+use App\Models\QuoteService;
 
 class QuoteServiceController extends Controller
 {
