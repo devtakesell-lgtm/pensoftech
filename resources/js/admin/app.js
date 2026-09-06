@@ -40,6 +40,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Notification interactive actions
+    const markAllBtn = document.getElementById('markAllReadBtn');
+    markAllBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        document.querySelectorAll('.notification-item.unread').forEach(item => {
+            item.classList.remove('unread');
+        });
+        document.querySelectorAll('.unread-dot').forEach(dot => {
+            dot.remove();
+        });
+
+        const badge = document.getElementById('notificationBadgeCount');
+        if (badge) badge.remove();
+
+        const newPill = document.getElementById('notificationNewPill');
+        if (newPill) newPill.remove();
+
+        markAllBtn.remove();
+    });
+
     // Search shortcut (Ctrl+K / Cmd+K)
     document.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
