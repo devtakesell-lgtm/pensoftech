@@ -21,6 +21,6 @@ class StatusBand extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.ui.status-band');
+        return view('frontend.components.ui.status-band');
     }
 }
