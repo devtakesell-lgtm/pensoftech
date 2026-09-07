@@ -41,7 +41,10 @@
         </div>
 
         <div class="profile-menu-footer border-top pt-1 pb-1">
-            <a class="dropdown-item text-danger d-flex align-items-center logout-item" href="#">
+            <form method="POST" action="{{ route('admin.logout') }}" id="admin-logout-form" class="d-none">
+                @csrf
+            </form>
+            <a class="dropdown-item text-danger d-flex align-items-center logout-item" href="#" onclick="event.preventDefault(); document.getElementById('admin-logout-form').submit();">
                 <i class="bi bi-box-arrow-right me-2"></i>Sign Out
             </a>
         </div>

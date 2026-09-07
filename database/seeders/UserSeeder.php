@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
         $adminRole = Role::where('slug', 'administrator')->first();
         $salesRole = Role::where('slug', 'sales-manager')->first();
         $pmRole = Role::where('slug', 'project-manager')->first();
+        $client = Role::where('slug', 'client')->first();
 
         // 1. Create a fixed admin account you can always log in with
         User::create([
@@ -43,6 +44,17 @@ class UserSeeder extends Seeder
             'role_id' => $pmRole?->id,
             'name' => 'Shihan Rahman',
             'email' => 'shihan@pensoftech.com',
+            'phone' => '+880 1700-000002',
+            'is_active' => true,
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+        ]);
+
+        // 3. Create a project manager
+        User::create([
+            'role_id' => $client?->id,
+            'name' => 'Rakib Hasan',
+            'email' => 'rakib@pensoftech.com',
             'phone' => '+880 1700-000002',
             'is_active' => true,
             'email_verified_at' => now(),

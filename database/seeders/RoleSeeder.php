@@ -17,10 +17,11 @@ class RoleSeeder extends Seeder
             ['name' => 'Developer',        'slug' => 'developer',         'description' => 'Works on development tasks.'],
             ['name' => 'Designer',         'slug' => 'designer',          'description' => 'Works on design tasks.'],
             ['name' => 'Content Writer',   'slug' => 'content-writer',    'description' => 'Writes blog posts and content.'],
+            ['name' => 'Client',           'slug' => 'client',            'description' => 'Client account for portal and project tracking.'],
         ];
 
         foreach ($roles as $role) {
-            Role::create(array_merge($role, ['is_active' => true]));
+            Role::firstOrCreate(['slug' => $role['slug']], array_merge($role, ['is_active' => true]));
         }
     }
 }

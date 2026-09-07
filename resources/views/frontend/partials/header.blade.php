@@ -33,8 +33,23 @@
         <li><a href="{{ route('digital-marketing') }}" @class(['is-active' => request()->routeIs('digital-marketing')]) @if (request()->routeIs('digital-marketing')) aria-current="page" @endif>Digital Marketing</a></li>
         <li><a href="{{ route('about') }}" @class(['is-active' => request()->routeIs('about')]) @if (request()->routeIs('about')) aria-current="page" @endif>About</a></li>
         <li><a href="{{ route('contact') }}" @class(['is-active' => request()->routeIs('contact')]) @if (request()->routeIs('contact')) aria-current="page" @endif>Contact</a></li>
+        @auth
+          @if(auth()->user()->role?->slug !== 'client')
+            <li><a href="{{ route('admin.dashboard') }}">Admin Panel</a></li>
+          @endif
+        @else
+          <li><a href="{{ route('login') }}" @class(['is-active' => request()->routeIs('login', 'register')])>Sign In</a></li>
+        @endauth
       </ul>
-      <a href="{{ route('contact') }}" class="btn btn-ink">Get a Quote</a>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        @auth
+          <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+            @csrf
+            <button type="submit" style="background: none; border: none; font-size: 14px; font-weight: 600; color: var(--slate); cursor: pointer; padding: 6px 10px;">Sign Out</button>
+          </form>
+        @endauth
+        <a href="{{ route('contact') }}" class="btn btn-ink">Get a Quote</a>
+      </div>
     </nav>
     <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-controls="site-nav" aria-expanded="false"><span></span></button>
   </div>
