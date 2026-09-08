@@ -70,6 +70,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/blog', [AdminBlogController::class, 'index'])->name('blog');
         Route::get('/careers', [AdminCareerController::class, 'index'])->name('careers');
         Route::get('/users', [AdminUserController::class, 'index'])->name('users');
+        Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
+        Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
+        Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+        Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
         Route::resource('roles', AdminRoleController::class)->except(['show']);
         Route::get('/permissions', [AdminPermissionController::class, 'index'])->name('permissions.index');
         Route::get('/analytics', [AdminAnalyticsController::class, 'index'])->name('analytics');
