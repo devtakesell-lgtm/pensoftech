@@ -1,0 +1,6 @@
+/*   About page */
+.story-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:start;}
+.story-grid p{color:var(--slate);margin-bottom:18px;max-width:58ch;}
+@media (max-width:900px){
+  .story-grid{grid-template-columns:1fr;}
+}
