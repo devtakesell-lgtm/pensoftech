@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // ── Step 1: Reference / lookup tables (no foreign keys) ─────────────
-        $this->call(RoleSeeder::class);        // roles (needed by users)
-        $this->call(PermissionSeeder::class);  // permissions (needed by permission_role pivot)
+        $this->call(PermissionSeeder::class);  // permissions (must exist before role matrix sync)
+        $this->call(RoleSeeder::class);        // roles and permission matrix mapping
         $this->call(CurrencySeeder::class);    // currencies (needed by leads, quotes)
         $this->call(IndustrySeeder::class);    // industries (needed by leads, projects)
 

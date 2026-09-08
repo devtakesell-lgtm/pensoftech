@@ -69,7 +69,7 @@ class AuthController extends Controller
             RateLimiter::clear($throttleKey);
             $request->session()->regenerate();
 
-            if ($user->role?->slug !== 'client') {
+            if ($user->can('access-admin')) {
                 return redirect()->intended(route('admin.dashboard'));
             }
 
@@ -102,9 +102,8 @@ class AuthController extends Controller
     {
         $user = DB::transaction(function () use ($request) {
             $clientRole = Role::firstOrCreate(
-                ['slug' => 'client'],
+                ['name' => 'client', 'guard_name' => 'web'],
                 [
-                    'name' => 'Client',
                     'description' => 'Client account for portal and project tracking.',
                     'is_active' => true,
                 ]
@@ -118,6 +117,8 @@ class AuthController extends Controller
                 'password' => Hash::make($request->validated('password')),
                 'is_active' => true,
             ]);
+
+            $newUser->assignRole($clientRole);
 
             $newUser->client()->create([
                 'company_name' => $request->validated('company_name') ?: $request->validated('name'),

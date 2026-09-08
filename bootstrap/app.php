@@ -7,6 +7,9 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,6 +20,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'admin' => AdminMiddleware::class,
+            'role' => RoleMiddleware::class,
+            'permission' => PermissionMiddleware::class,
+            'role_or_permission' => RoleOrPermissionMiddleware::class,
         ]);
 
         $middleware->redirectGuestsTo(function (Request $request): string {
@@ -31,7 +37,7 @@ return Application::configure(basePath: dirname(__DIR__))
             /** @var User|null $user */
             $user = Auth::user();
 
-            if ($user && $user->role?->slug !== 'client') {
+            if ($user && $user->can('access-admin')) {
                 return route('admin.dashboard');
             }
 

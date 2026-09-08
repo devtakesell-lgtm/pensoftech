@@ -95,12 +95,17 @@
         </a>
         
         <div class="label">SYSTEM</div>
-        <a class="nav {{ request()->routeIs('admin.users') ? 'active' : '' }}" href="{{ route('admin.users') }}" title="Users & Roles">
-            <i class="bi bi-person-gear"></i>
-            <span class="nav-title">Users & Roles</span>
-            <!-- @if(request()->routeIs('admin.users'))
-                <span class="active-badge"><span class="pulse-dot"></span>Active</span>
-            @endif -->
+        <a class="nav {{ request()->routeIs('admin.users*') ? 'active' : '' }}" href="{{ route('admin.users') }}" title="Users">
+            <i class="bi bi-people-fill"></i>
+            <span class="nav-title">Users</span>
+        </a>
+        <a class="nav {{ request()->routeIs('admin.roles*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}" title="Roles">
+            <i class="bi bi-shield-lock-fill"></i>
+            <span class="nav-title">Roles</span>
+        </a>
+        <a class="nav {{ request()->routeIs('admin.permissions*') ? 'active' : '' }}" href="{{ route('admin.permissions.index') }}" title="Permissions">
+            <i class="bi bi-key-fill"></i>
+            <span class="nav-title">Permissions</span>
         </a>
         <a class="nav {{ request()->routeIs('admin.analytics') ? 'active' : '' }}" href="{{ route('admin.analytics') }}" title="Analytics">
             <i class="bi bi-graph-up-arrow"></i>

@@ -1,7 +1,22 @@
 <?php
 
+use App\Http\Controllers\Admin\AnalyticsController as AdminAnalyticsController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
+use App\Http\Controllers\Admin\CareerController as AdminCareerController;
+use App\Http\Controllers\Admin\CaseStudyController as AdminCaseStudyController;
+use App\Http\Controllers\Admin\ClientController as AdminClientController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\IndustryController as AdminIndustryController;
+use App\Http\Controllers\Admin\LeadController as AdminLeadController;
+use App\Http\Controllers\Admin\PageController as AdminPageController;
+use App\Http\Controllers\Admin\PermissionController as AdminPermissionController;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\QuoteController as AdminQuoteController;
+use App\Http\Controllers\Admin\RoleController as AdminRoleController;
+use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
+use App\Http\Controllers\Admin\SettingController as AdminSettingController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Client\DashboardController as ClientDashboardController;
 use App\Http\Controllers\Client\LeadController as ClientLeadController;
 use App\Http\Controllers\Client\ProjectController as ClientProjectController;
@@ -44,19 +59,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
             return redirect()->route('admin.dashboard');
         });
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/leads', [DashboardController::class, 'leads'])->name('leads');
-        Route::get('/clients', [DashboardController::class, 'clients'])->name('clients');
-        Route::get('/quotes', [DashboardController::class, 'quotes'])->name('quotes');
-        Route::get('/services', [DashboardController::class, 'services'])->name('services');
-        Route::get('/projects', [DashboardController::class, 'projects'])->name('projects');
-        Route::get('/case-studies', [DashboardController::class, 'caseStudies'])->name('case-studies');
-        Route::get('/industries', [DashboardController::class, 'industries'])->name('industries');
-        Route::get('/pages', [DashboardController::class, 'pages'])->name('pages');
-        Route::get('/blog', [DashboardController::class, 'blog'])->name('blog');
-        Route::get('/careers', [DashboardController::class, 'careers'])->name('careers');
-        Route::get('/users', [DashboardController::class, 'users'])->name('users');
-        Route::get('/analytics', [DashboardController::class, 'analytics'])->name('analytics');
-        Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
+        Route::get('/leads', [AdminLeadController::class, 'index'])->name('leads');
+        Route::get('/clients', [AdminClientController::class, 'index'])->name('clients');
+        Route::get('/quotes', [AdminQuoteController::class, 'index'])->name('quotes');
+        Route::get('/services', [AdminServiceController::class, 'index'])->name('services');
+        Route::get('/projects', [AdminProjectController::class, 'index'])->name('projects');
+        Route::get('/case-studies', [AdminCaseStudyController::class, 'index'])->name('case-studies');
+        Route::get('/industries', [AdminIndustryController::class, 'index'])->name('industries');
+        Route::get('/pages', [AdminPageController::class, 'index'])->name('pages');
+        Route::get('/blog', [AdminBlogController::class, 'index'])->name('blog');
+        Route::get('/careers', [AdminCareerController::class, 'index'])->name('careers');
+        Route::get('/users', [AdminUserController::class, 'index'])->name('users');
+        Route::resource('roles', AdminRoleController::class)->except(['show']);
+        Route::get('/permissions', [AdminPermissionController::class, 'index'])->name('permissions.index');
+        Route::get('/analytics', [AdminAnalyticsController::class, 'index'])->name('analytics');
+        Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings');
     });
 });
 

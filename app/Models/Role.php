@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Database\Factories\RoleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role as SpatieRole;
 
-class Role extends Model
+class Role extends SpatieRole
 {
     /** @use HasFactory<RoleFactory> */
     use HasFactory;
@@ -16,6 +15,7 @@ class Role extends Model
     protected $fillable = [
         'name',
         'slug',
+        'guard_name',
         'description',
         'is_active',
     ];
@@ -24,13 +24,25 @@ class Role extends Model
         'is_active' => 'boolean',
     ];
 
-    public function permissions(): BelongsToMany
+    protected static function booted(): void
     {
-        return $this->belongsToMany(Permission::class, 'permission_role')->withTimestamps();
+        static::creating(function (Role $role) {
+            if (empty($role->guard_name)) {
+                $role->guard_name = 'web';
+            }
+            if (empty($role->name) && ! empty($role->slug)) {
+                $role->name = Str::slug($role->slug);
+            } elseif (! empty($role->name)) {
+                $role->name = Str::slug($role->name);
+            }
+            if (empty($role->slug) && ! empty($role->name)) {
+                $role->slug = $role->name;
+            }
+        });
     }
 
-    public function users(): HasMany
+    public function getSlugAttribute(): string
     {
-        return $this->hasMany(User::class);
+        return $this->attributes['slug'] ?? $this->name;
     }
 }

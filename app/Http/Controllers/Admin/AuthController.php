@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -20,12 +21,12 @@ class AuthController extends Controller
      */
     public function showLoginForm(): View|RedirectResponse
     {
-        if (Auth::check()) {
-            if (Auth::user()->role?->slug !== 'client') {
-                return redirect()->route('admin.dashboard');
-            }
+        if (Gate::allows('access-admin')) {
+            return redirect()->route('admin.dashboard');
+        }
 
-            return redirect()->route('home')->with('status', 'You are already signed in as a client.');
+        if (Auth::check()) {
+            return redirect()->route('home')->with('status', 'You are already signed in, but do not have staff admin privileges.');
         }
 
         return view('admin.auth.login');
@@ -66,13 +67,13 @@ class AuthController extends Controller
                 ]);
             }
 
-            if ($user->role?->slug === 'client') {
+            if (Gate::denies('access-admin')) {
                 Auth::logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
 
                 throw ValidationException::withMessages([
-                    'email' => 'Access denied. Client accounts cannot log in to the admin dashboard.',
+                    'email' => 'Access denied. You do not have permission to access the admin dashboard.',
                 ]);
             }
 

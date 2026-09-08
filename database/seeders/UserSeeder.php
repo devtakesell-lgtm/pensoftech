@@ -11,14 +11,14 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Get roles we created in RoleSeeder
-        $adminRole = Role::where('slug', 'administrator')->first();
-        $salesRole = Role::where('slug', 'sales-manager')->first();
-        $pmRole = Role::where('slug', 'project-manager')->first();
-        $client = Role::where('slug', 'client')->first();
+        // Get roles created in RoleSeeder
+        $adminRole = Role::where('name', 'administrator')->first();
+        $salesRole = Role::where('name', 'sales-manager')->first();
+        $pmRole = Role::where('name', 'project-manager')->first();
+        $clientRole = Role::where('name', 'client')->first();
 
         // 1. Create a fixed admin account you can always log in with
-        User::create([
+        $admin = User::create([
             'role_id' => $adminRole?->id,
             'name' => 'Admin User',
             'email' => 'admin@pensoftech.com',
@@ -27,9 +27,12 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
         ]);
+        if ($adminRole) {
+            $admin->assignRole($adminRole);
+        }
 
         // 2. Create a sales manager
-        User::create([
+        $sales = User::create([
             'role_id' => $salesRole?->id,
             'name' => 'Manchur Iqbal',
             'email' => 'manchur@pensoftech.com',
@@ -38,9 +41,12 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
         ]);
+        if ($salesRole) {
+            $sales->assignRole($salesRole);
+        }
 
         // 3. Create a project manager
-        User::create([
+        $pm = User::create([
             'role_id' => $pmRole?->id,
             'name' => 'Shihan Rahman',
             'email' => 'shihan@pensoftech.com',
@@ -49,21 +55,32 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
         ]);
+        if ($pmRole) {
+            $pm->assignRole($pmRole);
+        }
 
-        // 3. Create a project manager
-        User::create([
-            'role_id' => $client?->id,
+        // 4. Create a client user
+        $client = User::create([
+            'role_id' => $clientRole?->id,
             'name' => 'Rakib Hasan',
             'email' => 'rakib@pensoftech.com',
-            'phone' => '+880 1700-000002',
+            'phone' => '+880 1700-000003',
             'is_active' => true,
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
         ]);
+        if ($clientRole) {
+            $client->assignRole($clientRole);
+        }
 
-        // 4. Create 5 more random team members using the factory
-        User::factory(5)->create([
+        // 5. Create 5 more team members using the factory
+        $teamMembers = User::factory(5)->create([
             'role_id' => $adminRole?->id,
         ]);
+        foreach ($teamMembers as $member) {
+            if ($adminRole) {
+                $member->assignRole($adminRole);
+            }
+        }
     }
 }

@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 
-class DashboardController extends Controller
+class CareerController extends Controller
 {
     /**
-     * Display the admin main dashboard.
+     * Display a listing of career opportunities and applications.
      */
     public function index(): View
     {
-        return view('admin.pages.dashboard');
+        return view('admin.pages.careers');
     }
 }

@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Role>
@@ -14,18 +13,18 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         $name = fake()->unique()->randomElement([
-            'Administrator',
-            'Sales Manager',
-            'Project Manager',
-            'Developer',
-            'Designer',
-            'Content Writer',
-            'Support Agent',
+            'administrator',
+            'sales-manager',
+            'project-manager',
+            'developer',
+            'designer',
+            'content-writer',
+            'support-agent',
         ]);
 
         return [
             'name' => $name,
-            'slug' => Str::slug($name),
+            'guard_name' => 'web',
             'description' => fake()->sentence(),
             'is_active' => true,
         ];

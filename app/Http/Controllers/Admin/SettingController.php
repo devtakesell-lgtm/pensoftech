@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 
-class DashboardController extends Controller
+class SettingController extends Controller
 {
     /**
-     * Display the admin main dashboard.
+     * Display the agency and system settings page.
      */
     public function index(): View
     {
-        return view('admin.pages.dashboard');
+        return view('admin.pages.settings');
     }
 }
