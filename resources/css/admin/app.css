@@ -1,3 +1,11 @@
+/* ==========================================================================
+   MODULAR ADMIN SYSTEM (PAGE & COMMON STYLES)
+   ========================================================================== */
+@import "./common.css";
+@import "./pages/users.css";
+@import "./pages/roles.css";
+@import "./pages/permissions.css";
+
 * {
     box-sizing: border-box
 }
