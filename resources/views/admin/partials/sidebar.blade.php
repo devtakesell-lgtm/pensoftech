@@ -41,10 +41,34 @@
         @canany(['view-services', 'view-projects', 'view-case-studies', 'view-industries'])
             <div class="label">SERVICES</div>
             @can('view-services')
-                <a class="nav {{ request()->routeIs('admin.services') ? 'active' : '' }}" href="{{ route('admin.services') }}" title="Services">
-                    <i class="bi bi-layers"></i>
-                    <span class="nav-title">Services</span>
-                </a>
+                @php
+                    $isServicesActive = request()->routeIs('admin.services*') || request()->routeIs('admin.service-categories*');
+                @endphp
+                <div class="nav-item-dropdown {{ $isServicesActive ? 'open' : '' }}">
+                    <a class="nav nav-parent {{ $isServicesActive ? 'parent-active' : 'collapsed' }}" 
+                       data-bs-toggle="collapse" 
+                       href="#servicesSubmenu" 
+                       role="button" 
+                       aria-expanded="{{ $isServicesActive ? 'true' : 'false' }}" 
+                       aria-controls="servicesSubmenu"
+                       title="Services">
+                        <i class="bi bi-layers"></i>
+                        <span class="nav-title">Services</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                    <div class="collapse {{ $isServicesActive ? 'show' : '' }} nav-submenu" id="servicesSubmenu">
+                        <a class="nav-sub-link {{ request()->routeIs('admin.services*') && !request()->routeIs('admin.service-categories*') ? 'active' : '' }}" 
+                           href="{{ route('admin.services') }}">
+                            <i class="bi bi-layers"></i>
+                            <span>All Services</span>
+                        </a>
+                        <a class="nav-sub-link {{ request()->routeIs('admin.service-categories*') ? 'active' : '' }}" 
+                           href="{{ route('admin.service-categories.index') }}">
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Categories</span>
+                        </a>
+                    </div>
+                </div>
             @endcan
 
             @can('view-projects')

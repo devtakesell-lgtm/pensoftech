@@ -5,6 +5,8 @@
 @import "./pages/users.css";
 @import "./pages/roles.css";
 @import "./pages/permissions.css";
+@import "./pages/services.css";
+@import "./pages/service-categories.css";
 
 * {
     box-sizing: border-box
@@ -92,13 +94,96 @@ body {
     box-shadow: 0 7px 18px #6d4aff40
 }
 
-.nav span {
+.nav.parent-active {
+    color: #fff;
+    background: #1a1f32;
+}
+
+.nav span.nav-title {
+    margin-left: 0;
+    background: transparent;
+    color: inherit;
+    border-radius: 0;
+    padding: 0;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.nav span.nav-badge,
+.nav span:not(.nav-title) {
     margin-left: auto;
     background: #ff5d7d;
     color: #fff;
     border-radius: 15px;
     padding: 3px 7px;
     font-size: 9px
+}
+
+/* Sidebar Accordion Submenu */
+.nav-arrow {
+    margin-left: auto !important;
+    font-size: 11px !important;
+    transition: transform 0.2s ease, color 0.2s ease;
+    color: #737c91;
+    transform: rotate(0deg);
+}
+
+.nav-parent[aria-expanded="true"] .nav-arrow {
+    transform: rotate(90deg);
+    color: #fff;
+}
+
+.nav-parent.collapsed .nav-arrow,
+.nav-parent[aria-expanded="false"] .nav-arrow {
+    transform: rotate(0deg) !important;
+    color: #737c91 !important;
+}
+
+.nav-submenu {
+    margin: 2px 0 6px 14px;
+    padding: 4px 0 4px 14px;
+    border-left: 2px solid #23293d;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nav-sub-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 12px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #8f97ab;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.15s ease-in-out;
+}
+
+.nav-sub-link i {
+    font-size: 13.5px;
+    color: #737c91;
+    transition: all 0.15s ease-in-out;
+}
+
+.nav-sub-link:hover {
+    color: #ffffff;
+    background: #1a1f32;
+}
+
+.nav-sub-link:hover i {
+    color: #a084ff;
+}
+
+.nav-sub-link.active {
+    color: #ffffff;
+    background: rgba(109, 74, 255, 0.16);
+    font-weight: 600;
+}
+
+.nav-sub-link.active i {
+    color: #a084ff;
 }
 
 .sidebottom {

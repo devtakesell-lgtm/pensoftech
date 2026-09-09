@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\PermissionController as AdminPermissionController
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\QuoteController as AdminQuoteController;
 use App\Http\Controllers\Admin\RoleController as AdminRoleController;
+use App\Http\Controllers\Admin\ServiceCategoryController as AdminServiceCategoryController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -78,6 +79,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Services Module
         Route::prefix('services')->group(function () {
             Route::get('/', [AdminServiceController::class, 'index'])->name('services')->middleware('can:view-services');
+            Route::get('/create', [AdminServiceController::class, 'create'])->name('services.create')->middleware('can:create-services');
+            Route::post('/', [AdminServiceController::class, 'store'])->name('services.store')->middleware('can:create-services');
+            Route::get('/{service}/edit', [AdminServiceController::class, 'edit'])->name('services.edit')->middleware('can:edit-services');
+            Route::put('/{service}', [AdminServiceController::class, 'update'])->name('services.update')->middleware('can:edit-services');
+            Route::delete('/{service}', [AdminServiceController::class, 'destroy'])->name('services.destroy')->middleware('can:delete-services');
+        });
+
+        // Service Categories Module
+        Route::prefix('service-categories')->name('service-categories.')->group(function () {
+            Route::get('/', [AdminServiceCategoryController::class, 'index'])->name('index')->middleware('can:view-services');
+            Route::get('/create', [AdminServiceCategoryController::class, 'create'])->name('create')->middleware('can:create-services');
+            Route::post('/', [AdminServiceCategoryController::class, 'store'])->name('store')->middleware('can:create-services');
+            Route::get('/{serviceCategory}/edit', [AdminServiceCategoryController::class, 'edit'])->name('edit')->middleware('can:edit-services');
+            Route::put('/{serviceCategory}', [AdminServiceCategoryController::class, 'update'])->name('update')->middleware('can:edit-services');
+            Route::delete('/{serviceCategory}', [AdminServiceCategoryController::class, 'destroy'])->name('destroy')->middleware('can:delete-services');
         });
 
         // Projects Module
