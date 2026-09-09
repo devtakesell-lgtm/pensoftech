@@ -32,12 +32,14 @@
                 </span>
                 <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill py-0 px-2" style="font-size: 8.5px; font-weight: 700;">LIVE</span>
             </a>
-            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.settings') }}">
-                <i class="bi bi-person-gear me-2 text-secondary"></i>Account Settings
-            </a>
-            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.settings') }}">
-                <i class="bi bi-shield-lock me-2 text-secondary"></i>Change Password
-            </a>
+            @can('view-settings')
+                <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.settings') }}">
+                    <i class="bi bi-person-gear me-2 text-secondary"></i>Account Settings
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.settings') }}">
+                    <i class="bi bi-shield-lock me-2 text-secondary"></i>Change Password
+                </a>
+            @endcan
         </div>
 
         <div class="profile-menu-footer border-top pt-1 pb-1">

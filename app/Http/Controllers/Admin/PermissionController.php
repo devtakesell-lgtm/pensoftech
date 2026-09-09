@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Permission;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class PermissionController extends Controller
@@ -13,6 +14,8 @@ class PermissionController extends Controller
      */
     public function index(): View
     {
+        Gate::authorize('view-roles');
+
         $permissions = Permission::with('roles')
             ->orderBy('module')
             ->orderBy('name')

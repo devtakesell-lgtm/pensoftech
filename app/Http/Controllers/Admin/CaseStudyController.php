@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CaseStudy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class CaseStudyController extends Controller
@@ -13,6 +14,8 @@ class CaseStudyController extends Controller
      */
     public function index(): View
     {
+        Gate::authorize('view-case-studies');
+
         $caseStudies = CaseStudy::with('project')->latest()->get();
 
         return view('admin.pages.case-studies')->with([

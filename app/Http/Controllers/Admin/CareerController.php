@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class CareerController extends Controller
@@ -12,6 +13,8 @@ class CareerController extends Controller
      */
     public function index(): View
     {
+        Gate::authorize('view-jobs');
+
         return view('admin.pages.careers');
     }
 }

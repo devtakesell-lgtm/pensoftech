@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Service;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class ServiceController extends Controller
@@ -13,6 +14,8 @@ class ServiceController extends Controller
      */
     public function index(): View
     {
+        Gate::authorize('view-services');
+
         $services = Service::with('category')->latest()->get();
 
         return view('admin.pages.services')->with([

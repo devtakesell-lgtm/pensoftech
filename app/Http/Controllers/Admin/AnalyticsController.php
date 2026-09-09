@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class AnalyticsController extends Controller
@@ -12,6 +13,8 @@ class AnalyticsController extends Controller
      */
     public function index(): View
     {
+        Gate::authorize('view-analytics');
+
         return view('admin.pages.analytics');
     }
 }

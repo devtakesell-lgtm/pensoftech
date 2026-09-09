@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class LeadController extends Controller
@@ -13,6 +14,8 @@ class LeadController extends Controller
      */
     public function index(): View
     {
+        Gate::authorize('view-leads');
+
         $leads = Lead::with(['client', 'services'])->latest()->get();
 
         return view('admin.pages.leads')->with([

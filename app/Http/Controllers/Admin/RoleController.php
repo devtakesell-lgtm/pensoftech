@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\UpdateRoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Spatie\Permission\PermissionRegistrar;
@@ -19,6 +20,8 @@ class RoleController extends Controller
      */
     public function index(): View
     {
+        Gate::authorize('view-roles');
+
         $roles = Role::with('permissions')
             ->withCount('users')
             ->orderBy('name')
@@ -34,6 +37,8 @@ class RoleController extends Controller
      */
     public function create(): View
     {
+        Gate::authorize('create-roles');
+
         $permissionsByModule = Permission::all()->groupBy('module');
 
         return view('admin.pages.roles.create')->with([
@@ -46,6 +51,8 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request): RedirectResponse
     {
+        Gate::authorize('create-roles');
+
         $roleName = Str::slug($request->validated('name'));
 
         $role = Role::create([
@@ -67,6 +74,8 @@ class RoleController extends Controller
      */
     public function edit(Role $role): View
     {
+        Gate::authorize('edit-roles');
+
         $role->load('permissions');
         $permissionsByModule = Permission::all()->groupBy('module');
         $rolePermissionNames = $role->permissions->pluck('name')->toArray();
@@ -83,6 +92,8 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role): RedirectResponse
     {
+        Gate::authorize('edit-roles');
+
         // Protect system roles from having their slug changed
         if (! in_array($role->name, ['administrator', 'client'], true)) {
             $role->name = Str::slug($request->validated('name'));
@@ -108,6 +119,8 @@ class RoleController extends Controller
      */
     public function destroy(Role $role): RedirectResponse
     {
+        Gate::authorize('delete-roles');
+
         if (in_array($role->name, ['administrator', 'client'], true)) {
             return redirect()->route('admin.roles.index')->with('error', 'Core system roles cannot be deleted.');
         }

@@ -59,26 +59,91 @@ Route::prefix('admin')->name('admin.')->group(function () {
             return redirect()->route('admin.dashboard');
         });
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/leads', [AdminLeadController::class, 'index'])->name('leads');
-        Route::get('/clients', [AdminClientController::class, 'index'])->name('clients');
-        Route::get('/quotes', [AdminQuoteController::class, 'index'])->name('quotes');
-        Route::get('/services', [AdminServiceController::class, 'index'])->name('services');
-        Route::get('/projects', [AdminProjectController::class, 'index'])->name('projects');
-        Route::get('/case-studies', [AdminCaseStudyController::class, 'index'])->name('case-studies');
-        Route::get('/industries', [AdminIndustryController::class, 'index'])->name('industries');
-        Route::get('/pages', [AdminPageController::class, 'index'])->name('pages');
-        Route::get('/blog', [AdminBlogController::class, 'index'])->name('blog');
-        Route::get('/careers', [AdminCareerController::class, 'index'])->name('careers');
-        Route::get('/users', [AdminUserController::class, 'index'])->name('users');
-        Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
-        Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
-        Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
-        Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
-        Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
-        Route::resource('roles', AdminRoleController::class)->except(['show']);
-        Route::get('/permissions', [AdminPermissionController::class, 'index'])->name('permissions.index');
-        Route::get('/analytics', [AdminAnalyticsController::class, 'index'])->name('analytics');
-        Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings');
+
+        // Leads Module
+        Route::prefix('leads')->group(function () {
+            Route::get('/', [AdminLeadController::class, 'index'])->name('leads')->middleware('can:view-leads');
+        });
+
+        // Clients Module
+        Route::prefix('clients')->group(function () {
+            Route::get('/', [AdminClientController::class, 'index'])->name('clients')->middleware('can:view-clients');
+        });
+
+        // Quotes Module
+        Route::prefix('quotes')->group(function () {
+            Route::get('/', [AdminQuoteController::class, 'index'])->name('quotes')->middleware('can:view-quotes');
+        });
+
+        // Services Module
+        Route::prefix('services')->group(function () {
+            Route::get('/', [AdminServiceController::class, 'index'])->name('services')->middleware('can:view-services');
+        });
+
+        // Projects Module
+        Route::prefix('projects')->group(function () {
+            Route::get('/', [AdminProjectController::class, 'index'])->name('projects')->middleware('can:view-projects');
+        });
+
+        // Case Studies Module
+        Route::prefix('case-studies')->group(function () {
+            Route::get('/', [AdminCaseStudyController::class, 'index'])->name('case-studies')->middleware('can:view-case-studies');
+        });
+
+        // Industries Module
+        Route::prefix('industries')->group(function () {
+            Route::get('/', [AdminIndustryController::class, 'index'])->name('industries')->middleware('can:view-industries');
+        });
+
+        // CMS Pages Module
+        Route::prefix('pages')->group(function () {
+            Route::get('/', [AdminPageController::class, 'index'])->name('pages')->middleware('can:view-pages');
+        });
+
+        // Blog Module
+        Route::prefix('blog')->group(function () {
+            Route::get('/', [AdminBlogController::class, 'index'])->name('blog')->middleware('can:view-blogs');
+        });
+
+        // Careers / Jobs Module
+        Route::prefix('careers')->group(function () {
+            Route::get('/', [AdminCareerController::class, 'index'])->name('careers')->middleware('can:view-jobs');
+        });
+
+        // Users Module (Granular Capabilities)
+        Route::prefix('users')->group(function () {
+            Route::get('/', [AdminUserController::class, 'index'])->name('users')->middleware('can:view-users');
+            Route::get('/create', [AdminUserController::class, 'create'])->name('users.create')->middleware('can:create-users');
+            Route::post('/', [AdminUserController::class, 'store'])->name('users.store')->middleware('can:create-users');
+            Route::get('/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit')->middleware('can:edit-users');
+            Route::put('/{user}', [AdminUserController::class, 'update'])->name('users.update')->middleware('can:edit-users');
+            Route::delete('/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy')->middleware('can:delete-users');
+        });
+
+        // Roles Module
+        Route::prefix('roles')->group(function () {
+            Route::get('/', [AdminRoleController::class, 'index'])->name('roles.index')->middleware('can:view-roles');
+            Route::get('/create', [AdminRoleController::class, 'create'])->name('roles.create')->middleware('can:create-roles');
+            Route::post('/', [AdminRoleController::class, 'store'])->name('roles.store')->middleware('can:create-roles');
+            Route::get('/{role}/edit', [AdminRoleController::class, 'edit'])->name('roles.edit')->middleware('can:edit-roles');
+            Route::put('/{role}', [AdminRoleController::class, 'update'])->name('roles.update')->middleware('can:edit-roles');
+            Route::delete('/{role}', [AdminRoleController::class, 'destroy'])->name('roles.destroy')->middleware('can:delete-roles');
+        });
+
+        // Permissions Module
+        Route::prefix('permissions')->group(function () {
+            Route::get('/', [AdminPermissionController::class, 'index'])->name('permissions.index')->middleware('can:view-roles');
+        });
+
+        // Analytics Module
+        Route::prefix('analytics')->group(function () {
+            Route::get('/', [AdminAnalyticsController::class, 'index'])->name('analytics')->middleware('can:view-analytics');
+        });
+
+        // Settings Module
+        Route::prefix('settings')->group(function () {
+            Route::get('/', [AdminSettingController::class, 'index'])->name('settings')->middleware('can:view-settings');
+        });
     });
 });
 

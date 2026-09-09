@@ -58,41 +58,52 @@ class RoleSeeder extends Seeder
         // Administrator: Full access to everything
         $createdRoles['administrator']->syncPermissions(Permission::all());
 
-        // Sales Manager: Admin access, leads, quotes, view clients
+        // Sales Manager: Admin access, leads, quotes, clients, services, case studies, industries
         $createdRoles['sales-manager']->syncPermissions([
             'access-admin',
             'view-leads', 'create-leads', 'edit-leads', 'delete-leads',
             'view-quotes', 'create-quotes', 'edit-quotes', 'delete-quotes',
             'view-clients',
+            'view-services',
+            'view-case-studies',
+            'view-industries',
+            'view-analytics',
         ]);
 
-        // Project Manager: Admin access, projects, clients, and view leads/quotes
+        // Project Manager: Admin access, projects, clients, and view leads/quotes/services/case studies
         $createdRoles['project-manager']->syncPermissions([
             'access-admin',
             'view-projects', 'create-projects', 'edit-projects', 'delete-projects',
             'view-clients', 'create-clients', 'edit-clients',
             'view-leads',
             'view-quotes',
+            'view-services',
+            'view-case-studies',
+            'view-industries',
         ]);
 
-        // Developer: Admin access + project tracking
+        // Developer: Admin access + project tracking + services
         $createdRoles['developer']->syncPermissions([
             'access-admin',
             'view-projects',
             'edit-projects',
+            'view-services',
         ]);
 
-        // Designer: Admin access + project tracking
+        // Designer: Admin access + project tracking + services
         $createdRoles['designer']->syncPermissions([
             'access-admin',
             'view-projects',
             'edit-projects',
+            'view-services',
         ]);
 
-        // Content Writer: Admin access + blogs
+        // Content Writer: Admin access + blogs + pages + case studies
         $createdRoles['content-writer']->syncPermissions([
             'access-admin',
             'view-blogs', 'create-blogs', 'edit-blogs', 'delete-blogs',
+            'view-pages', 'create-pages', 'edit-pages',
+            'view-case-studies', 'create-case-studies', 'edit-case-studies',
         ]);
 
         // Client: External portal only, zero admin permissions

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class ClientController extends Controller
@@ -13,6 +14,8 @@ class ClientController extends Controller
      */
     public function index(): View
     {
+        Gate::authorize('view-clients');
+
         $clients = Client::with('user')->withCount('projects')->latest()->get();
 
         return view('admin.pages.clients')->with([
