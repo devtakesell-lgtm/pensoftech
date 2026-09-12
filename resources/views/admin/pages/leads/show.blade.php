@@ -59,7 +59,7 @@
             </span>
 
             {{-- Smart Action Buttons based on lifecycle stage --}}
-            @if ($lead->client_id || $lead->status === \App\Enums\LeadStatus::Converted)
+            @if ($lead->client_id)
                 {{-- 1. Already Converted --}}
                 <span class="btn light disabled text-success fw-bold">
                     <i class="bi bi-patch-check-fill me-1"></i> Converted Client
@@ -67,8 +67,15 @@
                 <a href="{{ route('admin.clients') }}" class="btn primary">
                     <i class="bi bi-building me-1"></i> View Client Profile
                 </a>
+            @elseif ($lead->status === \App\Enums\LeadStatus::Converted && !$lead->client_id)
+                {{-- 2. Ready to Convert to Client --}}
+                @can('edit-leads')
+                    <button type="button" class="btn primary" data-bs-toggle="modal" data-bs-target="#convertLeadModal">
+                        <i class="bi bi-person-check-fill me-1"></i> Convert to Client
+                    </button>
+                @endcan
             @elseif ($lead->status === \App\Enums\LeadStatus::Lost)
-                {{-- 2. Deal Lost: Smart Reopen Button --}}
+                {{-- 3. Deal Lost: Smart Reopen Button --}}
                 @can('edit-leads')
                     <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="d-inline">
                         @csrf
@@ -79,19 +86,8 @@
                         </button>
                     </form>
                 @endcan
-            @elseif (in_array($lead->status, [\App\Enums\LeadStatus::Qualified, \App\Enums\LeadStatus::ProposalSent]))
-                {{-- 3. Mature Lead Ready for Closing: Prominent Primary Convert Button --}}
-                @can('edit-leads')
-                    <form action="{{ route('admin.leads.convert', $lead) }}" method="POST" class="d-inline"
-                        onsubmit="return confirm('Convert this qualified inquiry into an active Client profile in your agency database?');">
-                        @csrf
-                        <button type="submit" class="btn primary">
-                            <i class="bi bi-person-check-fill me-1"></i> Convert to Client
-                        </button>
-                    </form>
-                @endcan
             @else
-                {{-- 4. Early Stage (New or Contacted): Smart Next Step CTA --}}
+                {{-- 4. Active Stages: Smart Next Step CTA --}}
                 @can('edit-leads')
                     @if ($lead->status === \App\Enums\LeadStatus::New)
                         <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="d-inline">
@@ -111,24 +107,13 @@
                                 <i class="bi bi-patch-check me-1"></i> Mark Qualified
                             </button>
                         </form>
+                    @elseif (in_array($lead->status, [\App\Enums\LeadStatus::Qualified, \App\Enums\LeadStatus::ProposalSent]))
+                        @can('create-quotes')
+                            <a href="{{ route('admin.quotes.create', ['lead_id' => $lead->id]) }}" class="btn primary">
+                                <i class="bi bi-file-earmark-plus me-1"></i> Create Quote
+                            </a>
+                        @endcan
                     @endif
-
-                    {{-- Subtle convert option for fast-track conversions --}}
-                    <form action="#" method="POST" class="d-inline"
-                        onsubmit="return confirm('Fast-track and convert this inquiry into an active Client profile in your agency database?');">
-                        @csrf
-                        <button type="submit" class="btn light" title="Directly convert to client">
-                            <i class="bi bi-person-check me-1"></i> Convert
-                        </button>
-                    </form>
-
-                    <form action="#" method="POST" class="d-inline"
-                        onsubmit="return confirm('Do You want to create Quote for this lead?');">
-                        @csrf
-                        <button type="submit" class="btn light" title="Directly Create Quote">
-                            <i class="bi bi-person-check me-1"></i> Create Quote
-                        </button>
-                    </form>
                 @endcan
             @endif
 
@@ -218,66 +203,42 @@
                 @endphp
 
                 @can('edit-leads')
-                    @if ($stage === \App\Enums\LeadStatus::Converted && !$lead->client_id)
-                        {{-- Clicking Converted when not converted yet triggers conversion --}}
-                        <form action="{{ route('admin.leads.convert', $lead) }}" method="POST" class="pipeline-step-form"
-                            onsubmit="return confirm('Convert this inquiry into an active Client profile in your agency database?');">
-                            @csrf
-                            <button type="submit" class="pipeline-step {{ $stepClass }}"
-                                title="Click to Convert to Client">
-                                <div class="step-indicator">
-                                    @if ($isCompleted)
-                                        <i class="bi bi-check-lg"></i>
+                    @php
+                        $isDisabled = $isCurrent;
+                        // Prevent moving back to ANY previous stage unless it's Lost
+                        if (!$isLost && $isCompleted) {
+                            $isDisabled = true;
+                        }
+                    @endphp
+                    <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST"
+                        class="pipeline-step-form">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="status" value="{{ $stage->value }}">
+                        <button type="submit" class="pipeline-step {{ $stepClass }}"
+                            {{ $isDisabled ? 'disabled' : '' }}
+                            title="{{ $isCurrent ? 'Current stage' : ($isDisabled ? 'Cannot revert to this stage' : 'Move stage to ' . $stage->label()) }}">
+                            <div class="step-indicator">
+                                @if ($isCompleted)
+                                    <i class="bi bi-check-lg"></i>
+                                @else
+                                    {{ $index + 1 }}
+                                @endif
+                            </div>
+                            <div class="step-details">
+                                <span class="step-label">{{ $stage->label() }}</span>
+                                <span class="step-subtext">
+                                    @if ($isCurrent)
+                                        Active Stage
+                                    @elseif ($isCompleted)
+                                        Completed
                                     @else
-                                        {{ $index + 1 }}
+                                        Advance to stage
                                     @endif
-                                </div>
-                                <div class="step-details">
-                                    <span class="step-label">{{ $stage->label() }}</span>
-                                    <span class="step-subtext">
-                                        @if ($isCurrent)
-                                            Active Stage
-                                        @elseif ($isCompleted)
-                                            Completed
-                                        @else
-                                            Click to Convert
-                                        @endif
-                                    </span>
-                                </div>
-                            </button>
-                        </form>
-                    @else
-                        {{-- Other stages trigger update-status --}}
-                        <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST"
-                            class="pipeline-step-form">
-                            @csrf
-                            @method('PATCH')
-                            <input type="hidden" name="status" value="{{ $stage->value }}">
-                            <button type="submit" class="pipeline-step {{ $stepClass }}"
-                                {{ $isCurrent ? 'disabled' : '' }}
-                                title="{{ $isCurrent ? 'Current stage' : 'Move stage to ' . $stage->label() }}">
-                                <div class="step-indicator">
-                                    @if ($isCompleted)
-                                        <i class="bi bi-check-lg"></i>
-                                    @else
-                                        {{ $index + 1 }}
-                                    @endif
-                                </div>
-                                <div class="step-details">
-                                    <span class="step-label">{{ $stage->label() }}</span>
-                                    <span class="step-subtext">
-                                        @if ($isCurrent)
-                                            Active Stage
-                                        @elseif ($isCompleted)
-                                            Completed
-                                        @else
-                                            Advance to stage
-                                        @endif
-                                    </span>
-                                </div>
-                            </button>
-                        </form>
-                    @endif
+                                </span>
+                            </div>
+                        </button>
+                    </form>
                 @else
                     <div class="pipeline-step {{ $stepClass }}">
                         <div class="step-indicator">
@@ -602,4 +563,22 @@
             @endif
         </div>
     </div>
+
+    {{-- Convert to Client Modal --}}
+    @if ($lead->status === \App\Enums\LeadStatus::Converted && !$lead->client_id)
+        @can('edit-leads')
+            @include('admin.components.modals.client-create-modal', [
+                'formAction' => route('admin.leads.convert', $lead),
+                'modalId' => 'convertLeadModal',
+                'title' => 'Convert to Client Profile',
+                'description' => 'This will create a new Client record and a linked User account. A random password will be generated and emailed to the client automatically.',
+                'submitText' => 'Convert to Client',
+                'defaultContactPerson' => $lead->name,
+                'defaultEmail' => $lead->email,
+                'defaultCompanyName' => $lead->company_name ?: $lead->name,
+                'defaultPhone' => $lead->phone,
+                'defaultWebsite' => $lead->website,
+            ])
+        @endcan
+    @endif
 @endsection

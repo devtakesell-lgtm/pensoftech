@@ -82,6 +82,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Quotes Module
         Route::prefix('quotes')->group(function () {
             Route::get('/', [AdminQuoteController::class, 'index'])->name('quotes')->middleware('can:view-quotes');
+            Route::get('/create', [AdminQuoteController::class, 'create'])->name('quotes.create')->middleware('can:create-quotes');
+            Route::post('/', [AdminQuoteController::class, 'store'])->name('quotes.store')->middleware('can:create-quotes');
+            Route::get('/{quote}', [AdminQuoteController::class, 'show'])->name('quotes.show')->middleware('can:view-quotes');
+            Route::get('/{quote}/edit', [AdminQuoteController::class, 'edit'])->name('quotes.edit')->middleware('can:edit-quotes');
+            Route::put('/{quote}', [AdminQuoteController::class, 'update'])->name('quotes.update')->middleware('can:edit-quotes');
+            Route::delete('/{quote}', [AdminQuoteController::class, 'destroy'])->name('quotes.destroy')->middleware('can:delete-quotes');
         });
 
         // Services Module

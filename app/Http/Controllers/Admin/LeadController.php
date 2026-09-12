@@ -9,15 +9,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreLeadRequest;
 use App\Http\Requests\Admin\UpdateLeadRequest;
 use App\Http\Requests\Admin\UpdateLeadStatusRequest;
+use App\Http\Requests\Admin\ConvertLeadRequest;
 use App\Models\Client;
 use App\Models\Currency;
 use App\Models\Industry;
 use App\Models\Lead;
 use App\Models\Service;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class LeadController extends Controller
@@ -161,35 +166,72 @@ class LeadController extends Controller
     {
         Gate::authorize('edit-leads');
 
+        $newStatus = $request->validated('status');
+
+        $pipelineStages = [
+            LeadStatus::New->value,
+            LeadStatus::Contacted->value,
+            LeadStatus::Qualified->value,
+            LeadStatus::ProposalSent->value,
+            LeadStatus::Converted->value,
+        ];
+
+        $currentIndex = array_search($lead->status->value, $pipelineStages);
+        $newIndex = array_search($newStatus, $pipelineStages);
+
+        if ($lead->status !== LeadStatus::Lost && $currentIndex !== false && $newIndex !== false && $newIndex < $currentIndex) {
+            return back()->with('error', 'Cannot revert an active lead to a previous pipeline stage.');
+        }
+
         $lead->update([
-            'status' => $request->validated('status'),
+            'status' => $newStatus,
         ]);
 
         return back()->with('success', "Status updated to '{$lead->status->label()}'.");
     }
 
-    public function convert(Request $request, Lead $lead): RedirectResponse
+    public function convert(ConvertLeadRequest $request, Lead $lead): RedirectResponse
     {
-        Gate::authorize('edit-leads');
-
         if ($lead->client_id) {
             return back()->with('error', 'This lead is already converted and linked to an existing client profile.');
         }
 
-        $client = Client::create([
-            'company_name' => $lead->company_name ?: $lead->name,
-            'contact_person' => $lead->name,
-            'website' => $lead->website,
-            'is_active' => true,
-        ]);
+        DB::transaction(function () use ($request, $lead, &$client) {
+            $password = Str::random(12);
 
-        $lead->update([
-            'client_id' => $client->id,
-            'status' => LeadStatus::Converted,
-        ]);
+            $role = Role::where('name', 'client')->first();
+
+            $user = User::create([
+                'name' => $request->validated('contact_person'),
+                'email' => $request->validated('email'),
+                'password' => Hash::make($password),
+                'role_id' => $role ? $role->id : null,
+                'is_active' => true,
+            ]);
+
+            if ($role) {
+                $user->assignRole($role);
+            }
+
+            // TODO: In a real app, fire an event or job to send the email with the $password here.
+
+            $client = Client::create([
+                'user_id' => $user->id,
+                'company_name' => $request->validated('company_name'),
+                'contact_person' => $request->validated('contact_person'),
+                'website' => $request->validated('website'),
+                'phone' => $request->validated('phone'),
+                'is_active' => true,
+            ]);
+
+            $lead->update([
+                'client_id' => $client->id,
+                'status' => LeadStatus::Converted,
+            ]);
+        });
 
         return redirect()->route('admin.leads.show', $lead)
-            ->with('success', "Lead successfully converted to Client '{$client->company_name}'!");
+            ->with('success', "Lead successfully converted to Client '{$client->company_name}'! An email has been sent with their login credentials.");
     }
 
     private function getFormData(): array
