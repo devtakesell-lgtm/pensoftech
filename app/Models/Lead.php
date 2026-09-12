@@ -4,16 +4,18 @@ namespace App\Models;
 
 use App\Enums\LeadStatus;
 use Database\Factories\LeadFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lead extends Model
 {
     /** @use HasFactory<LeadFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'client_id',
@@ -73,5 +75,35 @@ class Lead extends Model
     public function quotes(): HasMany
     {
         return $this->hasMany(Quote::class);
+    }
+
+    /**
+     * Filter leads query by search keyword, status, source, industry, or assignee.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function scopeFilter(Builder $query, array $filters): Builder
+    {
+        return $query
+            ->when($filters['search'] ?? null, function (Builder $q, $search) {
+                $q->where(function (Builder $sub) use ($search) {
+                    $sub->where('name', 'like', "%{$search}%")
+                        ->orWhere('company_name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('phone', 'like', "%{$search}%");
+                });
+            })
+            ->when($filters['status'] ?? null, function (Builder $q, $status) {
+                $q->where('status', $status);
+            })
+            ->when($filters['source'] ?? null, function (Builder $q, $source) {
+                $q->where('lead_source', $source);
+            })
+            ->when($filters['industry_id'] ?? null, function (Builder $q, $industryId) {
+                $q->where('industry_id', $industryId);
+            })
+            ->when($filters['assigned_to'] ?? null, function (Builder $q, $userId) {
+                $q->where('assigned_to', $userId);
+            });
     }
 }

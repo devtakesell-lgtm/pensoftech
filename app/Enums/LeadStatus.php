@@ -23,6 +23,30 @@ enum LeadStatus: string
         };
     }
 
+    public function badgeClass(): string
+    {
+        return match ($this) {
+            self::New => 'lead-status-new',
+            self::Contacted => 'lead-status-contacted',
+            self::Qualified => 'lead-status-qualified',
+            self::ProposalSent => 'lead-status-proposal_sent',
+            self::Converted => 'lead-status-converted',
+            self::Lost => 'lead-status-lost',
+        };
+    }
+
+    public function icon(): string
+    {
+        return match ($this) {
+            self::New => 'bi-stars',
+            self::Contacted => 'bi-telephone-forward',
+            self::Qualified => 'bi-patch-check',
+            self::ProposalSent => 'bi-send-check',
+            self::Converted => 'bi-trophy',
+            self::Lost => 'bi-x-circle',
+        };
+    }
+
     public static function options(): array
     {
         return array_map(fn ($case) => ['value' => $case->value, 'label' => $case->label()], self::cases());

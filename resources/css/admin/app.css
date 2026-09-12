@@ -7,6 +7,7 @@
 @import "./pages/permissions.css";
 @import "./pages/services.css";
 @import "./pages/service-categories.css";
+@import "./pages/leads.css";
 
 * {
     box-sizing: border-box

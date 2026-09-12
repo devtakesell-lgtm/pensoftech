@@ -42,7 +42,7 @@
         <div class="card stat">
             <div>
                 <span>Revenue</span>
-                <strong>$48,920</strong>
+                <strong>{{ $defaultCurrency?->symbol ?? '$' }}48,920</strong>
                 <small>↗ 18.6% <i>vs last month</i></small>
             </div>
             <b class="ico orange"><i class="bi bi-currency-dollar"></i></b>
@@ -61,7 +61,7 @@
             </div>
             <div class="chart">
                 <div class="y">
-                    <span>$60k</span><span>$45k</span><span>$30k</span><span>$15k</span><span>$0</span>
+                    <span>{{ $defaultCurrency?->symbol ?? '$' }}60k</span><span>{{ $defaultCurrency?->symbol ?? '$' }}45k</span><span>{{ $defaultCurrency?->symbol ?? '$' }}30k</span><span>{{ $defaultCurrency?->symbol ?? '$' }}15k</span><span>{{ $defaultCurrency?->symbol ?? '$' }}0</span>
                 </div>
                 <div class="graph">
                     <div class="lines"></div>

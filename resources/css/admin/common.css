@@ -76,6 +76,12 @@
     padding: 0;
 }
 
+.btn-action-view:hover {
+    border-color: #38bdf8;
+    color: #0284c7;
+    background: #f0f9ff;
+}
+
 .btn-action-edit:hover {
     border-color: #818cf8;
     color: #4f46e5;

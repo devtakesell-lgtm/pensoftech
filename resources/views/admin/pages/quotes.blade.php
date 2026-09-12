@@ -33,7 +33,7 @@
                         <td>#QT-1048</td>
                         <td>BrightCo</td>
                         <td>Mobile App</td>
-                        <td>$12,500</td>
+                        <td>{{ $defaultCurrency?->symbol ?? '$' }}12,500</td>
                         <td>Sent</td>
                         <td><button class="rowbtn">•••</button></td>
                     </tr>
@@ -41,7 +41,7 @@
                         <td>#QT-1047</td>
                         <td>Nova Labs</td>
                         <td>Web Development</td>
-                        <td>$8,900</td>
+                        <td>{{ $defaultCurrency?->symbol ?? '$' }}8,900</td>
                         <td>Accepted</td>
                         <td><button class="rowbtn">•••</button></td>
                     </tr>
@@ -49,7 +49,7 @@
                         <td>#QT-1046</td>
                         <td>FinServe</td>
                         <td>Digital Marketing</td>
-                        <td>$4,800</td>
+                        <td>{{ $defaultCurrency?->symbol ?? '$' }}4,800</td>
                         <td>Negotiation</td>
                         <td><button class="rowbtn">•••</button></td>
                     </tr>
@@ -57,7 +57,7 @@
                         <td>#QT-1045</td>
                         <td>CloudCore</td>
                         <td>E-commerce</td>
-                        <td>$15,200</td>
+                        <td>{{ $defaultCurrency?->symbol ?? '$' }}15,200</td>
                         <td>Draft</td>
                         <td><button class="rowbtn">•••</button></td>
                     </tr>

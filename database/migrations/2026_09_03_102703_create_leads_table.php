@@ -16,16 +16,16 @@ return new class extends Migration
             $table->foreignId('industry_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('assigned_to')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('currency_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('lead_source')->nullable();
+            $table->string('lead_source')->nullable()->index();
             $table->string('lead_type')->nullable();
             $table->string('name');
             $table->string('company_name')->nullable();
-            $table->string('email')->nullable();
+            $table->string('email')->nullable()->index();
             $table->string('phone')->nullable();
             $table->string('website')->nullable();
             $table->text('message')->nullable();
             $table->decimal('budget', 15, 2)->nullable();
-            $table->string('status')->default('new');
+            $table->string('status')->default('new')->index();
             $table->string('utm_source')->nullable();
             $table->string('utm_medium')->nullable();
             $table->string('utm_campaign')->nullable();
@@ -35,6 +35,8 @@ return new class extends Migration
             $table->string('ip_address')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index(['status', 'created_at']);
         });
     }
 

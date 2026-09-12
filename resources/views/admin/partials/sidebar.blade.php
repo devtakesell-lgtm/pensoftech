@@ -6,64 +6,67 @@
             <small>AGENCY</small>
         </div>
     </div>
-    
+
     <div class="nav-section">
         <div class="label">MAIN</div>
         @can('access-admin')
-            <a class="nav {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}" title="Dashboard">
+            <a class="nav {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"
+                title="Dashboard">
                 <i class="bi bi-grid-1x2-fill"></i>
                 <span class="nav-title">Dashboard</span>
             </a>
         @endcan
 
         @can('view-leads')
-            <a class="nav {{ request()->routeIs('admin.leads') ? 'active' : '' }}" href="{{ route('admin.leads') }}" title="Leads">
+            <a class="nav {{ request()->routeIs('admin.leads*') ? 'active' : '' }}" href="{{ route('admin.leads') }}"
+                title="Leads">
                 <i class="bi bi-people"></i>
                 <span class="nav-title">Leads</span>
-                <span class="nav-badge">24</span>
+                @if (($newLeadsCount ?? 0) > 0)
+                    <span class="nav-badge" title="{{ $newLeadsCount }} new inquiries">{{ $newLeadsCount }}</span>
+                @endif
             </a>
         @endcan
 
         @can('view-clients')
-            <a class="nav {{ request()->routeIs('admin.clients') ? 'active' : '' }}" href="{{ route('admin.clients') }}" title="Clients">
+            <a class="nav {{ request()->routeIs('admin.clients') ? 'active' : '' }}" href="{{ route('admin.clients') }}"
+                title="Clients">
                 <i class="bi bi-building"></i>
                 <span class="nav-title">Clients</span>
             </a>
         @endcan
 
         @can('view-quotes')
-            <a class="nav {{ request()->routeIs('admin.quotes') ? 'active' : '' }}" href="{{ route('admin.quotes') }}" title="Quotes">
+            <a class="nav {{ request()->routeIs('admin.quotes') ? 'active' : '' }}" href="{{ route('admin.quotes') }}"
+                title="Quotes">
                 <i class="bi bi-file-earmark-text"></i>
                 <span class="nav-title">Quotes</span>
             </a>
         @endcan
-        
+
         @canany(['view-services', 'view-projects', 'view-case-studies', 'view-industries'])
             <div class="label">SERVICES</div>
             @can('view-services')
                 @php
-                    $isServicesActive = request()->routeIs('admin.services*') || request()->routeIs('admin.service-categories*');
+                    $isServicesActive =
+                        request()->routeIs('admin.services*') || request()->routeIs('admin.service-categories*');
                 @endphp
                 <div class="nav-item-dropdown {{ $isServicesActive ? 'open' : '' }}">
-                    <a class="nav nav-parent {{ $isServicesActive ? 'parent-active' : 'collapsed' }}" 
-                       data-bs-toggle="collapse" 
-                       href="#servicesSubmenu" 
-                       role="button" 
-                       aria-expanded="{{ $isServicesActive ? 'true' : 'false' }}" 
-                       aria-controls="servicesSubmenu"
-                       title="Services">
+                    <a class="nav nav-parent {{ $isServicesActive ? 'parent-active' : 'collapsed' }}" data-bs-toggle="collapse"
+                        href="#servicesSubmenu" role="button" aria-expanded="{{ $isServicesActive ? 'true' : 'false' }}"
+                        aria-controls="servicesSubmenu" title="Services">
                         <i class="bi bi-layers"></i>
                         <span class="nav-title">Services</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
                     </a>
                     <div class="collapse {{ $isServicesActive ? 'show' : '' }} nav-submenu" id="servicesSubmenu">
-                        <a class="nav-sub-link {{ request()->routeIs('admin.services*') && !request()->routeIs('admin.service-categories*') ? 'active' : '' }}" 
-                           href="{{ route('admin.services') }}">
+                        <a class="nav-sub-link {{ request()->routeIs('admin.services*') && !request()->routeIs('admin.service-categories*') ? 'active' : '' }}"
+                            href="{{ route('admin.services') }}">
                             <i class="bi bi-layers"></i>
                             <span>All Services</span>
                         </a>
-                        <a class="nav-sub-link {{ request()->routeIs('admin.service-categories*') ? 'active' : '' }}" 
-                           href="{{ route('admin.service-categories.index') }}">
+                        <a class="nav-sub-link {{ request()->routeIs('admin.service-categories*') ? 'active' : '' }}"
+                            href="{{ route('admin.service-categories.index') }}">
                             <i class="bi bi-grid-fill"></i>
                             <span>Categories</span>
                         </a>
@@ -72,87 +75,98 @@
             @endcan
 
             @can('view-projects')
-                <a class="nav {{ request()->routeIs('admin.projects') ? 'active' : '' }}" href="{{ route('admin.projects') }}" title="Projects">
+                <a class="nav {{ request()->routeIs('admin.projects') ? 'active' : '' }}" href="{{ route('admin.projects') }}"
+                    title="Projects">
                     <i class="bi bi-kanban"></i>
                     <span class="nav-title">Projects</span>
                 </a>
             @endcan
 
             @can('view-case-studies')
-                <a class="nav {{ request()->routeIs('admin.case-studies') ? 'active' : '' }}" href="{{ route('admin.case-studies') }}" title="Case Studies">
+                <a class="nav {{ request()->routeIs('admin.case-studies') ? 'active' : '' }}"
+                    href="{{ route('admin.case-studies') }}" title="Case Studies">
                     <i class="bi bi-bar-chart"></i>
                     <span class="nav-title">Case Studies</span>
                 </a>
             @endcan
 
             @can('view-industries')
-                <a class="nav {{ request()->routeIs('admin.industries') ? 'active' : '' }}" href="{{ route('admin.industries') }}" title="Industries">
+                <a class="nav {{ request()->routeIs('admin.industries') ? 'active' : '' }}"
+                    href="{{ route('admin.industries') }}" title="Industries">
                     <i class="bi bi-diagram-3"></i>
                     <span class="nav-title">Industries</span>
                 </a>
             @endcan
         @endcanany
-        
+
         @canany(['view-pages', 'view-blogs', 'view-jobs'])
             <div class="label">CONTENT</div>
             @can('view-pages')
-                <a class="nav {{ request()->routeIs('admin.pages') ? 'active' : '' }}" href="{{ route('admin.pages') }}" title="Pages">
+                <a class="nav {{ request()->routeIs('admin.pages') ? 'active' : '' }}" href="{{ route('admin.pages') }}"
+                    title="Pages">
                     <i class="bi bi-file-richtext"></i>
                     <span class="nav-title">Pages</span>
                 </a>
             @endcan
 
             @can('view-blogs')
-                <a class="nav {{ request()->routeIs('admin.blog') ? 'active' : '' }}" href="{{ route('admin.blog') }}" title="Blog">
+                <a class="nav {{ request()->routeIs('admin.blog') ? 'active' : '' }}" href="{{ route('admin.blog') }}"
+                    title="Blog">
                     <i class="bi bi-pencil-square"></i>
                     <span class="nav-title">Blog</span>
                 </a>
             @endcan
 
             @can('view-jobs')
-                <a class="nav {{ request()->routeIs('admin.careers') ? 'active' : '' }}" href="{{ route('admin.careers') }}" title="Careers">
+                <a class="nav {{ request()->routeIs('admin.careers') ? 'active' : '' }}" href="{{ route('admin.careers') }}"
+                    title="Careers">
                     <i class="bi bi-briefcase"></i>
                     <span class="nav-title">Careers</span>
                 </a>
             @endcan
         @endcanany
-        
+
         @canany(['view-users', 'view-roles', 'view-analytics', 'view-settings'])
             <div class="label">SYSTEM</div>
             @can('view-users')
-                <a class="nav {{ request()->routeIs('admin.users*') ? 'active' : '' }}" href="{{ route('admin.users') }}" title="Users">
+                <a class="nav {{ request()->routeIs('admin.users*') ? 'active' : '' }}" href="{{ route('admin.users') }}"
+                    title="Users">
                     <i class="bi bi-people-fill"></i>
                     <span class="nav-title">Users</span>
                 </a>
             @endcan
 
             @can('view-roles')
-                <a class="nav {{ request()->routeIs('admin.roles*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}" title="Roles">
+                <a class="nav {{ request()->routeIs('admin.roles*') ? 'active' : '' }}"
+                    href="{{ route('admin.roles.index') }}" title="Roles">
                     <i class="bi bi-shield-lock-fill"></i>
                     <span class="nav-title">Roles</span>
                 </a>
-                <a class="nav {{ request()->routeIs('admin.permissions*') ? 'active' : '' }}" href="{{ route('admin.permissions.index') }}" title="Permissions">
+                <a class="nav {{ request()->routeIs('admin.permissions*') ? 'active' : '' }}"
+                    href="{{ route('admin.permissions.index') }}" title="Permissions">
                     <i class="bi bi-key-fill"></i>
                     <span class="nav-title">Permissions</span>
                 </a>
             @endcan
 
             @can('view-analytics')
-                <a class="nav {{ request()->routeIs('admin.analytics') ? 'active' : '' }}" href="{{ route('admin.analytics') }}" title="Analytics">
+                <a class="nav {{ request()->routeIs('admin.analytics') ? 'active' : '' }}"
+                    href="{{ route('admin.analytics') }}" title="Analytics">
                     <i class="bi bi-graph-up-arrow"></i>
                     <span class="nav-title">Analytics</span>
                 </a>
             @endcan
 
             @can('view-settings')
-                <a class="nav {{ request()->routeIs('admin.settings') ? 'active' : '' }}" href="{{ route('admin.settings') }}" title="Settings">
+                <a class="nav {{ request()->routeIs('admin.settings') ? 'active' : '' }}"
+                    href="{{ route('admin.settings') }}" title="Settings">
                     <i class="bi bi-gear"></i>
                     <span class="nav-title">Settings</span>
                 </a>
             @endcan
         @endcanany
     </div>
-    
+
     <div class="sidebottom">
         <div class="grow">
             <b>✦ Grow your agency</b>

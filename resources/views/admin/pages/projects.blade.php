@@ -33,7 +33,7 @@
                         <td>Nova Labs Website</td>
                         <td>Nova Labs</td>
                         <td>Web Development</td>
-                        <td>$8,900</td>
+                        <td>{{ $defaultCurrency?->symbol ?? '$' }}8,900</td>
                         <td>In Progress</td>
                         <td><button class="rowbtn">•••</button></td>
                     </tr>
@@ -41,7 +41,7 @@
                         <td>BrightCo Mobile App</td>
                         <td>BrightCo</td>
                         <td>Mobile App</td>
-                        <td>$12,500</td>
+                        <td>{{ $defaultCurrency?->symbol ?? '$' }}12,500</td>
                         <td>In Progress</td>
                         <td><button class="rowbtn">•••</button></td>
                     </tr>
@@ -49,7 +49,7 @@
                         <td>FinServe Growth</td>
                         <td>FinServe</td>
                         <td>Digital Marketing</td>
-                        <td>$4,800</td>
+                        <td>{{ $defaultCurrency?->symbol ?? '$' }}4,800</td>
                         <td>Completed</td>
                         <td><button class="rowbtn">•••</button></td>
                     </tr>
@@ -57,7 +57,7 @@
                         <td>CloudCore Store</td>
                         <td>CloudCore</td>
                         <td>E-commerce</td>
-                        <td>$15,200</td>
+                        <td>{{ $defaultCurrency?->symbol ?? '$' }}15,200</td>
                         <td>Planning</td>
                         <td><button class="rowbtn">•••</button></td>
                     </tr>

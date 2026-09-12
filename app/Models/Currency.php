@@ -36,4 +36,21 @@ class Currency extends Model
     {
         return $this->hasMany(Quote::class);
     }
+
+    /**
+     * Get the agency's default currency.
+     */
+    public static function default(): ?self
+    {
+        return static::where('is_default', true)->first()
+            ?? static::where('is_active', true)->first();
+    }
+
+    /**
+     * Get the agency's default currency symbol.
+     */
+    public static function defaultSymbol(): string
+    {
+        return static::default()?->symbol ?? '$';
+    }
 }

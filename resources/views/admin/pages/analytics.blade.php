@@ -18,7 +18,7 @@
             <div><span>Conversion Rate</span><strong>4.82%</strong><small>↗ 0.8% <i>this month</i></small></div>
         </div>
         <div class="card stat">
-            <div><span>Ad Spend</span><strong>$12,480</strong><small>↘ 6.4% <i>this month</i></small></div>
+            <div><span>Ad Spend</span><strong>{{ $defaultCurrency?->symbol ?? '$' }}12,480</strong><small>↘ 6.4% <i>this month</i></small></div>
         </div>
         <div class="card stat">
             <div><span>ROAS</span><strong>3.92x</strong><small>↗ 11.1% <i>this month</i></small></div>
