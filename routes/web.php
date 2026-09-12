@@ -72,6 +72,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/{lead}', [AdminLeadController::class, 'destroy'])->name('leads.destroy')->middleware('can:delete-leads');
             Route::patch('/{lead}/status', [AdminLeadController::class, 'updateStatus'])->name('leads.update-status')->middleware('can:edit-leads');
             Route::post('/{lead}/convert', [AdminLeadController::class, 'convert'])->name('leads.convert')->middleware('can:edit-leads');
+            Route::patch('/{lead}/assignee', [AdminLeadController::class, 'updateAssignee'])->name('leads.assignee')->middleware('can:edit-leads');
         });
 
         // Clients Module

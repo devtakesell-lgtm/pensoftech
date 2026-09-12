@@ -51,4 +51,26 @@ enum LeadStatus: string
     {
         return array_map(fn ($case) => ['value' => $case->value, 'label' => $case->label()], self::cases());
     }
+
+    public function isValidTransitionTo(self|string $newStatus): bool
+    {
+        $newStatusValue = $newStatus instanceof self ? $newStatus->value : $newStatus;
+
+        $pipelineStages = [
+            self::New->value,
+            self::Contacted->value,
+            self::Qualified->value,
+            self::ProposalSent->value,
+            self::Converted->value,
+        ];
+
+        $currentIndex = array_search($this->value, $pipelineStages);
+        $newIndex = array_search($newStatusValue, $pipelineStages);
+
+        if ($this !== self::Lost && $currentIndex !== false && $newIndex !== false && $newIndex < $currentIndex) {
+            return false;
+        }
+
+        return true;
+    }
 }

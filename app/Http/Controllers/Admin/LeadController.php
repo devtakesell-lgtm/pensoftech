@@ -17,6 +17,7 @@ use App\Models\Lead;
 use App\Models\Service;
 use App\Models\User;
 use App\Models\Role;
+use App\Services\LeadConversionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -115,11 +116,14 @@ class LeadController extends Controller
         Gate::authorize('view-leads');
 
         $lead->load(['client', 'services', 'assignee', 'industry', 'currency', 'quotes.currency']);
+        $assignees = User::select('id', 'name', 'email')->where('is_active', true)->orderBy('name')->get();
+        // dd($assignees);
 
         return view('admin.pages.leads.show')->with([
             'lead' => $lead,
             'statuses' => LeadStatus::cases(),
             'defaultCurrency' => Currency::default(),
+            'assignees' => $assignees,
         ]);
     }
 
@@ -144,11 +148,32 @@ class LeadController extends Controller
     {
         Gate::authorize('edit-leads');
 
+        if (!$lead->status->isValidTransitionTo($request->validated('status'))) {
+            return back()->with('error', 'Cannot revert an active lead to a previous pipeline stage.');
+        }
+
         $lead->update($request->safe()->except('service_ids'));
         $lead->services()->sync($request->validated('service_ids') ?? []);
 
         return redirect()->route('admin.leads')
             ->with('success', "Lead '{$lead->name}' has been successfully updated.");
+    }
+
+    public function updateAssignee(Request $request, Lead $lead): RedirectResponse
+    {
+        Gate::authorize('edit-leads');
+
+        $validated = $request->validate([
+            'assignee_to' => ['nullable', 'integer', 'exists:users,id'],
+        ]);
+
+        // dd($validated);
+
+        $lead->update([
+            'assigned_to' => $validated['assignee_to'] ?? null,
+        ]);
+
+        return back()->with('success', "Lead '{$lead->name}' has been successfully updated.");
     }
 
     public function destroy(Lead $lead): RedirectResponse
@@ -168,18 +193,7 @@ class LeadController extends Controller
 
         $newStatus = $request->validated('status');
 
-        $pipelineStages = [
-            LeadStatus::New->value,
-            LeadStatus::Contacted->value,
-            LeadStatus::Qualified->value,
-            LeadStatus::ProposalSent->value,
-            LeadStatus::Converted->value,
-        ];
-
-        $currentIndex = array_search($lead->status->value, $pipelineStages);
-        $newIndex = array_search($newStatus, $pipelineStages);
-
-        if ($lead->status !== LeadStatus::Lost && $currentIndex !== false && $newIndex !== false && $newIndex < $currentIndex) {
+        if (!$lead->status->isValidTransitionTo($newStatus)) {
             return back()->with('error', 'Cannot revert an active lead to a previous pipeline stage.');
         }
 
@@ -190,45 +204,13 @@ class LeadController extends Controller
         return back()->with('success', "Status updated to '{$lead->status->label()}'.");
     }
 
-    public function convert(ConvertLeadRequest $request, Lead $lead): RedirectResponse
+    public function convert(ConvertLeadRequest $request, Lead $lead, LeadConversionService $service): RedirectResponse
     {
         if ($lead->client_id) {
             return back()->with('error', 'This lead is already converted and linked to an existing client profile.');
         }
 
-        DB::transaction(function () use ($request, $lead, &$client) {
-            $password = Str::random(12);
-
-            $role = Role::where('name', 'client')->first();
-
-            $user = User::create([
-                'name' => $request->validated('contact_person'),
-                'email' => $request->validated('email'),
-                'password' => Hash::make($password),
-                'role_id' => $role ? $role->id : null,
-                'is_active' => true,
-            ]);
-
-            if ($role) {
-                $user->assignRole($role);
-            }
-
-            // TODO: In a real app, fire an event or job to send the email with the $password here.
-
-            $client = Client::create([
-                'user_id' => $user->id,
-                'company_name' => $request->validated('company_name'),
-                'contact_person' => $request->validated('contact_person'),
-                'website' => $request->validated('website'),
-                'phone' => $request->validated('phone'),
-                'is_active' => true,
-            ]);
-
-            $lead->update([
-                'client_id' => $client->id,
-                'status' => LeadStatus::Converted,
-            ]);
-        });
+        $client = $service->convert($lead, $request->validated());
 
         return redirect()->route('admin.leads.show', $lead)
             ->with('success', "Lead successfully converted to Client '{$client->company_name}'! An email has been sent with their login credentials.");

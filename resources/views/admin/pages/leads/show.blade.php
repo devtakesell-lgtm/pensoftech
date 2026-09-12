@@ -114,24 +114,18 @@
                             </a>
                         @endcan
                     @endif
+                    
+                    @if ($lead->status === \App\Enums\LeadStatus::ProposalSent && !$lead->client_id)
+                        @can('edit-leads')
+                            <button type="button" class="btn primary" data-bs-toggle="modal" data-bs-target="#convertLeadModal">
+                                <i class="bi bi-person-check-fill me-1"></i> Convert to Client
+                            </button>
+                        @endcan
+                    @endif
                 @endcan
             @endif
 
-            {{-- Quick Status Changer Dropdown --}}
-            {{-- @can('edit-leads')
-                <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="d-inline">
-                    @csrf
-                    @method('PATCH')
-                    <select name="status" onchange="this.form.submit()" class="lead-status-select p-2">
-                        @foreach ($statuses ?? [] as $statusOption)
-                            <option value="{{ $statusOption->value }}"
-                                {{ $lead->status->value === $statusOption->value ? 'selected' : '' }}>
-                                Move to: {{ $statusOption->label() }}
-                            </option>
-                        @endforeach
-                    </select>
-                </form>
-            @endcan --}}
+
 
             {{-- Edit Button --}}
             @can('edit-leads')
@@ -210,13 +204,11 @@
                             $isDisabled = true;
                         }
                     @endphp
-                    <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST"
-                        class="pipeline-step-form">
+                    <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="pipeline-step-form">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="status" value="{{ $stage->value }}">
-                        <button type="submit" class="pipeline-step {{ $stepClass }}"
-                            {{ $isDisabled ? 'disabled' : '' }}
+                        <button type="submit" class="pipeline-step {{ $stepClass }}" {{ $isDisabled ? 'disabled' : '' }}
                             title="{{ $isCurrent ? 'Current stage' : ($isDisabled ? 'Cannot revert to this stage' : 'Move stage to ' . $stage->label()) }}">
                             <div class="step-indicator">
                                 @if ($isCompleted)
@@ -519,16 +511,36 @@
                 </h3>
                 <div class="dossier-data-row">
                     <span class="dossier-label">Account Owner</span>
-                    <span class="dossier-value">
-                        @if ($lead->assignee)
-                            <div class="d-flex align-items-center gap-2 justify-content-end">
-                                <i class="bi bi-person-check-fill text-primary"></i>
-                                <span>{{ $lead->assignee->name }}</span>
-                            </div>
-                        @else
-                            <span class="text-muted fst-italic">Unassigned</span>
-                        @endif
-                    </span>
+                    {{-- Quick Status Changer Dropdown --}}
+                    @can('edit-leads')
+                        <span class="dossier-value">
+                            <form action="{{ route('admin.leads.assignee', $lead) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('PATCH')
+                                <select name="assignee_to" onchange="this.form.submit()" class="lead-status-select p-2">
+                                    <option value="">Unassigned </option>
+                                    @foreach ($assignees ?? [] as $assignee)
+                                        <option value="{{ $assignee->id }}"
+                                            {{ (string) old('assignee_to', $lead->assigned_to) === (string) $assignee->id ? 'selected' : '' }}>
+                                            {{ $assignee->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </span>
+                    @else
+                        <span class="dossier-value">
+                            @if ($lead->assignee)
+                                <div class="d-flex align-items-center gap-2 justify-content-end">
+                                    <i class="bi bi-person-check-fill text-primary"></i>
+                                    <span>{{ $lead->assignee->name }}</span>
+                                </div>
+                            @else
+                                <span class="text-muted fst-italic">Unassigned</span>
+                            @endif
+                        </span>
+                    @endcan
+
                 </div>
                 <div class="dossier-data-row">
                     <span class="dossier-label">Created At</span>
@@ -565,13 +577,14 @@
     </div>
 
     {{-- Convert to Client Modal --}}
-    @if ($lead->status === \App\Enums\LeadStatus::Converted && !$lead->client_id)
+    @if ($lead->status === \App\Enums\LeadStatus::ProposalSent && !$lead->client_id)
         @can('edit-leads')
             @include('admin.components.modals.client-create-modal', [
                 'formAction' => route('admin.leads.convert', $lead),
                 'modalId' => 'convertLeadModal',
                 'title' => 'Convert to Client Profile',
-                'description' => 'This will create a new Client record and a linked User account. A random password will be generated and emailed to the client automatically.',
+                'description' =>
+                    'This will create a new Client record and a linked User account. A random password will be generated and emailed to the client automatically.',
                 'submitText' => 'Convert to Client',
                 'defaultContactPerson' => $lead->name,
                 'defaultEmail' => $lead->email,

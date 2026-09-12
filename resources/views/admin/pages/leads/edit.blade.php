@@ -186,9 +186,27 @@
                 <div class="form-group">
                     <label class="form-label">Pipeline Status *</label>
                     <select name="status" required class="form-input">
+                        @php
+                            $pipelineStages = [
+                                \App\Enums\LeadStatus::New->value,
+                                \App\Enums\LeadStatus::Contacted->value,
+                                \App\Enums\LeadStatus::Qualified->value,
+                                \App\Enums\LeadStatus::ProposalSent->value,
+                                \App\Enums\LeadStatus::Converted->value,
+                            ];
+                            $currentIndex = array_search($lead->status->value, $pipelineStages);
+                        @endphp
                         @foreach ($statuses ?? [] as $statusOption)
+                            @php
+                                $optionIndex = array_search($statusOption->value, $pipelineStages);
+                                $isDisabled = $lead->status !== \App\Enums\LeadStatus::Lost 
+                                    && $currentIndex !== false 
+                                    && $optionIndex !== false 
+                                    && $optionIndex < $currentIndex;
+                            @endphp
                             <option value="{{ $statusOption->value }}"
-                                {{ old('status', $lead->status->value) === $statusOption->value ? 'selected' : '' }}>
+                                {{ old('status', $lead->status->value) === $statusOption->value ? 'selected' : '' }}
+                                {{ $isDisabled ? 'disabled' : '' }}>
                                 {{ $statusOption->label() }}
                             </option>
                         @endforeach

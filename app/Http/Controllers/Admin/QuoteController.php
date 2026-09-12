@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\LeadStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Quote;
 use App\Models\Lead;
@@ -11,6 +12,8 @@ use App\Http\Requests\Admin\StoreQuoteRequest;
 use App\Http\Requests\Admin\UpdateQuoteRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -47,10 +50,24 @@ class QuoteController extends Controller
     {
         Gate::authorize('create-quotes');
 
-        $quote = Quote::create(array_merge($request->validated(), [
-            'quote_number' => 'Q-' . strtoupper(Str::random(6)),
-            'created_by' => auth()->id(),
-        ]));
+        $lead = Lead::findOrFail($request->validated('lead_id'));
+
+        $quote = DB::transaction(function () use($request, $lead) {
+
+            $quote = Quote::create(array_merge($request->validated(), [
+                'quote_number' => 'Q-' . strtoupper(Str::random(6)),
+                'created_by' => Auth::id(),
+            ]));
+
+            if ($lead->status === LeadStatus::Qualified) {
+                $lead->update([
+                    'status' => LeadStatus::ProposalSent,
+                ]);
+            }
+
+            return $quote;
+        });
+
 
         return redirect()->route('admin.quotes.show', $quote)
             ->with('success', "Quote '{$quote->quote_number}' has been successfully created.");
