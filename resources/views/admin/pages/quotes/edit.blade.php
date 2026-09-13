@@ -65,13 +65,32 @@
 
                 <div class="col-md-6">
                     <label for="status" class="form-label fw-semibold">Status <span class="text-danger">*</span></label>
-                    <select class="form-select" id="status" name="status" required>
-                        @foreach($statuses as $statusOption)
-                            <option value="{{ $statusOption->value }}" {{ old('status', $quote->status->value) == $statusOption->value ? 'selected' : '' }}>
-                                {{ $statusOption->label() }}
-                            </option>
-                        @endforeach
-                    </select>
+                    @if (in_array($quote->status, [\App\Enums\QuoteStatus::Accepted, \App\Enums\QuoteStatus::Expired, \App\Enums\QuoteStatus::Rejected]))
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="status-badge {{ $quote->status->badgeClass() }} py-2 px-3 fs-6">
+                                <i class="bi {{ $quote->status->icon() }} me-1"></i> {{ $quote->status->label() }} (Finalized)
+                            </span>
+                            <input type="hidden" name="status" value="{{ $quote->status->value }}">
+                        </div>
+                        <small class="text-muted d-block mt-1">
+                            @if ($quote->status === \App\Enums\QuoteStatus::Expired)
+                                Expired quotes are managed by the automated schedule and cannot be modified.
+                            @elseif ($quote->status === \App\Enums\QuoteStatus::Accepted)
+                                Accepted quotes are finalized and cannot be reverted.
+                            @else
+                                Rejected quotes are finalized.
+                            @endif
+                        </small>
+                    @else
+                        <select class="form-select" id="status" name="status" required>
+                            @foreach($statuses as $statusOption)
+                                <option value="{{ $statusOption->value }}" {{ old('status', $quote->status->value) == $statusOption->value ? 'selected' : '' }}>
+                                    {{ $statusOption->label() }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <small class="text-muted d-block mt-1">Allowed next stages for {{ $quote->status->label() }} quote</small>
+                    @endif
                 </div>
 
                 <div class="col-md-6">

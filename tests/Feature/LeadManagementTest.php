@@ -2,6 +2,7 @@
 
 use App\Enums\ContentStatus;
 use App\Enums\LeadStatus;
+use App\Models\Client;
 use App\Models\Currency;
 use App\Models\Industry;
 use App\Models\Lead;
@@ -284,4 +285,33 @@ test('user with delete-leads permission can soft delete lead', function () {
     $response->assertSessionHas('success');
 
     $this->assertSoftDeleted('leads', ['id' => $lead->id]);
+});
+
+test('converted lead displays verified client badge in leads index and show pages', function () {
+    $admin = User::factory()->create(['is_active' => true]);
+    $admin->assignRole('administrator');
+
+    $client = Client::factory()->create(['company_name' => 'Wayne Enterprises']);
+    $convertedLead = Lead::factory()->create([
+        'name' => 'Bruce Wayne',
+        'client_id' => $client->id,
+        'status' => LeadStatus::Converted,
+    ]);
+
+    $unconvertedLead = Lead::factory()->create([
+        'name' => 'Arthur Dent',
+        'client_id' => null,
+        'status' => LeadStatus::New,
+    ]);
+
+    $response = $this->actingAs($admin)->get(route('admin.leads'));
+    $response->assertStatus(200);
+    $response->assertSee('verified-client-badge');
+    $response->assertSee('Bruce Wayne');
+    $response->assertSee('Arthur Dent');
+
+    $showResponse = $this->actingAs($admin)->get(route('admin.leads.show', $convertedLead));
+    $showResponse->assertStatus(200);
+    $showResponse->assertSee('verified-client-badge');
+    $showResponse->assertSee('Official Converted Client');
 });

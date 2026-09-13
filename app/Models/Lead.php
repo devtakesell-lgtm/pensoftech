@@ -78,6 +78,14 @@ class Lead extends Model
     }
 
     /**
+     * Determine if the lead has been converted into an official client account.
+     */
+    public function isConvertedClient(): bool
+    {
+        return ! is_null($this->client_id);
+    }
+
+    /**
      * Filter leads query by search keyword, status, source, industry, or assignee.
      *
      * @param  array<string, mixed>  $filters

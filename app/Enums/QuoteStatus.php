@@ -47,7 +47,7 @@ enum QuoteStatus: string
     {
         return [
             self::Draft,
-            self::Sent
+            self::Sent,
         ];
     }
 
@@ -57,6 +57,28 @@ enum QuoteStatus: string
             self::Accepted,
             self::Rejected,
         ];
+    }
+
+    public function allowedTransitions(): array
+    {
+        return match ($this) {
+            self::Draft => [self::Draft, self::Sent],
+            self::Sent => [self::Sent, self::Accepted, self::Rejected],
+            self::Accepted => [self::Accepted],
+            self::Rejected => [self::Rejected],
+            self::Expired => [self::Expired],
+        };
+    }
+
+    public function isValidTransitionTo(self|string $newStatus): bool
+    {
+        $target = $newStatus instanceof self ? $newStatus : self::tryFrom($newStatus);
+
+        if (! $target) {
+            return false;
+        }
+
+        return in_array($target, $this->allowedTransitions(), true);
     }
 
     public static function options(): array

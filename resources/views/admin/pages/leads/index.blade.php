@@ -178,9 +178,14 @@
                                         {{ strtoupper($initials ?: 'L') }}
                                     </div>
                                     <div class="lead-name-box">
-                                        <a href="{{ route('admin.leads.show', $lead) }}" class="text-decoration-none">
-                                            <strong>{{ $lead->name }}</strong>
-                                        </a>
+                                        <div class="d-inline-flex align-items-center gap-1">
+                                            <a href="{{ route('admin.leads.show', $lead) }}" class="text-decoration-none">
+                                                <strong>{{ $lead->name }}</strong>
+                                            </a>
+                                            @if ($lead->isConvertedClient())
+                                                <x-verified-badge title="Converted Client Account" :url="route('admin.clients')" />
+                                            @endif
+                                        </div>
                                         @if ($lead->company_name)
                                             <span class="lead-company">
                                                 <i class="bi bi-building me-1"></i>{{ $lead->company_name }}

@@ -7,6 +7,7 @@ use App\Enums\QuoteStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreQuoteRequest;
 use App\Http\Requests\Admin\UpdateQuoteRequest;
+use App\Http\Requests\Admin\UpdateQuoteStatusRequest;
 use App\Models\Currency;
 use App\Models\Lead;
 use App\Models\Quote;
@@ -99,6 +100,11 @@ class QuoteController extends Controller
             return $quote;
         });
 
+        if ($request->input('redirect_to') === 'lead') {
+            return redirect()->route('admin.leads.show', $lead)
+                ->with('success', "Quote '{$quote->quote_number}' has been successfully created.");
+        }
+
         return redirect()->route('admin.quotes.show', $quote)
             ->with('success', "Quote '{$quote->quote_number}' has been successfully created.");
     }
@@ -119,7 +125,7 @@ class QuoteController extends Controller
         Gate::authorize('edit-quotes');
 
         return view('admin.pages.quotes.edit')->with(
-            array_merge($this->getFormData(), ['quote' => $quote])
+            array_merge($this->getFormData(null, $quote->status->allowedTransitions()), ['quote' => $quote])
         );
     }
 
@@ -127,10 +133,45 @@ class QuoteController extends Controller
     {
         Gate::authorize('edit-quotes');
 
+        $newStatus = QuoteStatus::from($request->validated('status'));
+
+        if (! $quote->status->isValidTransitionTo($newStatus)) {
+            return back()->with('error', "Cannot transition quote from '{$quote->status->label()}' to '{$newStatus->label()}'.");
+        }
+
         $quote->update($request->validated());
+
+        if ($newStatus === QuoteStatus::Sent && $quote->lead && $quote->lead->status !== LeadStatus::Converted) {
+            $quote->lead->update([
+                'status' => LeadStatus::ProposalSent,
+            ]);
+        }
 
         return redirect()->route('admin.quotes.show', $quote)
             ->with('success', "Quote '{$quote->quote_number}' has been successfully updated.");
+    }
+
+    public function updateStatus(UpdateQuoteStatusRequest $request, Quote $quote): RedirectResponse
+    {
+        Gate::authorize('edit-quotes');
+
+        $newStatus = QuoteStatus::from($request->validated('status'));
+
+        if (! $quote->status->isValidTransitionTo($newStatus)) {
+            return back()->with('error', "Cannot transition quote from '{$quote->status->label()}' to '{$newStatus->label()}'.");
+        }
+
+        $quote->update([
+            'status' => $newStatus,
+        ]);
+
+        if ($newStatus === QuoteStatus::Sent && $quote->lead && $quote->lead->status !== LeadStatus::Converted) {
+            $quote->lead->update([
+                'status' => LeadStatus::ProposalSent,
+            ]);
+        }
+
+        return back()->with('success', "Quote status updated to '{$newStatus->label()}'.");
     }
 
     public function destroy(Quote $quote): RedirectResponse
@@ -152,7 +193,7 @@ class QuoteController extends Controller
         return [
             'leads' => $leads,
             'currencies' => $currencies,
-            'statuses' => $statuses?? QuoteStatus::cases(),
+            'statuses' => $statuses ?? QuoteStatus::cases(),
             'selectedLead' => $lead,
         ];
     }

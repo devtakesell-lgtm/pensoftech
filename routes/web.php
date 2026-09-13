@@ -88,6 +88,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{quote}', [AdminQuoteController::class, 'show'])->name('quotes.show')->middleware('can:view-quotes');
             Route::get('/{quote}/edit', [AdminQuoteController::class, 'edit'])->name('quotes.edit')->middleware('can:edit-quotes');
             Route::put('/{quote}', [AdminQuoteController::class, 'update'])->name('quotes.update')->middleware('can:edit-quotes');
+            Route::patch('/{quote}/status', [AdminQuoteController::class, 'updateStatus'])->name('quotes.update-status')->middleware('can:edit-quotes');
             Route::delete('/{quote}', [AdminQuoteController::class, 'destroy'])->name('quotes.destroy')->middleware('can:delete-quotes');
         });
 

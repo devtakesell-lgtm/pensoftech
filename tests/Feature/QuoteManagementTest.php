@@ -1,6 +1,8 @@
 <?php
 
+use App\Enums\LeadStatus;
 use App\Enums\QuoteStatus;
+use App\Models\Currency;
 use App\Models\Lead;
 use App\Models\Quote;
 use App\Models\QuoteService;
@@ -95,4 +97,106 @@ test('user with view-quotes permission can view quotes index, see KPIs, services
     $otherStatusResponse = $this->actingAs($admin)->get(route('admin.quotes', ['status' => 'accepted']));
     $otherStatusResponse->assertStatus(200);
     $otherStatusResponse->assertDontSee('Q-ACME01');
+});
+
+test('draft quote can transition to sent and syncs lead status to proposal_sent', function () {
+    $admin = User::factory()->create(['is_active' => true]);
+    $admin->assignRole('administrator');
+
+    $lead = Lead::factory()->create([
+        'status' => LeadStatus::Qualified,
+    ]);
+
+    $quote = Quote::factory()->create([
+        'lead_id' => $lead->id,
+        'status' => QuoteStatus::Draft,
+    ]);
+
+    $response = $this->actingAs($admin)->patch(route('admin.quotes.update-status', $quote), [
+        'status' => 'sent',
+    ]);
+
+    $response->assertSessionHas('success');
+    expect($quote->fresh()->status)->toBe(QuoteStatus::Sent);
+    expect($lead->fresh()->status)->toBe(LeadStatus::ProposalSent);
+});
+
+test('sent quote cannot revert back to draft', function () {
+    $admin = User::factory()->create(['is_active' => true]);
+    $admin->assignRole('administrator');
+
+    $lead = Lead::factory()->create();
+    $currency = Currency::factory()->create();
+
+    $quote = Quote::factory()->create([
+        'lead_id' => $lead->id,
+        'currency_id' => $currency->id,
+        'status' => QuoteStatus::Sent,
+    ]);
+
+    $response = $this->actingAs($admin)->patch(route('admin.quotes.update-status', $quote), [
+        'status' => 'draft',
+    ]);
+
+    $response->assertSessionHas('error');
+    expect($quote->fresh()->status)->toBe(QuoteStatus::Sent);
+});
+
+test('accepted quote cannot be reverted or changed to any other status', function () {
+    $admin = User::factory()->create(['is_active' => true]);
+    $admin->assignRole('administrator');
+
+    $lead = Lead::factory()->create();
+    $currency = Currency::factory()->create();
+
+    $quote = Quote::factory()->create([
+        'lead_id' => $lead->id,
+        'currency_id' => $currency->id,
+        'status' => QuoteStatus::Accepted,
+    ]);
+
+    $response = $this->actingAs($admin)->patch(route('admin.quotes.update-status', $quote), [
+        'status' => 'sent',
+    ]);
+
+    $response->assertSessionHas('error');
+    expect($quote->fresh()->status)->toBe(QuoteStatus::Accepted);
+});
+
+test('quote creation rejects invalid initial status like accepted', function () {
+    $admin = User::factory()->create(['is_active' => true]);
+    $admin->assignRole('administrator');
+
+    $lead = Lead::factory()->create();
+    $currency = Currency::factory()->create();
+
+    $response = $this->actingAs($admin)->post(route('admin.quotes.store'), [
+        'lead_id' => $lead->id,
+        'currency_id' => $currency->id,
+        'title' => 'Invalid Status Quote',
+        'status' => 'accepted',
+    ]);
+
+    $response->assertSessionHasErrors('status');
+});
+
+test('quote cannot be manually changed to expired by user', function () {
+    $admin = User::factory()->create(['is_active' => true]);
+    $admin->assignRole('administrator');
+
+    $lead = Lead::factory()->create();
+    $currency = Currency::factory()->create();
+
+    $quote = Quote::factory()->create([
+        'lead_id' => $lead->id,
+        'currency_id' => $currency->id,
+        'status' => QuoteStatus::Sent,
+    ]);
+
+    $response = $this->actingAs($admin)->patch(route('admin.quotes.update-status', $quote), [
+        'status' => 'expired',
+    ]);
+
+    $response->assertSessionHas('error');
+    expect($quote->fresh()->status)->toBe(QuoteStatus::Sent);
 });

@@ -39,7 +39,12 @@
                 {{ strtoupper($initials ?: 'L') }}
             </div>
             <div class="dossier-hero-info">
-                <h2>{{ $lead->name }}</h2>
+                <h2>
+                    {{ $lead->name }}
+                    @if ($lead->isConvertedClient())
+                        <x-verified-badge title="Official Converted Client" :url="route('admin.clients')" />
+                    @endif
+                </h2>
                 <p>
                     @if ($lead->company_name)
                         <i class="bi bi-building me-1"></i> <strong>{{ $lead->company_name }}</strong> &bull;
@@ -109,13 +114,16 @@
                         </form>
                     @elseif (in_array($lead->status, [\App\Enums\LeadStatus::Qualified, \App\Enums\LeadStatus::ProposalSent]))
                         @can('create-quotes')
-                            <a href="{{ route('admin.quotes.create', ['lead_id' => $lead->id]) }}" class="btn primary">
+                            <button type="button" class="btn primary" data-bs-toggle="modal" data-bs-target="#createQuoteModal">
                                 <i class="bi bi-file-earmark-plus me-1"></i> Create Quote
-                            </a>
+                            </button>
                         @endcan
                     @endif
-                    
-                    @if ($lead->status === \App\Enums\LeadStatus::ProposalSent && !$lead->client_id)
+
+                    @if (
+                        $lead->status === \App\Enums\LeadStatus::ProposalSent &&
+                            !$lead->client_id &&
+                            $lead->quotes->contains('status', \App\Enums\QuoteStatus::Accepted))
                         @can('edit-leads')
                             <button type="button" class="btn primary" data-bs-toggle="modal" data-bs-target="#convertLeadModal">
                                 <i class="bi bi-person-check-fill me-1"></i> Convert to Client
@@ -319,57 +327,161 @@
             </div>
 
             {{-- Associated Quotes --}}
-            @if ($lead->quotes->isNotEmpty())
-                <div class="dossier-card">
-                    <h3 class="dossier-card-title">
-                        <i class="bi bi-file-earmark-text-fill text-primary"></i> Associated Estimates / Quotes
+            <div class="dossier-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="dossier-card-title mb-0">
+                        <i class="bi bi-file-earmark-text-fill text-primary"></i> Estimates & Proposals
+                        <span class="badge bg-light text-primary border ms-2">{{ $lead->quotes->count() }}</span>
                     </h3>
+
+                    @if (in_array($lead->status, [\App\Enums\LeadStatus::Qualified, \App\Enums\LeadStatus::ProposalSent]))
+                        @can('create-quotes')
+                            <button class="btn primary btn-sm" data-bs-toggle="modal" data-bs-target="#createQuoteModal">
+                                <i class="bi bi-plus-lg me-1"></i> New Quote
+                            </button>
+                        @endcan
+                    @endif
+                </div>
+
+                @if ($lead->quotes->isNotEmpty())
                     <div class="tablewrap">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>QUOTE #</th>
-                                    <th>TITLE</th>
+                                    <th>QUOTE / TITLE</th>
+                                    <th>SERVICES</th>
                                     <th>ESTIMATED BUDGET</th>
                                     <th>STATUS</th>
                                     <th>VALID UNTIL</th>
+                                    <th class="text-end">ACTIONS</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($lead->quotes as $quote)
                                     @php
                                         $sym = $quote->currency?->symbol ?? ($defaultCurrency?->symbol ?? '$');
+                                        $currencyCode = $quote->currency?->code ?? ($defaultCurrency?->code ?? 'USD');
                                     @endphp
                                     <tr>
-                                        <td><strong>{{ $quote->quote_number ?? 'QUOTE-' . $quote->id }}</strong></td>
                                         <td>
-                                            <span class="fw-semibold text-dark">{{ $quote->title }}</span>
+                                            <a href="{{ route('admin.quotes.show', $quote) }}"
+                                                class="text-decoration-none fw-bold text-dark">
+                                                <span
+                                                    class="font-monospace text-muted small me-1">{{ $quote->quote_number ?? 'QUOTE-' . $quote->id }}</span><br>
+                                                {{ $quote->title }}
+                                            </a>
+                                            <div class="small text-muted mt-1">
+                                                Created {{ $quote->created_at->format('M d, Y') }} by
+                                                {{ $quote->creator?->name ?? 'System' }}
+                                            </div>
                                         </td>
                                         <td>
-                                            <span class="lead-budget-text">
+                                            @if ($quote->services->count() > 0)
+                                                <span
+                                                    class="badge bg-light text-dark border">{{ $quote->services->count() }}
+                                                    Items</span>
+                                            @else
+                                                <span class="text-muted">—</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <span class="lead-budget-text fw-semibold">
                                                 @if ($quote->budget_min && $quote->budget_max)
                                                     {{ $sym }}{{ number_format($quote->budget_min, 0) }} –
-                                                    {{ $sym }}{{ number_format($quote->budget_max, 0) }}
+                                                    {{ $sym }}{{ number_format($quote->budget_max, 0) }} <span
+                                                        class="small text-muted">{{ $currencyCode }}</span>
                                                 @elseif ($quote->budget_max)
-                                                    {{ $sym }}{{ number_format($quote->budget_max, 0) }}
+                                                    {{ $sym }}{{ number_format($quote->budget_max, 0) }} <span
+                                                        class="small text-muted">{{ $currencyCode }}</span>
                                                 @elseif ($quote->budget_min)
-                                                    {{ $sym }}{{ number_format($quote->budget_min, 0) }}
+                                                    {{ $sym }}{{ number_format($quote->budget_min, 0) }} <span
+                                                        class="small text-muted">{{ $currencyCode }}</span>
                                                 @else
                                                     <span class="text-muted">—</span>
                                                 @endif
                                             </span>
                                         </td>
                                         <td>
-                                            <span class="status-badge">{{ $quote->status->label() }}</span>
+                                            @if (in_array($quote->status, [\App\Enums\QuoteStatus::Draft, \App\Enums\QuoteStatus::Sent]) &&
+                                                    auth()->user()->can('edit-quotes'))
+                                                <form action="{{ route('admin.quotes.update-status', $quote) }}"
+                                                    method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <select name="status" onchange="this.form.submit()"
+                                                        class="lead-status-select p-2">
+                                                        @foreach ($quote->status->allowedTransitions() as $allowedStatus)
+                                                            <option value="{{ $allowedStatus->value }}"
+                                                                {{ $quote->status === $allowedStatus ? 'selected' : '' }}>
+                                                                {{ $allowedStatus->label() }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+                                            @else
+                                                <span class="status-badge {{ $quote->status->badgeClass() }}">
+                                                    <i class="bi {{ $quote->status->icon() }} me-1"></i>
+                                                    {{ $quote->status->label() }}
+                                                </span>
+                                            @endif
                                         </td>
-                                        <td>{{ $quote->valid_until ? $quote->valid_until->format('M d, Y') : '—' }}</td>
+                                        <td>
+                                            @if ($quote->valid_until)
+                                                <span
+                                                    class="{{ $quote->valid_until->isPast() ? 'text-danger fw-semibold' : '' }}">
+                                                    {{ $quote->valid_until->format('M d, Y') }}
+                                                    @if ($quote->valid_until->isPast())
+                                                        <i class="bi bi-exclamation-circle ms-1" title="Expired"></i>
+                                                    @endif
+                                                </span>
+                                            @else
+                                                <span class="text-muted">—</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="{{ route('admin.quotes.show', $quote) }}" class="btn light btn-sm"
+                                                title="View Quote">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            @can('edit-quotes')
+                                                <a href="{{ route('admin.quotes.edit', $quote) }}" class="btn light btn-sm"
+                                                    title="Edit Quote">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                            @endcan
+                                            @can('delete-quotes')
+                                                <form action="{{ route('admin.quotes.destroy', $quote) }}" method="POST"
+                                                    class="d-inline" onsubmit="return confirm('Delete this quote?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn light btn-sm text-danger"
+                                                        title="Delete Quote">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endcan
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                </div>
-            @endif
+                @else
+                    <div class="text-center py-5 bg-light rounded border-dashed mt-3" style="border: 2px dashed #dee2e6;">
+                        <i class="bi bi-file-earmark-text text-muted fs-1 mb-2"></i>
+                        <h5 class="text-dark fw-semibold">No Quotes Yet</h5>
+                        <p class="text-muted mb-3">There are no estimates or proposals associated with this lead.</p>
+
+                        @if (in_array($lead->status, [\App\Enums\LeadStatus::Qualified, \App\Enums\LeadStatus::ProposalSent]))
+                            @can('create-quotes')
+                                <button class="btn primary" data-bs-toggle="modal" data-bs-target="#createQuoteModal">
+                                    <i class="bi bi-plus-lg me-1"></i> Create First Quote
+                                </button>
+                            @endcan
+                        @endif
+                    </div>
+                @endif
+            </div>
 
             {{-- Marketing Attribution Details --}}
             <div class="dossier-card">
@@ -575,6 +687,11 @@
             @endif
         </div>
     </div>
+
+    {{-- Create Quote Modal --}}
+    @can('create-quotes')
+        @include('admin.components.modals.quote-create-modal')
+    @endcan
 
     {{-- Convert to Client Modal --}}
     @if ($lead->status === \App\Enums\LeadStatus::ProposalSent && !$lead->client_id)

@@ -16,7 +16,7 @@ class ClientController extends Controller
     {
         Gate::authorize('view-clients');
 
-        $clients = Client::with('user')->withCount('projects')->latest()->get();
+        $clients = Client::with('user')->withCount('projects')->latest()->paginate(10);
 
         return view('admin.pages.clients')->with([
             'clients' => $clients,

@@ -29,40 +29,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Nova Labs</td>
-                        <td>Mark Khan</td>
-                        <td>mark@novalabs.io</td>
-                        <td>Web Development</td>
-                        <td>Active</td>
-                        <td><button class="rowbtn">•••</button></td>
-                    </tr>
-                    <tr>
-                        <td>BrightCo</td>
-                        <td>James Ahmed</td>
-                        <td>james@brightco.co</td>
-                        <td>Mobile App</td>
-                        <td>Active</td>
-                        <td><button class="rowbtn">•••</button></td>
-                    </tr>
-                    <tr>
-                        <td>FinServe</td>
-                        <td>Nadia Malik</td>
-                        <td>nadia@finserve.com</td>
-                        <td>Digital Marketing</td>
-                        <td>Active</td>
-                        <td><button class="rowbtn">•••</button></td>
-                    </tr>
-                    <tr>
-                        <td>CloudCore</td>
-                        <td>David Chen</td>
-                        <td>david@cloudcore.io</td>
-                        <td>E-commerce</td>
-                        <td>Onboarding</td>
-                        <td><button class="rowbtn">•••</button></td>
-                    </tr>
+                    @foreach ($clients as $client)
+                        <tr>
+                            <td>Nova Labs</td>
+                            <td>Mark Khan</td>
+                            <td>mark@novalabs.io</td>
+                            <td>Web Development</td>
+                            <td>Active</td>
+                            <td><button class="rowbtn">•••</button></td>
+                        </tr>
+                    @endforeach
+
                 </tbody>
             </table>
+
+            <div class="p-3 border-top d-flex justify-content-end">
+                {{ $clients->links('pagination::bootstrap-5') }}
+            </div>
+
         </div>
     </div>
 @endsection

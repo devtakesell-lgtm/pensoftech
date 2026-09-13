@@ -27,7 +27,11 @@
                     <strong>{{ $quote->quote_number }}</strong> &bull;
                     <span>Created on {{ $quote->created_at->format('M d, Y') }}</span>
                     @if ($quote->lead)
-                        &bull; <span class="badge bg-light text-dark border">Lead: {{ $quote->lead->name }}</span>
+                        &bull; <span class="badge bg-light text-dark border">Lead: {{ $quote->lead->name }}
+                            @if ($quote->lead->isConvertedClient())
+                                <x-verified-badge title="Converted Client Account" :url="route('admin.clients')" />
+                            @endif
+                        </span>
                     @endif
                 </p>
             </div>
@@ -39,10 +43,47 @@
                 {{ $quote->status->label() }}
             </span>
 
+            {{-- Smart Lifecycle Actions --}}
             @can('edit-quotes')
-                <a href="{{ route('admin.quotes.edit', $quote) }}" class="btn light">
-                    <i class="bi bi-pencil-square me-1"></i> Edit
-                </a>
+                @if ($quote->status === \App\Enums\QuoteStatus::Draft)
+                    <form action="{{ route('admin.quotes.update-status', $quote) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="status" value="{{ \App\Enums\QuoteStatus::Sent->value }}">
+                        <button type="submit" class="btn primary">
+                            <i class="bi bi-send me-1"></i> Send to Client
+                        </button>
+                    </form>
+                @elseif ($quote->status === \App\Enums\QuoteStatus::Sent)
+                    <form action="{{ route('admin.quotes.update-status', $quote) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="status" value="{{ \App\Enums\QuoteStatus::Accepted->value }}">
+                        <button type="submit" class="btn light text-success fw-bold" title="Mark quote as accepted by client">
+                            <i class="bi bi-check-circle-fill me-1"></i> Mark as Accepted
+                        </button>
+                    </form>
+
+                    <form action="{{ route('admin.quotes.update-status', $quote) }}" method="POST" class="d-inline"
+                        onsubmit="return confirm('Are you sure you want to mark this quote as rejected?');">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="status" value="{{ \App\Enums\QuoteStatus::Rejected->value }}">
+                        <button type="submit" class="btn light text-danger" title="Mark quote as rejected">
+                            <i class="bi bi-x-circle me-1"></i> Reject
+                        </button>
+                    </form>
+                @elseif ($quote->status === \App\Enums\QuoteStatus::Accepted)
+                    <span class="btn light disabled text-success fw-bold">
+                        <i class="bi bi-trophy-fill me-1"></i> Won Deal
+                    </span>
+                @endif
+
+                @if ($quote->status !== \App\Enums\QuoteStatus::Accepted)
+                    <a href="{{ route('admin.quotes.edit', $quote) }}" class="btn light">
+                        <i class="bi bi-pencil-square me-1"></i> Edit
+                    </a>
+                @endif
             @endcan
 
             @can('delete-quotes')

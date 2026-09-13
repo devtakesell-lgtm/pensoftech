@@ -32,6 +32,7 @@ class StoreQuoteRequest extends FormRequest
             'budget_max' => ['nullable', 'numeric', 'min:0', 'gte:budget_min'],
             'status' => ['required', 'string', \Illuminate\Validation\Rule::in([QuoteStatus::Draft->value, QuoteStatus::Sent->value])],
             'valid_until' => ['nullable', 'date'],
+            'redirect_to' => ['nullable', 'string', 'in:lead,quote'],
         ];
     }
 }

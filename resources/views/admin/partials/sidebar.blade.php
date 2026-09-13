@@ -29,7 +29,7 @@
         @endcan
 
         @can('view-clients')
-            <a class="nav {{ request()->routeIs('admin.clients') ? 'active' : '' }}" href="{{ route('admin.clients') }}"
+            <a class="nav {{ request()->routeIs('admin.clients*') ? 'active' : '' }}" href="{{ route('admin.clients') }}"
                 title="Clients">
                 <i class="bi bi-building"></i>
                 <span class="nav-title">Clients</span>
@@ -37,7 +37,7 @@
         @endcan
 
         @can('view-quotes')
-            <a class="nav {{ request()->routeIs('admin.quotes') ? 'active' : '' }}" href="{{ route('admin.quotes') }}"
+            <a class="nav {{ request()->routeIs('admin.quotes*') ? 'active' : '' }}" href="{{ route('admin.quotes') }}"
                 title="Quotes">
                 <i class="bi bi-file-earmark-text"></i>
                 <span class="nav-title">Quotes</span>

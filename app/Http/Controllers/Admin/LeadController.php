@@ -49,8 +49,8 @@ class LeadController extends Controller
         $newCount = Lead::where('status', LeadStatus::New)->count();
         $qualifiedCount = Lead::where('status', LeadStatus::Qualified)->count();
         $convertedCount = Lead::where('status', LeadStatus::Converted)->count();
-        // $activePipelineValue = (float) Lead::whereNotIn('status', [LeadStatus::Lost, LeadStatus::Converted])
-        //     ->sum('budget');
+        $activePipelineValue = (float) Lead::whereNotIn('status', [LeadStatus::Lost, LeadStatus::Converted])
+            ->sum('budget');
 
         // Filter dropdown lookups
         $industries = Industry::select('id', 'name')->orderBy('name')->get();
@@ -73,7 +73,7 @@ class LeadController extends Controller
             'newCount' => $newCount,
             'qualifiedCount' => $qualifiedCount,
             'convertedCount' => $convertedCount,
-            // 'activePipelineValue' => $activePipelineValue,
+            'activePipelineValue' => $activePipelineValue,
             'currentSearch' => $filters['search'] ?? '',
             'currentStatus' => $filters['status'] ?? '',
             'currentSource' => $filters['source'] ?? '',
@@ -116,8 +116,9 @@ class LeadController extends Controller
     {
         Gate::authorize('view-leads');
 
-        $lead->load(['client', 'services', 'assignee', 'industry', 'currency', 'quotes.currency']);
+        $lead->load(['client', 'services', 'assignee', 'industry', 'currency', 'quotes.currency', 'quotes.creator', 'quotes.services.service']);
         $assignees = User::select('id', 'name', 'email')->where('is_active', true)->orderBy('name')->get();
+        $currencies = Currency::select('id', 'name', 'code', 'symbol')->where('is_active', true)->get();
         // dd($assignees);
 
         return view('admin.pages.leads.show')->with([
@@ -125,6 +126,8 @@ class LeadController extends Controller
             'statuses' => LeadStatus::cases(),
             'defaultCurrency' => Currency::default(),
             'assignees' => $assignees,
+            'currencies' => $currencies,
+            'quoteStatuses' => \App\Enums\QuoteStatus::initialCases(),
         ]);
     }
 
