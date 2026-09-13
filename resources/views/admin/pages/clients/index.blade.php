@@ -31,7 +31,7 @@
                 <tbody>
                     @foreach ($clients as $client)
                         <tr>
-                            <td>Nova Labs</td>
+                            <td>{{ $client->contact_person }}</td>
                             <td>Mark Khan</td>
                             <td>mark@novalabs.io</td>
                             <td>Web Development</td>
@@ -39,6 +39,19 @@
                             <td><button class="rowbtn">•••</button></td>
                         </tr>
                     @endforeach
+
+                    {{-- "user_id" => 13
+          "company_name" => "Softcase"
+          "contact_person" => "Sajjad Hossain"
+          "website" => null
+          "address" => null
+          "city" => null
+          "country" => null
+          "is_active" => 1
+          "created_at" => "2026-09-13 11:34:27"
+          "updated_at" => "2026-09-13 11:34:27"
+          "deleted_at" => null
+          "projects_count" => 0 --}}
 
                 </tbody>
             </table>
