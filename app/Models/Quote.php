@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\QuoteStatus;
 use Database\Factories\QuoteFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -55,5 +56,32 @@ class Quote extends Model
     public function services(): HasMany
     {
         return $this->hasMany(QuoteService::class);
+    }
+
+    /**
+     * Filter quotes query by search keyword, status, or lead.
+     *
+     * @param  array<string, mixed>  $filters
+     */
+    public function scopeFilter(Builder $query, array $filters): Builder
+    {
+        return $query
+            ->when($filters['search'] ?? null, function (Builder $q, $search) {
+                $q->where(function (Builder $sub) use ($search) {
+                    $sub->where('quote_number', 'like', "%{$search}%")
+                        ->orWhere('title', 'like', "%{$search}%")
+                        ->orWhereHas('lead', function (Builder $leadQuery) use ($search) {
+                            $leadQuery->where('name', 'like', "%{$search}%")
+                                ->orWhere('company_name', 'like', "%{$search}%")
+                                ->orWhere('email', 'like', "%{$search}%");
+                        });
+                });
+            })
+            ->when($filters['status'] ?? null, function (Builder $q, $status) {
+                $q->where('status', $status);
+            })
+            ->when($filters['lead_id'] ?? null, function (Builder $q, $leadId) {
+                $q->where('lead_id', $leadId);
+            });
     }
 }

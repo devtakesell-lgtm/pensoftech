@@ -34,7 +34,8 @@
         </div>
 
         <div class="dossier-hero-actions">
-            <span class="status-badge fs-6 py-2 px-3">
+            <span class="status-badge {{ $quote->status->badgeClass() }} fs-6 py-2 px-3">
+                <i class="bi {{ $quote->status->icon() }} me-1"></i>
                 {{ $quote->status->label() }}
             </span>
 
@@ -122,14 +123,14 @@
                     </span>
                 </div>
                 @if ($quote->lead)
-                <div class="dossier-data-row">
-                    <span class="dossier-label">Related Lead</span>
-                    <span class="dossier-value">
-                        <a href="{{ route('admin.leads.show', $quote->lead) }}">
-                            {{ $quote->lead->name }} ({{ $quote->lead->company_name }})
-                        </a>
-                    </span>
-                </div>
+                    <div class="dossier-data-row">
+                        <span class="dossier-label">Lead</span>
+                        <span class="dossier-value">
+                            <a href="{{ route('admin.leads.show', $quote->lead) }}">
+                                {{ $quote->lead->name }} ({{ $quote->lead->company_name }})
+                            </a>
+                        </span>
+                    </div>
                 @endif
             </div>
         </div>

@@ -254,7 +254,12 @@ test('user with edit-leads permission can convert lead into client', function ()
         'client_id' => null,
     ]);
 
-    $response = $this->actingAs($admin)->post(route('admin.leads.convert', $lead));
+    $response = $this->actingAs($admin)->post(route('admin.leads.convert', $lead), [
+        'contact_person' => $lead->name,
+        'email' => 'michael.scott@dundermifflin.com',
+        'company_name' => $lead->company_name,
+        'website' => $lead->website,
+    ]);
     $response->assertRedirect(route('admin.leads.show', $lead));
     $response->assertSessionHas('success');
 

@@ -8,6 +8,7 @@
 @import "./pages/services.css";
 @import "./pages/service-categories.css";
 @import "./pages/leads.css";
+@import "./pages/quotes.css";
 
 * {
     box-sizing: border-box

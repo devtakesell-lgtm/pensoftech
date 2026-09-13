@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\LeadStatus;
-use App\Http\Controllers\Controller;
-use App\Models\Quote;
-use App\Models\Lead;
-use App\Models\Currency;
 use App\Enums\QuoteStatus;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreQuoteRequest;
 use App\Http\Requests\Admin\UpdateQuoteRequest;
+use App\Models\Currency;
+use App\Models\Lead;
+use App\Models\Quote;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,16 +21,47 @@ use Illuminate\View\View;
 class QuoteController extends Controller
 {
     /**
-     * Display a listing of client quotes and proposals.
+     * Display a listing of client quotes and proposals with filtering and metrics.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         Gate::authorize('view-quotes');
 
-        $quotes = Quote::with(['lead', 'currency', 'creator'])->latest()->paginate(15);
+        $filters = $request->only(['search', 'status', 'lead_id']);
+
+        $quotes = Quote::query()
+            ->filter($filters)
+            ->with(['lead.services', 'currency', 'creator', 'services.service'])
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
+        // Pipeline Metrics
+        $totalCount = Quote::count();
+        $draftCount = Quote::where('status', QuoteStatus::Draft)->count();
+        $sentCount = Quote::where('status', QuoteStatus::Sent)->count();
+        $acceptedCount = Quote::where('status', QuoteStatus::Accepted)->count();
+        $totalPipelineValue = (float) Quote::whereIn('status', [QuoteStatus::Draft, QuoteStatus::Sent, QuoteStatus::Accepted])
+            ->sum('budget_max');
+
+        // Lookups
+        $statuses = QuoteStatus::cases();
+        $leads = Lead::select('id', 'name', 'company_name')->orderBy('name')->get();
+        $defaultCurrency = Currency::default();
 
         return view('admin.pages.quotes.index')->with([
             'quotes' => $quotes,
+            'statuses' => $statuses,
+            'leads' => $leads,
+            'defaultCurrency' => $defaultCurrency,
+            'totalCount' => $totalCount,
+            'draftCount' => $draftCount,
+            'sentCount' => $sentCount,
+            'acceptedCount' => $acceptedCount,
+            'totalPipelineValue' => $totalPipelineValue,
+            'currentSearch' => $filters['search'] ?? '',
+            'currentStatus' => $filters['status'] ?? '',
+            'currentLead' => $filters['lead_id'] ?? '',
         ]);
     }
 
@@ -52,10 +83,10 @@ class QuoteController extends Controller
 
         $lead = Lead::findOrFail($request->validated('lead_id'));
 
-        $quote = DB::transaction(function () use($request, $lead) {
+        $quote = DB::transaction(function () use ($request, $lead) {
 
             $quote = Quote::create(array_merge($request->validated(), [
-                'quote_number' => 'Q-' . strtoupper(Str::random(6)),
+                'quote_number' => 'Q-'.strtoupper(Str::random(6)),
                 'created_by' => Auth::id(),
             ]));
 
@@ -67,7 +98,6 @@ class QuoteController extends Controller
 
             return $quote;
         });
-
 
         return redirect()->route('admin.quotes.show', $quote)
             ->with('success', "Quote '{$quote->quote_number}' has been successfully created.");

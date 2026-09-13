@@ -44,8 +44,8 @@ class LeadConversionService
                 'user_id' => $user->id,
                 'company_name' => $validatedData['company_name'],
                 'contact_person' => $validatedData['contact_person'],
-                'website' => $validatedData['website'],
-                'phone' => $validatedData['phone'],
+                'website' => $validatedData['website'] ?? null,
+                'phone' => $validatedData['phone'] ?? null,
                 'is_active' => true,
             ]);
 
