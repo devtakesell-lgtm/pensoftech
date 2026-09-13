@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Enums\QuoteStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,7 +30,7 @@ class StoreQuoteRequest extends FormRequest
             'description' => ['nullable', 'string'],
             'budget_min' => ['nullable', 'numeric', 'min:0'],
             'budget_max' => ['nullable', 'numeric', 'min:0', 'gte:budget_min'],
-            'status' => ['required', 'string', \Illuminate\Validation\Rule::enum(\App\Enums\QuoteStatus::class)],
+            'status' => ['required', 'string', \Illuminate\Validation\Rule::in([QuoteStatus::Draft->value, QuoteStatus::Sent->value])],
             'valid_until' => ['nullable', 'date'],
         ];
     }

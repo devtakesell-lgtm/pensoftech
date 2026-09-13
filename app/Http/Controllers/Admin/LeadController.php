@@ -64,6 +64,7 @@ class LeadController extends Controller
         return view('admin.pages.leads.index')->with([
             'leads' => $leads,
             'statuses' => LeadStatus::cases(),
+            'initialCases' => LeadStatus::initialCase(),
             'sources' => LeadSource::options(),
             'industries' => $industries,
             'assignees' => $assignees,

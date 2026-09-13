@@ -217,9 +217,10 @@
                             <td>
                                 @if ($lead->budget)
                                     <span class="lead-budget-text">
-                                        {{ $lead->currency?->symbol ?? $defaultCurrency?->symbol ?? '$' }}{{ number_format($lead->budget, 0) }}
+                                        {{ $lead->currency?->symbol ?? ($defaultCurrency?->symbol ?? '$') }}{{ number_format($lead->budget, 0) }}
                                     </span>
-                                    <span class="lead-budget-currency">{{ $lead->currency?->code ?? $defaultCurrency?->code ?? 'USD' }}</span>
+                                    <span
+                                        class="lead-budget-currency">{{ $lead->currency?->code ?? ($defaultCurrency?->code ?? 'USD') }}</span>
                                 @else
                                     <span class="text-muted small">—</span>
                                 @endif
@@ -240,45 +241,50 @@
                                 @endif
                             </td>
                             <td>
-                                @can('edit-leads')
-                                    <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('PATCH')
-                                        <select name="status" onchange="this.form.submit()"
-                                            class="lead-status-select {{ $lead->status->badgeClass() }}">
-                                            @php
-                                                $pipelineStages = [
-                                                    \App\Enums\LeadStatus::New->value,
-                                                    \App\Enums\LeadStatus::Contacted->value,
-                                                    \App\Enums\LeadStatus::Qualified->value,
-                                                    \App\Enums\LeadStatus::ProposalSent->value,
-                                                    \App\Enums\LeadStatus::Converted->value,
-                                                ];
-                                                $currentIndex = array_search($lead->status->value, $pipelineStages);
-                                            @endphp
-                                            @foreach ($statuses ?? [] as $statusOption)
+                                @if (in_array($lead->status, $initialCases, true))
+                                    @can('edit-leads')
+                                        <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <select name="status" onchange="this.form.submit()"
+                                                class="lead-status-select {{ $lead->status->badgeClass() }}">
                                                 @php
-                                                    $optionIndex = array_search($statusOption->value, $pipelineStages);
-                                                    $isDisabled = $lead->status !== \App\Enums\LeadStatus::Lost 
-                                                        && $currentIndex !== false 
-                                                        && $optionIndex !== false 
-                                                        && $optionIndex < $currentIndex;
+                                                    $pipelineStages = [
+                                                        \App\Enums\LeadStatus::New->value,
+                                                        \App\Enums\LeadStatus::Contacted->value,
+                                                        \App\Enums\LeadStatus::Qualified->value,
+                                                    ];
+                                                    $currentIndex = array_search($lead->status->value, $pipelineStages);
                                                 @endphp
-                                                <option value="{{ $statusOption->value }}"
-                                                    {{ $lead->status->value === $statusOption->value ? 'selected' : '' }}
-                                                    {{ $isDisabled ? 'disabled' : '' }}>
-                                                    {{ $statusOption->label() }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </form>
+                                                @foreach ($initialCases ?? [] as $statusOption)
+                                                    @php
+                                                        $optionIndex = array_search(
+                                                            $statusOption->value,
+                                                            $pipelineStages,
+                                                        );
+                                                        $isDisabled =
+                                                            $lead->status !== \App\Enums\LeadStatus::Lost &&
+                                                            $currentIndex !== false &&
+                                                            $optionIndex !== false &&
+                                                            $optionIndex < $currentIndex;
+                                                    @endphp
+                                                    <option value="{{ $statusOption->value }}"
+                                                        {{ $lead->status->value === $statusOption->value ? 'selected' : '' }}
+                                                        {{ $isDisabled ? 'disabled' : '' }}>
+                                                        {{ $statusOption->label() }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </form>
+                                    @endcan
                                 @else
                                     <span class="status-badge {{ $lead->status->badgeClass() }}">
                                         <i class="bi {{ $lead->status->icon() }} me-1"></i>
                                         {{ $lead->status->label() }}
                                     </span>
-                                @endcan
+                                @endif
+                                {{-- @endcan --}}
                             </td>
                             <td>
                                 <span class="fw-semibold text-dark small d-block">

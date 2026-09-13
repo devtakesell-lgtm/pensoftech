@@ -43,6 +43,22 @@ enum QuoteStatus: string
         };
     }
 
+    public static function initialCases(): array
+    {
+        return [
+            self::Draft,
+            self::Sent
+        ];
+    }
+
+    public static function actionCases(): array
+    {
+        return [
+            self::Accepted,
+            self::Rejected,
+        ];
+    }
+
     public static function options(): array
     {
         return array_map(fn ($case) => ['value' => $case->value, 'label' => $case->label()], self::cases());

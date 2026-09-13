@@ -74,7 +74,7 @@ class QuoteController extends Controller
             $lead = Lead::find($request->input('lead_id'));
         }
 
-        return view('admin.pages.quotes.create')->with($this->getFormData($lead));
+        return view('admin.pages.quotes.create')->with($this->getFormData($lead, QuoteStatus::initialCases()));
     }
 
     public function store(StoreQuoteRequest $request): RedirectResponse
@@ -90,7 +90,7 @@ class QuoteController extends Controller
                 'created_by' => Auth::id(),
             ]));
 
-            if ($lead->status === LeadStatus::Qualified) {
+            if ($quote->status === QuoteStatus::Sent && $lead->status !== LeadStatus::Converted) {
                 $lead->update([
                     'status' => LeadStatus::ProposalSent,
                 ]);
@@ -144,7 +144,7 @@ class QuoteController extends Controller
             ->with('success', "Quote '{$quoteNumber}' has been deleted.");
     }
 
-    private function getFormData(?Lead $lead = null): array
+    private function getFormData(?Lead $lead = null, ?array $statuses = null): array
     {
         $leads = Lead::select('id', 'name', 'company_name')->orderBy('name')->get();
         $currencies = Currency::select('id', 'name', 'code', 'symbol')->where('is_active', true)->get();
@@ -152,7 +152,7 @@ class QuoteController extends Controller
         return [
             'leads' => $leads,
             'currencies' => $currencies,
-            'statuses' => QuoteStatus::cases(),
+            'statuses' => $statuses?? QuoteStatus::cases(),
             'selectedLead' => $lead,
         ];
     }

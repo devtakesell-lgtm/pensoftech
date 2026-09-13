@@ -11,6 +11,15 @@ enum LeadStatus: string
     case Converted = 'converted';
     case Lost = 'lost';
 
+    public static function initialCase(): array
+    {
+        return [
+            self::New,
+            self::Contacted,
+            self::Qualified,
+        ];
+    }
+
     public function label(): string
     {
         return match ($this) {
