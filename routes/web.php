@@ -130,6 +130,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Industries Module
         Route::prefix('industries')->group(function () {
             Route::get('/', [AdminIndustryController::class, 'index'])->name('industries')->middleware('can:view-industries');
+            Route::get('/create', [AdminIndustryController::class, 'create'])->name('industries.create')->middleware('can:create-industries');
+            Route::post('/', [AdminIndustryController::class, 'store'])->name('industries.store')->middleware('can:create-industries');
+            Route::get('/{industry}/edit', [AdminIndustryController::class, 'edit'])->name('industries.edit')->middleware('can:edit-industries');
+            Route::put('/{industry}', [AdminIndustryController::class, 'update'])->name('industries.update')->middleware('can:edit-industries');
+            Route::delete('/{industry}', [AdminIndustryController::class, 'destroy'])->name('industries.destroy')->middleware('can:delete-industries');
         });
 
         // CMS Pages Module

@@ -75,15 +75,15 @@
             @endcan
 
             @can('view-projects')
-                <a class="nav {{ request()->routeIs('admin.projects') ? 'active' : '' }}" href="{{ route('admin.projects') }}"
-                    title="Projects">
+                <a class="nav {{ request()->routeIs('admin.projects*') ? 'active' : '' }}"
+                    href="{{ route('admin.projects') }}" title="Projects">
                     <i class="bi bi-kanban"></i>
                     <span class="nav-title">Projects</span>
                 </a>
             @endcan
 
             @can('view-case-studies')
-                <a class="nav {{ request()->routeIs('admin.case-studies') ? 'active' : '' }}"
+                <a class="nav {{ request()->routeIs('admin.case-studies*') ? 'active' : '' }}"
                     href="{{ route('admin.case-studies') }}" title="Case Studies">
                     <i class="bi bi-bar-chart"></i>
                     <span class="nav-title">Case Studies</span>
@@ -91,7 +91,7 @@
             @endcan
 
             @can('view-industries')
-                <a class="nav {{ request()->routeIs('admin.industries') ? 'active' : '' }}"
+                <a class="nav {{ request()->routeIs('admin.industries*') ? 'active' : '' }}"
                     href="{{ route('admin.industries') }}" title="Industries">
                     <i class="bi bi-diagram-3"></i>
                     <span class="nav-title">Industries</span>
@@ -102,7 +102,7 @@
         @canany(['view-pages', 'view-blogs', 'view-jobs'])
             <div class="label">CONTENT</div>
             @can('view-pages')
-                <a class="nav {{ request()->routeIs('admin.pages') ? 'active' : '' }}" href="{{ route('admin.pages') }}"
+                <a class="nav {{ request()->routeIs('admin.pages*') ? 'active' : '' }}" href="{{ route('admin.pages') }}"
                     title="Pages">
                     <i class="bi bi-file-richtext"></i>
                     <span class="nav-title">Pages</span>
@@ -110,7 +110,7 @@
             @endcan
 
             @can('view-blogs')
-                <a class="nav {{ request()->routeIs('admin.blog') ? 'active' : '' }}" href="{{ route('admin.blog') }}"
+                <a class="nav {{ request()->routeIs('admin.blog*') ? 'active' : '' }}" href="{{ route('admin.blog') }}"
                     title="Blog">
                     <i class="bi bi-pencil-square"></i>
                     <span class="nav-title">Blog</span>
@@ -118,7 +118,7 @@
             @endcan
 
             @can('view-jobs')
-                <a class="nav {{ request()->routeIs('admin.careers') ? 'active' : '' }}" href="{{ route('admin.careers') }}"
+                <a class="nav {{ request()->routeIs('admin.careers*') ? 'active' : '' }}" href="{{ route('admin.careers') }}"
                     title="Careers">
                     <i class="bi bi-briefcase"></i>
                     <span class="nav-title">Careers</span>
@@ -150,7 +150,7 @@
             @endcan
 
             @can('view-analytics')
-                <a class="nav {{ request()->routeIs('admin.analytics') ? 'active' : '' }}"
+                <a class="nav {{ request()->routeIs('admin.analytics*') ? 'active' : '' }}"
                     href="{{ route('admin.analytics') }}" title="Analytics">
                     <i class="bi bi-graph-up-arrow"></i>
                     <span class="nav-title">Analytics</span>
@@ -158,7 +158,7 @@
             @endcan
 
             @can('view-settings')
-                <a class="nav {{ request()->routeIs('admin.settings') ? 'active' : '' }}"
+                <a class="nav {{ request()->routeIs('admin.settings*') ? 'active' : '' }}"
                     href="{{ route('admin.settings') }}" title="Settings">
                     <i class="bi bi-gear"></i>
                     <span class="nav-title">Settings</span>

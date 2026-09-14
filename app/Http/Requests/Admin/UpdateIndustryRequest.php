@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Requests\Admin;
+
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateIndustryRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        $industryId = $this->route('industry')->id;
+
+        return [
+            'name' => ['required', 'string', 'max:255', 'unique:industries,name,'.$industryId],
+            'short_description' => ['nullable', 'string', 'max:500'],
+            'description' => ['nullable', 'string'],
+            'icon' => ['nullable', 'string', 'max:100'],
+            'image' => ['nullable', 'string', 'max:255'],
+            'is_active' => ['boolean'],
+            'sort_order' => ['nullable', 'integer', 'min:0'],
+        ];
+    }
+}
