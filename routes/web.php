@@ -78,6 +78,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Clients Module
         Route::prefix('clients')->group(function () {
             Route::get('/', [AdminClientController::class, 'index'])->name('clients')->middleware('can:view-clients');
+            Route::post('/', [AdminClientController::class, 'store'])->name('clients.store')->middleware('can:create-clients');
+            Route::get('/{client}', [AdminClientController::class, 'show'])->name('clients.show')->middleware('can:view-clients');
+            Route::get('/{client}/edit', [AdminClientController::class, 'edit'])->name('clients.edit')->middleware('can:edit-clients');
+            Route::put('/{client}', [AdminClientController::class, 'update'])->name('clients.update')->middleware('can:edit-clients');
+            Route::delete('/{client}', [AdminClientController::class, 'destroy'])->name('clients.destroy')->middleware('can:delete-clients');
         });
 
         // Quotes Module
