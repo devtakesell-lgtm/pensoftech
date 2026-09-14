@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreIndustryRequest;
 use App\Http\Requests\Admin\UpdateIndustryRequest;
 use App\Models\Industry;
+use App\Traits\HandlesImageUploads;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -14,6 +15,8 @@ use Illuminate\View\View;
 
 class IndustryController extends Controller
 {
+    use HandlesImageUploads;
+
     /**
      * Display a listing of client business industries.
      */
@@ -67,6 +70,10 @@ class IndustryController extends Controller
         $data = $request->validated();
         $data['slug'] = Str::slug($data['name']);
 
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->handleImageUpload($request->file('image'), 'industries', 800);
+        }
+
         Industry::create($data);
 
         return redirect()->route('admin.industries')
@@ -98,6 +105,10 @@ class IndustryController extends Controller
             $data['slug'] = Str::slug($data['name']);
         }
 
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->handleImageUpload($request->file('image'), 'industries', 800, $industry->image);
+        }
+
         $industry->update($data);
 
         return redirect()->route('admin.industries')
@@ -115,6 +126,7 @@ class IndustryController extends Controller
             return back()->with('error', 'Cannot delete industry because it has associated projects or leads.');
         }
 
+        $this->deleteImage($industry->image);
         $industry->delete();
 
         return redirect()->route('admin.industries')

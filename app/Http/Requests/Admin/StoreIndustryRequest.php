@@ -27,7 +27,7 @@ class StoreIndustryRequest extends FormRequest
             'short_description' => ['nullable', 'string', 'max:500'],
             'description' => ['nullable', 'string'],
             'icon' => ['nullable', 'string', 'max:100'],
-            'image' => ['nullable', 'string', 'max:255'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
             'is_active' => ['boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
         ];

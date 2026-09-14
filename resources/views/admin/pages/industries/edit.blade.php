@@ -28,7 +28,7 @@
     @endif
 
     <div class="card p-4">
-        <form action="{{ route('admin.industries.update', $industry) }}" method="POST">
+        <form action="{{ route('admin.industries.update', $industry) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -43,6 +43,16 @@
                 <div class="col-md-6">
                     <label for="icon" class="form-label fw-semibold">Bootstrap Icon Class</label>
                     <input type="text" class="form-control" id="icon" name="icon" value="{{ old('icon', $industry->icon) }}" placeholder="e.g. bi-tags">
+                </div>
+
+                <div class="col-md-12">
+                    <x-admin.components.forms.image-upload 
+                        name="image" 
+                        label="Industry Cover Image" 
+                        aspect="banner" 
+                        :current="$industry->image ? asset('storage/' . $industry->image) : null"
+                        help="Recommended: 800x400px. JPG, PNG, WEBP." 
+                    />
                 </div>
 
                 <div class="col-md-12">
