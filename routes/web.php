@@ -123,8 +123,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
         // Case Studies Module
-        Route::prefix('case-studies')->group(function () {
-            Route::get('/', [AdminCaseStudyController::class, 'index'])->name('case-studies')->middleware('can:view-case-studies');
+        Route::prefix('case-studies')->name('case-studies.')->group(function () {
+            Route::get('/', [AdminCaseStudyController::class, 'index'])->name('index')->middleware('can:view-case-studies');
+            Route::get('/create', [AdminCaseStudyController::class, 'create'])->name('create')->middleware('can:create-case-studies');
+            Route::post('/', [AdminCaseStudyController::class, 'store'])->name('store')->middleware('can:create-case-studies');
+            Route::get('/{caseStudy}', [AdminCaseStudyController::class, 'show'])->name('show')->middleware('can:view-case-studies');
+            Route::get('/{caseStudy}/edit', [AdminCaseStudyController::class, 'edit'])->name('edit')->middleware('can:edit-case-studies');
+            Route::put('/{caseStudy}', [AdminCaseStudyController::class, 'update'])->name('update')->middleware('can:edit-case-studies');
+            Route::delete('/{caseStudy}', [AdminCaseStudyController::class, 'destroy'])->name('destroy')->middleware('can:delete-case-studies');
         });
 
         // Industries Module

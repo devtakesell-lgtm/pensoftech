@@ -84,7 +84,7 @@
 
             @can('view-case-studies')
                 <a class="nav {{ request()->routeIs('admin.case-studies*') ? 'active' : '' }}"
-                    href="{{ route('admin.case-studies') }}" title="Case Studies">
+                    href="{{ route('admin.case-studies.index') }}" title="Case Studies">
                     <i class="bi bi-bar-chart"></i>
                     <span class="nav-title">Case Studies</span>
                 </a>
