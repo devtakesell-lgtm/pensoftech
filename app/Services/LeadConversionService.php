@@ -28,7 +28,7 @@ class LeadConversionService
             $user = User::create([
                 'name' => $validatedData['contact_person'],
                 'email' => $validatedData['email'],
-                'phone' => $validatedData['phone'],
+                'phone' => $validatedData['phone'] ?? null,
                 'password' => Hash::make($password),
                 'role_id' => $role ? $role->id : null,
                 'is_active' => true,

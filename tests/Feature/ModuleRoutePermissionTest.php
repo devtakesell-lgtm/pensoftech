@@ -24,7 +24,7 @@ test('administrator can access all admin module routes', function (string $route
     'admin.quotes',
     'admin.services',
     'admin.projects',
-    'admin.case-studies',
+    'admin.case-studies.index',
     'admin.industries',
     'admin.pages',
     'admin.blog',
@@ -60,7 +60,7 @@ test('content writer can access content module routes but is forbidden from syst
     // Permitted routes
     $this->actingAs($writer)->get(route('admin.blog'))->assertStatus(200);
     $this->actingAs($writer)->get(route('admin.pages'))->assertStatus(200);
-    $this->actingAs($writer)->get(route('admin.case-studies'))->assertStatus(200);
+    $this->actingAs($writer)->get(route('admin.case-studies.index'))->assertStatus(200);
 
     // Forbidden routes
     $this->actingAs($writer)->get(route('admin.leads'))->assertStatus(403);
