@@ -181,12 +181,14 @@
                                 </div>
                             </td>
                             <td>
-                                @if (auth()->user()->can('edit-projects') && $project->status !== \App\Enums\ProjectStatus::Completed)
+                                {{-- @if (auth()->user()->can('edit-projects') && $project->status !== \App\Enums\ProjectStatus::Completed)
                                     <form action="{{ route('admin.projects.update-status', $project) }}" method="POST"
                                         class="d-inline">
                                         @csrf
                                         @method('PATCH')
-                                        <select name="status" onchange="this.form.submit()" class="lead-status-select">
+                                        <select name="status" data-original="{{ $project->status->value }}"
+                                            onchange="if(confirm('Are you sure you want to change this project\'s status?')) { this.form.submit(); } else { this.value = this.getAttribute('data-original'); }"
+                                            class="lead-status-select {{ $project->status->badgeClass() }}">
                                             @foreach ($statuses ?? [] as $statusOption)
                                                 <option value="{{ $statusOption->value }}"
                                                     {{ $project->status->value === $statusOption->value ? 'selected' : '' }}>
@@ -195,12 +197,12 @@
                                             @endforeach
                                         </select>
                                     </form>
-                                @else
-                                    <span class="status-badge {{ $project->status->badgeClass() }}">
-                                        <i class="bi {{ $project->status->icon() }} me-1"></i>
-                                        {{ $project->status->label() }}
-                                    </span>
-                                @endif
+                                @else --}}
+                                <span class="status-badge {{ $project->status->badgeClass() }}">
+                                    <i class="bi {{ $project->status->icon() }} me-1"></i>
+                                    {{ $project->status->label() }}
+                                </span>
+                                {{-- @endif --}}
                             </td>
                             <td>
                                 @if ($project->start_date)

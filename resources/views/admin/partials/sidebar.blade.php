@@ -1,11 +1,11 @@
 <aside class="sidebar" id="sidebar">
-    <div class="brand">
+    <a href="{{ route('admin.dashboard') }}" class="brand text-decoration-none d-flex align-items-center gap-2">
         <b class="logo">P</b>
         <div class="brand-info">
             <strong>PenSoftTech</strong>
             <small>AGENCY</small>
         </div>
-    </div>
+    </a>
 
     <div class="nav-section">
         <div class="label">MAIN</div>

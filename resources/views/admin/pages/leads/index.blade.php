@@ -252,7 +252,9 @@
                                             class="d-inline">
                                             @csrf
                                             @method('PATCH')
-                                            <select name="status" onchange="this.form.submit()"
+                                            <select name="status" 
+                                                data-original="{{ $lead->status->value }}"
+                                                onchange="if(confirm('Are you sure you want to change this lead\'s status?')) { this.form.submit(); } else { this.value = this.getAttribute('data-original'); }"
                                                 class="lead-status-select {{ $lead->status->badgeClass() }}">
                                                 @php
                                                     $pipelineStages = [

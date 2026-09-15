@@ -38,7 +38,7 @@ class IndustryController extends Controller
 
         $industries = $query->orderBy('sort_order', 'asc')
             ->latest()
-            ->paginate(15)
+            ->paginate(10)
             ->withQueryString();
 
         return view('admin.pages.industries.index')->with([

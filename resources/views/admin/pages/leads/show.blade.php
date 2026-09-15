@@ -82,7 +82,7 @@
             @elseif ($lead->status === \App\Enums\LeadStatus::Lost)
                 {{-- 3. Deal Lost: Smart Reopen Button --}}
                 @can('edit-leads')
-                    <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="d-inline">
+                    <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to change this lead\'s status?');">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="status" value="new">
@@ -95,7 +95,7 @@
                 {{-- 4. Active Stages: Smart Next Step CTA --}}
                 @can('edit-leads')
                     @if ($lead->status === \App\Enums\LeadStatus::New)
-                        <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="d-inline">
+                        <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to change this lead\'s status?');">
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name="status" value="contacted">
@@ -104,7 +104,7 @@
                             </button>
                         </form>
                     @elseif ($lead->status === \App\Enums\LeadStatus::Contacted)
-                        <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="d-inline">
+                        <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to change this lead\'s status?');">
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name="status" value="qualified">
@@ -212,7 +212,7 @@
                             $isDisabled = true;
                         }
                     @endphp
-                    <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="pipeline-step-form">
+                    <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="pipeline-step-form" onsubmit="return confirm('Are you sure you want to advance/change the pipeline stage?');">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="status" value="{{ $stage->value }}">
@@ -276,7 +276,7 @@
                     </div>
                 </div>
                 @can('edit-leads')
-                    <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="d-inline">
+                    <form action="{{ route('admin.leads.update-status', $lead) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to change this lead\'s status?');">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="status" value="new">

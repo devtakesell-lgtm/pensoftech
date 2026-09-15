@@ -68,7 +68,8 @@
             {{-- Smart Action Buttons based on lifecycle stage --}}
             @can('edit-projects')
                 @if ($project->status === \App\Enums\ProjectStatus::Upcoming)
-                    <form action="{{ route('admin.projects.update-status', $project) }}" method="POST" class="d-inline">
+                    <form action="{{ route('admin.projects.update-status', $project) }}" method="POST" class="d-inline"
+                        onsubmit="return confirm('Are you sure you want to change this project\'s status?');">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="status" value="ongoing">
@@ -77,7 +78,8 @@
                         </button>
                     </form>
                 @elseif ($project->status === \App\Enums\ProjectStatus::Ongoing)
-                    <form action="{{ route('admin.projects.update-status', $project) }}" method="POST" class="d-inline">
+                    <form action="{{ route('admin.projects.update-status', $project) }}" method="POST" class="d-inline"
+                        onsubmit="return confirm('Are you sure you want to change this project\'s status?');">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="status" value="completed">
@@ -86,7 +88,8 @@
                         </button>
                     </form>
                 @elseif ($project->status === \App\Enums\ProjectStatus::OnHold)
-                    <form action="{{ route('admin.projects.update-status', $project) }}" method="POST" class="d-inline">
+                    <form action="{{ route('admin.projects.update-status', $project) }}" method="POST" class="d-inline"
+                        onsubmit="return confirm('Are you sure you want to change this project\'s status?');">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="status" value="ongoing">
@@ -130,6 +133,7 @@
         if ($currentStageIndex === false) {
             $currentStageIndex = -1;
         }
+
     @endphp
 
 

@@ -34,7 +34,7 @@ class QuoteController extends Controller
             ->filter($filters)
             ->with(['lead.services', 'currency', 'creator', 'services.service'])
             ->latest()
-            ->paginate(15)
+            ->paginate(10)
             ->withQueryString();
 
         // Pipeline Metrics

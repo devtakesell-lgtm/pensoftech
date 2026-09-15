@@ -48,7 +48,7 @@ class ServiceCategoryController extends Controller
             $query->where('is_active', $isActive);
         }
 
-        $categories = $query->orderBy('sort_order', 'asc')->latest()->get();
+        $categories = $query->orderBy('sort_order', 'asc')->latest()->paginate(10)->withQueryString();
 
         return view('admin.pages.service-categories.index')->with([
             'categories' => $categories,

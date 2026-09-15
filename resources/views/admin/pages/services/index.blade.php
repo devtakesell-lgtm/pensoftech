@@ -43,7 +43,8 @@
                 <select name="category" onchange="this.form.submit()" class="filter-select">
                     <option value="">All Categories</option>
                     @foreach ($categories ?? [] as $category)
-                        <option value="{{ $category->id }}" {{ (string) ($currentCategory ?? '') === (string) $category->id ? 'selected' : '' }}>
+                        <option value="{{ $category->id }}"
+                            {{ (string) ($currentCategory ?? '') === (string) $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
                         </option>
                     @endforeach
@@ -52,7 +53,8 @@
                 <select name="status" onchange="this.form.submit()" class="filter-select">
                     <option value="">All Status</option>
                     @foreach ($statuses ?? [] as $status)
-                        <option value="{{ $status->value }}" {{ ($currentStatus ?? '') === $status->value ? 'selected' : '' }}>
+                        <option value="{{ $status->value }}"
+                            {{ ($currentStatus ?? '') === $status->value ? 'selected' : '' }}>
                             {{ $status->label() }}
                         </option>
                     @endforeach
@@ -85,8 +87,9 @@
                             <td>
                                 <div class="service-table-cell">
                                     <div class="service-thumb-box">
-                                        @if($service->featured_image)
-                                            <img src="{{ asset('storage/' . $service->featured_image) }}" alt="{{ $service->name }}">
+                                        @if ($service->featured_image)
+                                            <img src="{{ asset('storage/' . $service->featured_image) }}"
+                                                alt="{{ $service->name }}">
                                         @elseif($service->icon)
                                             <i class="bi {{ $service->icon }}"></i>
                                         @else
@@ -96,7 +99,7 @@
                                     <div>
                                         <strong class="service-name-text">
                                             {{ $service->name }}
-                                            @if($service->is_featured)
+                                            @if ($service->is_featured)
                                                 <span class="badge-featured ms-1" title="Featured on website">
                                                     <i class="bi bi-star-fill"></i> Featured
                                                 </span>
@@ -117,7 +120,7 @@
                                 </span>
                             </td>
                             <td>
-                                @if($service->status->value === 'published')
+                                @if ($service->status->value === 'published')
                                     <span class="status-badge service-status-published">
                                         <span class="status-dot status-dot-active"></span> Published
                                     </span>
@@ -137,8 +140,8 @@
                             <td class="text-end-align nowrap-cell">
                                 <div class="table-actions">
                                     @can('edit-services')
-                                        <a href="{{ route('admin.services.edit', $service) }}" class="btn-action btn-action-edit"
-                                            title="Edit Service">
+                                        <a href="{{ route('admin.services.edit', $service) }}"
+                                            class="btn-action btn-action-edit" title="Edit Service">
                                             <i class="bi bi-pencil-square"></i>
                                             <span>Edit</span>
                                         </a>
@@ -175,5 +178,10 @@
                 </tbody>
             </table>
         </div>
+        @if ($services->hasPages())
+            <div class="p-3 border-top d-flex justify-content-end">
+                {{ $services->links('pagination::bootstrap-5') }}
+            </div>
+        @endif
     </div>
 @endsection

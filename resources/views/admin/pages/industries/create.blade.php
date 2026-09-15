@@ -32,26 +32,22 @@
             @csrf
 
             <h5 class="fw-bold mb-4 border-bottom pb-2">Industry Details</h5>
-            
+
             <div class="row g-4 mb-4">
                 <div class="col-md-6">
-                    <label for="name" class="form-label fw-semibold">Industry Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
-                </div>
-                
-                <div class="col-md-6">
-                    <label for="icon" class="form-label fw-semibold">Bootstrap Icon Class</label>
-                    <input type="text" class="form-control" id="icon" name="icon" value="{{ old('icon') }}" placeholder="e.g. bi-tags">
+                    <label for="name" class="form-label fw-semibold">Industry Name <span
+                            class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}"
+                        required>
                 </div>
 
-                <div class="col-md-12">
-                    <x-admin.components.forms.image-upload 
-                        name="image" 
-                        label="Industry Cover Image" 
-                        aspect="banner" 
-                        help="Recommended: 800x400px. JPG, PNG, WEBP." 
-                    />
+                <div class="col-md-6">
+                    <label for="icon" class="form-label fw-semibold">Bootstrap Icon Class</label>
+                    <input type="text" class="form-control" id="icon" name="icon" value="{{ old('icon') }}"
+                        placeholder="e.g. bi-tags">
                 </div>
+
+
 
                 <div class="col-md-12">
                     <label for="short_description" class="form-label fw-semibold">Short Description</label>
@@ -65,19 +61,30 @@
             </div>
 
             <h5 class="fw-bold mb-4 border-bottom pb-2">Settings</h5>
-            
+
             <div class="row g-4 mb-4">
                 <div class="col-md-6">
                     <label for="sort_order" class="form-label fw-semibold">Sort Order</label>
-                    <input type="number" class="form-control" id="sort_order" name="sort_order" value="{{ old('sort_order', 0) }}" min="0">
+                    <input type="number" class="form-control" id="sort_order" name="sort_order"
+                        value="{{ old('sort_order', 0) }}" min="0">
                     <small class="text-muted">Lower numbers appear first.</small>
                 </div>
-                
+
                 <div class="col-md-6 d-flex align-items-center">
                     <div class="form-check form-switch mt-4">
-                        <input class="form-check-input" type="checkbox" role="switch" id="is_active" name="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }}>
+                        <input class="form-check-input" type="checkbox" role="switch" id="is_active" name="is_active"
+                            value="1" {{ old('is_active', true) ? 'checked' : '' }}>
                         <label class="form-check-label fw-semibold ms-2" for="is_active">Active Status</label>
                     </div>
+                </div>
+            </div>
+
+            <h5 class="fw-bold mb-4 border-bottom pb-2">Media</h5>
+
+            <div class="row g-4 mb-4">
+                <div class="col-md-12">
+                    <x-admin.components.forms.image-upload name="image" label="Industry Cover Image" aspect="banner"
+                        help="Recommended: 800x400px. JPG, PNG, WEBP." />
                 </div>
             </div>
 

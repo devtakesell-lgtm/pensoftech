@@ -73,8 +73,9 @@
                             <td>
                                 <div class="category-table-cell">
                                     <div class="category-thumb-box">
-                                        @if($category->image)
-                                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
+                                        @if ($category->image)
+                                            <img src="{{ asset('storage/' . $category->image) }}"
+                                                alt="{{ $category->name }}">
                                         @elseif($category->icon)
                                             <i class="bi {{ $category->icon }}"></i>
                                         @else
@@ -95,14 +96,15 @@
                             <td>
                                 <span class="category-count-badge">
                                     <i class="bi bi-layers-half"></i>
-                                    {{ $category->services_count ?? 0 }} {{ Str::plural('service', $category->services_count ?? 0) }}
+                                    {{ $category->services_count ?? 0 }}
+                                    {{ Str::plural('service', $category->services_count ?? 0) }}
                                 </span>
                             </td>
                             <td>
                                 <span class="text-secondary fw-semibold">{{ $category->sort_order }}</span>
                             </td>
                             <td>
-                                @if($category->is_active)
+                                @if ($category->is_active)
                                     <span class="badge status category-status-active">
                                         <i class="bi bi-check2-circle me-1"></i> Active
                                     </span>
@@ -115,21 +117,22 @@
                             <td class="text-end-align">
                                 <div class="table-actions">
                                     @can('edit-services')
-                                        <a href="{{ route('admin.service-categories.edit', $category) }}" 
-                                           class="btn-action btn-action-edit" 
-                                           title="Edit Category">
+                                        <a href="{{ route('admin.service-categories.edit', $category) }}"
+                                            class="btn-action btn-action-edit" title="Edit Category">
                                             <i class="bi bi-pencil-square"></i>
                                             <span>Edit</span>
                                         </a>
                                     @endcan
 
                                     @can('delete-services')
-                                        <form method="POST" action="{{ route('admin.service-categories.destroy', $category) }}" 
-                                              onsubmit="return confirm('Are you sure you want to delete category \'{{ addslashes($category->name) }}\'?');" 
-                                              class="d-inline">
+                                        <form method="POST"
+                                            action="{{ route('admin.service-categories.destroy', $category) }}"
+                                            onsubmit="return confirm('Are you sure you want to delete category \'{{ addslashes($category->name) }}\'?');"
+                                            class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn-action btn-action-delete btn-action-icon" title="Delete Category">
+                                            <button type="submit" class="btn-action btn-action-delete btn-action-icon"
+                                                title="Delete Category">
                                                 <i class="bi bi-trash3"></i>
                                             </button>
                                         </form>
@@ -146,7 +149,7 @@
                                     </div>
                                     <h5 class="fw-bold mb-1">No service categories found</h5>
                                     <p class="text-muted small mb-3">
-                                        @if(!empty($currentSearch) || !empty($currentStatus))
+                                        @if (!empty($currentSearch) || !empty($currentStatus))
                                             No categories match your active filters. Try clearing your search parameters.
                                         @else
                                             Get started by adding your first service category.
@@ -164,5 +167,11 @@
                 </tbody>
             </table>
         </div>
+
+        @if ($categories->hasPages())
+            <div class="p-3 border-top d-flex justify-content-end">
+                {{ $categories->links('pagination::bootstrap-5') }}
+            </div>
+        @endif
     </div>
 @endsection

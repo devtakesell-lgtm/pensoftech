@@ -43,7 +43,7 @@ class ServiceController extends Controller
             $query->where('status', $request->input('status'));
         }
 
-        $services = $query->orderBy('sort_order', 'asc')->latest()->get();
+        $services = $query->orderBy('sort_order', 'asc')->latest()->paginate(10)->withQueryString();
         $categories = ServiceCategory::select('id', 'name')->orderBy('name')->get();
 
         return view('admin.pages.services.index')->with([

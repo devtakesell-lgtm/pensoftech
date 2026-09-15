@@ -46,7 +46,7 @@ class ClientController extends Controller
             $clientsQuery->where('is_active', false);
         }
 
-        $clients = $clientsQuery->latest()->paginate(15)->withQueryString();
+        $clients = $clientsQuery->latest()->paginate(10)->withQueryString();
 
         $totalCount = Client::count();
         $activeCount = Client::where('is_active', true)->count();

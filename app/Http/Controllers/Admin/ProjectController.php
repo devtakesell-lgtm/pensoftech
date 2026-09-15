@@ -31,7 +31,7 @@ class ProjectController extends Controller
             ->filter($filters)
             ->with(['client', 'services'])
             ->latest()
-            ->paginate(15)
+            ->paginate(10)
             ->withQueryString();
 
         // KPIs
@@ -189,8 +189,8 @@ class ProjectController extends Controller
             'clients' => Client::select('id', 'contact_person')->orderBy('contact_person')->get(),
             'industries' => Industry::select('id', 'name')->orderBy('name')->get(),
             'services' => Service::select('id', 'name')->orderBy('name')->get(),
-            'statuses' => $isCreate 
-                ? [ProjectStatus::Upcoming, ProjectStatus::Ongoing] 
+            'statuses' => $isCreate
+                ? [ProjectStatus::Upcoming, ProjectStatus::Ongoing]
                 : ProjectStatus::cases(),
         ];
     }

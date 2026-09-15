@@ -46,7 +46,7 @@ class UserController extends Controller
             $query->where('is_active', $isActive);
         }
 
-        $users = $query->get();
+        $users = $query->paginate(10)->withQueryString();
         $roles = Role::where('name', '!=', 'client')->orderBy('name')->get();
 
         return view('admin.pages.users.index')->with([

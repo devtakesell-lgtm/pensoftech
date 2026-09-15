@@ -178,5 +178,11 @@
                 </tbody>
             </table>
         </div>
+
+        @if ($users->hasPages())
+            <div class="p-3 border-top d-flex justify-content-end">
+                {{ $users->links('pagination::bootstrap-5') }}
+            </div>
+        @endif
     </div>
 @endsection

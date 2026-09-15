@@ -41,7 +41,7 @@ class LeadController extends Controller
             ->filter($filters)
             ->with(['client', 'services', 'assignee', 'industry', 'currency'])
             ->latest()
-            ->paginate(15)
+            ->paginate(10)
             ->withQueryString();
 
         // Pipeline Metrics
