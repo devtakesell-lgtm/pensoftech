@@ -19,6 +19,27 @@ enum ProjectStatus: string
         };
     }
 
+    public function badgeClass(): string
+    {
+        return match ($this) {
+            self::Upcoming => 'status-badge-new',
+            self::Ongoing => 'status-badge-progress',
+            self::Completed => 'status-badge-won',
+            self::OnHold => 'status-badge-lost',
+        };
+    }
+
+    public function icon(): string
+    {
+        return match ($this) {
+            self::Upcoming => 'bi-calendar-event',
+            self::Ongoing => 'bi-arrow-repeat',
+            self::Completed => 'bi-check2-circle',
+            self::OnHold => 'bi-pause-circle',
+        };
+    }
+
+
     public static function options(): array
     {
         return array_map(fn ($case) => ['value' => $case->value, 'label' => $case->label()], self::cases());

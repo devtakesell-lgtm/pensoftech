@@ -48,7 +48,7 @@ test('all admin pages return a successful response for authenticated staff', fun
     'admin.clients',
     'admin.quotes',
     'admin.services',
-    'admin.projects',
+    'admin.projects.index',
     'admin.case-studies.index',
     'admin.industries',
     'admin.pages',

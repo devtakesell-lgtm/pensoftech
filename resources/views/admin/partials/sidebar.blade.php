@@ -76,7 +76,7 @@
 
             @can('view-projects')
                 <a class="nav {{ request()->routeIs('admin.projects*') ? 'active' : '' }}"
-                    href="{{ route('admin.projects') }}" title="Projects">
+                    href="{{ route('admin.projects.index') }}" title="Projects">
                     <i class="bi bi-kanban"></i>
                     <span class="nav-title">Projects</span>
                 </a>

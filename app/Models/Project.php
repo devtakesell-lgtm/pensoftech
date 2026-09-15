@@ -66,4 +66,21 @@ class Project extends Model
     {
         return $this->morphOne(SeoMeta::class, 'seoable');
     }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhereHas('client', function ($query) use ($search) {
+                        $query->where('company_name', 'like', '%' . $search . '%')
+                            ->orWhere('contact_person', 'like', '%' . $search . '%');
+                    });
+            });
+        })->when($filters['status'] ?? null, function ($query, $status) {
+            $query->where('status', $status);
+        })->when($filters['industry_id'] ?? null, function ($query, $industry_id) {
+            $query->where('industry_id', $industry_id);
+        });
+    }
 }

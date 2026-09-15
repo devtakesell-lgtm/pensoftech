@@ -23,7 +23,7 @@ test('administrator can access all admin module routes', function (string $route
     'admin.clients',
     'admin.quotes',
     'admin.services',
-    'admin.projects',
+    'admin.projects.index',
     'admin.case-studies.index',
     'admin.industries',
     'admin.pages',

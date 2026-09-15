@@ -9,6 +9,7 @@
 @import "./pages/service-categories.css";
 @import "./pages/leads.css";
 @import "./pages/quotes.css";
+@import "./pages/projects.css";
 
 * {
     box-sizing: border-box

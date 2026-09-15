@@ -119,7 +119,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Projects Module
         Route::prefix('projects')->group(function () {
-            Route::get('/', [AdminProjectController::class, 'index'])->name('projects')->middleware('can:view-projects');
+            Route::get('/', [AdminProjectController::class, 'index'])->name('projects.index')->middleware('can:view-projects');
+            Route::get('/create', [AdminProjectController::class, 'create'])->name('projects.create')->middleware('can:create-projects');
+            Route::post('/', [AdminProjectController::class, 'store'])->name('projects.store')->middleware('can:create-projects');
+            Route::get('/{project}', [AdminProjectController::class, 'show'])->name('projects.show')->middleware('can:view-projects');
+            Route::get('/{project}/edit', [AdminProjectController::class, 'edit'])->name('projects.edit')->middleware('can:edit-projects');
+            Route::put('/{project}', [AdminProjectController::class, 'update'])->name('projects.update')->middleware('can:edit-projects');
+            Route::patch('/{project}/status', [AdminProjectController::class, 'updateStatus'])->name('projects.update-status')->middleware('can:edit-projects');
+            Route::delete('/{project}', [AdminProjectController::class, 'destroy'])->name('projects.destroy')->middleware('can:delete-projects');
         });
 
         // Case Studies Module

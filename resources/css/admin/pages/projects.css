@@ -1,0 +1,58 @@
+/* ==========================================================================
+   PROJECT MODULE STYLES
+   ========================================================================== */
+
+.status-badge-new,
+.status-badge-progress,
+.status-badge-won,
+.status-badge-lost {
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+/* Upcoming (New) */
+.status-badge-new {
+    background: #eeeaff;
+    color: #7052e9;
+}
+
+/* Ongoing (Progress) */
+.status-badge-progress {
+    background: #eaf4ff;
+    color: #3184dc;
+}
+
+/* Completed (Won) */
+.status-badge-won {
+    background: #e5f8ef;
+    color: #159769;
+}
+
+/* On Hold (Lost) */
+.status-badge-lost {
+    background: #fff0e5;
+    color: #d47d29;
+}
+
+/* Ensure the status dropdown inherits the styling properly */
+select.lead-status-select.status-badge-new,
+select.lead-status-select.status-badge-progress,
+select.lead-status-select.status-badge-won,
+select.lead-status-select.status-badge-lost {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 25px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 10px 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+}

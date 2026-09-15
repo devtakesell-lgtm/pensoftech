@@ -57,7 +57,7 @@ class NotificationDropdown extends Component
                     'icon' => 'bi-kanban-fill',
                     'color' => 'blue',
                     'unread' => true,
-                    'link' => route('admin.projects'),
+                    'link' => route('admin.projects.index'),
                 ],
                 [
                     'id' => 4,
