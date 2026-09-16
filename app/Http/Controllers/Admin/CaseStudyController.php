@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\SolutionStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCaseStudyRequest;
 use App\Http\Requests\Admin\UpdateCaseStudyRequest;
 use App\Models\CaseStudy;
 use App\Models\Project;
+use App\Services\CaseStudyService;
 use App\Traits\HandlesImageUploads;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
@@ -36,34 +38,18 @@ class CaseStudyController extends Controller
 
         return view('admin.pages.case-studies.create')->with([
             'projects' => $projects,
+            'solutionStatuses' => SolutionStatus::cases(),
         ]);
     }
 
-    public function store(StoreCaseStudyRequest $request): RedirectResponse
+    public function store(StoreCaseStudyRequest $request, CaseStudyService $caseStudyService): RedirectResponse
     {
         $validated = $request->validated();
 
         $validated['slug'] = Str::slug($validated['title']);
         $validated['featured_image'] = $this->handleImageUpload($request->file('image'), 'case-studies', 1200);
 
-        $caseStudy = CaseStudy::create($validated);
-
-        if (isset($validated['metrics']) && is_array($validated['metrics'])) {
-            $metricsData = [];
-            foreach ($validated['metrics'] as $index => $metric) {
-                if (!empty($metric['metric_name'])) {
-                    $metricsData[] = [
-                        'metric_name' => $metric['metric_name'],
-                        'metric_value' => $metric['metric_value'] ?? null,
-                        'metric_suffix' => $metric['metric_suffix'] ?? null,
-                        'sort_order' => $index,
-                    ];
-                }
-            }
-            if (!empty($metricsData)) {
-                $caseStudy->metrics()->createMany($metricsData);
-            }
-        }
+        $caseStudyService->storeCaseStudy($validated);
 
         return redirect()->route('admin.case-studies.index')
             ->with('success', 'Case Study created successfully.');
@@ -73,7 +59,7 @@ class CaseStudyController extends Controller
     {
         Gate::authorize('view-case-studies');
 
-        $caseStudy->load(['project', 'metrics']);
+        $caseStudy->load(['project', 'metrics', 'challenges.solutions']);
 
         return view('admin.pages.case-studies.show')->with([
             'caseStudy' => $caseStudy,
@@ -84,16 +70,17 @@ class CaseStudyController extends Controller
     {
         Gate::authorize('edit-case-studies');
 
-        $caseStudy->load('metrics');
+        $caseStudy->load(['metrics', 'challenges.solutions']);
         $projects = Project::where('status', 'Completed')->latest()->get();
 
         return view('admin.pages.case-studies.edit')->with([
             'caseStudy' => $caseStudy,
             'projects' => $projects,
+            'solutionStatuses' => SolutionStatus::cases(),
         ]);
     }
 
-    public function update(UpdateCaseStudyRequest $request, CaseStudy $caseStudy): RedirectResponse
+    public function update(UpdateCaseStudyRequest $request, CaseStudy $caseStudy, CaseStudyService $caseStudyService): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -103,27 +90,7 @@ class CaseStudyController extends Controller
             $validated['featured_image'] = $this->handleImageUpload($request->file('image'), 'case-studies', 1200, $caseStudy->featured_image);
         }
 
-        $caseStudy->update($validated);
-
-        // Sync metrics - delete old ones and recreate to keep it simple
-        $caseStudy->metrics()->delete();
-
-        if (isset($validated['metrics']) && is_array($validated['metrics'])) {
-            $metricsData = [];
-            foreach ($validated['metrics'] as $index => $metric) {
-                if (!empty($metric['metric_name'])) {
-                    $metricsData[] = [
-                        'metric_name' => $metric['metric_name'],
-                        'metric_value' => $metric['metric_value'] ?? null,
-                        'metric_suffix' => $metric['metric_suffix'] ?? null,
-                        'sort_order' => $index,
-                    ];
-                }
-            }
-            if (!empty($metricsData)) {
-                $caseStudy->metrics()->createMany($metricsData);
-            }
-        }
+        $caseStudyService->updateCaseStudy($caseStudy, $validated);
 
         return redirect()->route('admin.case-studies.index')
             ->with('success', 'Case Study updated successfully.');

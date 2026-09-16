@@ -5,25 +5,21 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\LeadSource;
 use App\Enums\LeadStatus;
 use App\Enums\LeadType;
+use App\Enums\QuoteStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ConvertLeadRequest;
 use App\Http\Requests\Admin\StoreLeadRequest;
 use App\Http\Requests\Admin\UpdateLeadRequest;
 use App\Http\Requests\Admin\UpdateLeadStatusRequest;
-use App\Http\Requests\Admin\ConvertLeadRequest;
-use App\Models\Client;
 use App\Models\Currency;
 use App\Models\Industry;
 use App\Models\Lead;
 use App\Models\Service;
 use App\Models\User;
-use App\Models\Role;
 use App\Services\LeadConversionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class LeadController extends Controller
@@ -127,7 +123,7 @@ class LeadController extends Controller
             'defaultCurrency' => Currency::default(),
             'assignees' => $assignees,
             'currencies' => $currencies,
-            'quoteStatuses' => \App\Enums\QuoteStatus::initialCases(),
+            'quoteStatuses' => QuoteStatus::initialCases(),
         ]);
     }
 
@@ -152,7 +148,7 @@ class LeadController extends Controller
     {
         Gate::authorize('edit-leads');
 
-        if (!$lead->status->isValidTransitionTo($request->validated('status'))) {
+        if (! $lead->status->isValidTransitionTo($request->validated('status'))) {
             return back()->with('error', 'Cannot revert an active lead to a previous pipeline stage.');
         }
 
@@ -197,7 +193,7 @@ class LeadController extends Controller
 
         $newStatus = $request->validated('status');
 
-        if (!$lead->status->isValidTransitionTo($newStatus)) {
+        if (! $lead->status->isValidTransitionTo($newStatus)) {
             return back()->with('error', 'Cannot revert an active lead to a previous pipeline stage.');
         }
 

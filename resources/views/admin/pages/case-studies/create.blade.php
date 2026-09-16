@@ -70,19 +70,81 @@
                             </select>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
-                                <label for="challenge" class="form-label fw-semibold">The Challenge <span
-                                        class="text-danger">*</span></label>
-                                <textarea name="challenge" id="challenge" class="form-control" rows="4" required
-                                    placeholder="What problem did the client face?">{{ old('challenge') }}</textarea>
+                        {{-- Dynamic Challenges & Solutions Alpine Component --}}
+                        <div class="mb-4" x-data="{
+                            challenges: {{ json_encode(old('challenges', [['title' => '', 'description' => '', 'solutions' => [['description' => '', 'status' => '']]]])) }},
+                            addChallenge() {
+                                this.challenges.push({ title: '', description: '', solutions: [{ description: '', status: '' }] });
+                            },
+                            removeChallenge(index) {
+                                if (this.challenges.length > 1) {
+                                    this.challenges.splice(index, 1);
+                                }
+                            },
+                            addSolution(challengeIndex) {
+                                this.challenges[challengeIndex].solutions.push({ description: '', status: '' });
+                            },
+                            removeSolution(challengeIndex, solutionIndex) {
+                                if (this.challenges[challengeIndex].solutions.length > 1) {
+                                    this.challenges[challengeIndex].solutions.splice(solutionIndex, 1);
+                                }
+                            }
+                        }">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <label class="form-label fw-semibold mb-0">Challenges & Solutions <span class="text-danger">*</span></label>
+                                <button type="button" class="btn btn-sm light" @click="addChallenge()">
+                                    <i class="bi bi-plus"></i> Add Challenge
+                                </button>
                             </div>
-                            <div class="col-md-6 mb-4">
-                                <label for="solution" class="form-label fw-semibold">Our Solution <span
-                                        class="text-danger">*</span></label>
-                                <textarea name="solution" id="solution" class="form-control" rows="4" required
-                                    placeholder="How did we solve it?">{{ old('solution') }}</textarea>
-                            </div>
+
+                            <template x-for="(challenge, challengeIndex) in challenges" :key="challengeIndex">
+                                <div class="p-3 bg-light rounded mb-3 border">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6 class="fw-bold mb-0" x-text="'Challenge ' + (challengeIndex + 1)"></h6>
+                                        <button type="button" class="btn btn-sm btn-link text-danger p-0" @click="removeChallenge(challengeIndex)" x-show="challenges.length > 1">
+                                            <i class="bi bi-x-circle"></i> Remove Challenge
+                                        </button>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-semibold">Challenge Title</label>
+                                        <input type="text" class="form-control" x-model="challenge.title" :name="'challenges[' + challengeIndex + '][title]'" placeholder="e.g. Website was very slow" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-semibold">Challenge Description (Optional)</label>
+                                        <textarea class="form-control" rows="2" x-model="challenge.description" :name="'challenges[' + challengeIndex + '][description]'"></textarea>
+                                    </div>
+
+                                    <div class="ps-3 border-start border-2 border-primary mt-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <label class="form-label small fw-semibold mb-0">Solution Attempts</label>
+                                            <button type="button" class="btn btn-sm btn-outline-primary py-0" @click="addSolution(challengeIndex)">
+                                                <i class="bi bi-plus"></i> Add Solution
+                                            </button>
+                                        </div>
+                                        
+                                        <template x-for="(solution, solutionIndex) in challenge.solutions" :key="solutionIndex">
+                                            <div class="row align-items-center mb-2">
+                                                <div class="col-md-7">
+                                                    <input type="text" class="form-control form-control-sm" x-model="solution.description" :name="'challenges[' + challengeIndex + '][solutions][' + solutionIndex + '][description]'" placeholder="What did you try?" required>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-select form-select-sm" x-model="solution.status" :name="'challenges[' + challengeIndex + '][solutions][' + solutionIndex + '][status]'">
+                                                        <option value="">Status...</option>
+                                                        @foreach ($solutionStatuses as $status)
+                                                            <option value="{{ $status->value }}">{{ $status->label() }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-1 text-end">
+                                                    <button type="button" class="btn btn-sm btn-link text-danger p-0" @click="removeSolution(challengeIndex, solutionIndex)" x-show="challenge.solutions.length > 1">
+                                                        <i class="bi bi-x"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
                         </div>
 
                         <div class="mb-4">

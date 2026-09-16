@@ -90,7 +90,7 @@ test('user with create-projects permission can create and store project', functi
     ]);
 
     $project = Project::where('title', 'Beta Software Suite')->first();
-    
+
     $response->assertRedirect(route('admin.projects.show', $project));
     $response->assertSessionHas('success');
 
@@ -103,7 +103,7 @@ test('user with create-projects permission can create and store project', functi
 
     expect($project->services)->toHaveCount(1);
     expect($project->services->first()->id)->toBe($service->id);
-    
+
     // Verify file was stored
     Storage::disk('public')->assertExists($project->featured_image);
 });

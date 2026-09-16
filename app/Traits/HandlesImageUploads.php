@@ -4,6 +4,8 @@ namespace App\Traits;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Encoders\WebpEncoder;
+use Intervention\Image\Laravel\Facades\Image;
 
 trait HandlesImageUploads
 {
@@ -28,13 +30,13 @@ trait HandlesImageUploads
         }
 
         // Use Intervention Image to resize and convert
-        $image = \Intervention\Image\Laravel\Facades\Image::decode($file);
+        $image = Image::decode($file);
         $image->scaleDown(width: $width);
 
-        $filename = uniqid() . '_' . time() . '.webp';
-        $path = $folder . '/' . $filename;
-        
-        $encoded = $image->encode(new \Intervention\Image\Encoders\WebpEncoder(80));
+        $filename = uniqid().'_'.time().'.webp';
+        $path = $folder.'/'.$filename;
+
+        $encoded = $image->encode(new WebpEncoder(80));
         Storage::disk('public')->put($path, (string) $encoded);
 
         return $path;

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\ContentStatus;
+use App\Enums\SolutionStatus;
 use App\Models\CaseStudy;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -28,13 +29,34 @@ class CaseStudyFactory extends Factory
             'project_id' => null,
             'title' => $title,
             'slug' => Str::slug($title),
-            'challenge' => fake()->paragraph(),
-            'solution' => fake()->paragraph(),
             'result' => fake()->paragraph(),
             'content' => fake()->paragraphs(5, true),
             'featured_image' => 'https://picsum.photos/seed/'.Str::slug($title).'/1200/630',
             'status' => ContentStatus::Published,
             'published_at' => fake()->dateTimeBetween('-1 year', 'now'),
         ];
+    }
+
+    /**
+     * Configure the model factory.
+     */
+    public function configure(): static
+    {
+        return $this->afterCreating(function (CaseStudy $caseStudy) {
+            $challenge = $caseStudy->challenges()->create([
+                'title' => fake()->sentence(),
+                'description' => fake()->paragraph(),
+            ]);
+
+            $challenge->solutions()->create([
+                'description' => fake()->paragraph(),
+                'status' => fake()->randomElement(SolutionStatus::cases()),
+            ]);
+
+            $challenge->solutions()->create([
+                'description' => fake()->paragraph(),
+                'status' => fake()->randomElement(SolutionStatus::cases()),
+            ]);
+        });
     }
 }

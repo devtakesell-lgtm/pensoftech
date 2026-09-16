@@ -13,8 +13,6 @@ return new class extends Migration
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('challenge')->nullable();
-            $table->text('solution')->nullable();
             $table->text('result')->nullable();
             $table->longText('content')->nullable();
             $table->string('featured_image')->nullable();

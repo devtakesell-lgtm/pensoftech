@@ -75,27 +75,47 @@
         <div>
             <div class="dossier-card">
                 <h3 class="dossier-card-title">
-                    <i class="bi bi-exclamation-triangle-fill text-warning"></i> The Challenge
+                    <i class="bi bi-exclamation-triangle-fill text-warning"></i> Challenges & Solutions
                 </h3>
-                @if ($caseStudy->challenge)
-                    <div class="dossier-message-box">
-                        {!! nl2br(e($caseStudy->challenge)) !!}
+                @if ($caseStudy->challenges->isNotEmpty())
+                    <div class="accordion mt-3" id="challengesAccordion">
+                        @foreach ($caseStudy->challenges as $index => $challenge)
+                            <div class="accordion-item mb-2 border rounded">
+                                <h2 class="accordion-header" id="heading-{{ $index }}">
+                                    <button class="accordion-button {{ $index === 0 ? '' : 'collapsed' }} fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $index }}" aria-expanded="{{ $index === 0 ? 'true' : 'false' }}" aria-controls="collapse-{{ $index }}">
+                                        Challenge {{ $index + 1 }}: {{ $challenge->title }}
+                                    </button>
+                                </h2>
+                                <div id="collapse-{{ $index }}" class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}" aria-labelledby="heading-{{ $index }}" data-bs-parent="#challengesAccordion">
+                                    <div class="accordion-body">
+                                        @if($challenge->description)
+                                            <p class="mb-3 text-muted">{{ $challenge->description }}</p>
+                                        @endif
+                                        
+                                        <h6 class="fw-bold mb-2"><i class="bi bi-wrench text-primary"></i> Solution Attempts:</h6>
+                                        @if($challenge->solutions->isNotEmpty())
+                                            <ul class="list-group list-group-flush">
+                                                @foreach($challenge->solutions as $solution)
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0 bg-transparent">
+                                                        <span>{{ $solution->description }}</span>
+                                                        @if($solution->status)
+                                                            <span class="badge {{ $solution->status->badgeClass() }}">
+                                                                {{ $solution->status->label() }}
+                                                            </span>
+                                                        @endif
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <p class="text-muted small fst-italic mb-0">No solution attempts recorded.</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 @else
-                    <p class="text-muted fst-italic">No challenge documented.</p>
-                @endif
-            </div>
-
-            <div class="dossier-card">
-                <h3 class="dossier-card-title">
-                    <i class="bi bi-lightbulb-fill text-success"></i> Our Solution
-                </h3>
-                @if ($caseStudy->solution)
-                    <div class="dossier-message-box">
-                        {!! nl2br(e($caseStudy->solution)) !!}
-                    </div>
-                @else
-                    <p class="text-muted fst-italic">No solution documented.</p>
+                    <p class="text-muted fst-italic">No challenges documented.</p>
                 @endif
             </div>
 

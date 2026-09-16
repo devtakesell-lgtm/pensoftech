@@ -5,6 +5,8 @@ namespace App\Http\Requests\Admin;
 use App\Enums\QuoteStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class StoreQuoteRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class StoreQuoteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return \Illuminate\Support\Facades\Gate::allows('create-quotes');
+        return Gate::allows('create-quotes');
     }
 
     /**
@@ -30,7 +32,7 @@ class StoreQuoteRequest extends FormRequest
             'description' => ['nullable', 'string'],
             'budget_min' => ['nullable', 'numeric', 'min:0'],
             'budget_max' => ['nullable', 'numeric', 'min:0', 'gte:budget_min'],
-            'status' => ['required', 'string', \Illuminate\Validation\Rule::in([QuoteStatus::Draft->value, QuoteStatus::Sent->value])],
+            'status' => ['required', 'string', Rule::in([QuoteStatus::Draft->value, QuoteStatus::Sent->value])],
             'valid_until' => ['nullable', 'date'],
             'redirect_to' => ['nullable', 'string', 'in:lead,quote'],
         ];

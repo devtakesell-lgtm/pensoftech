@@ -22,8 +22,6 @@ class CaseStudy extends Model
         'project_id',
         'title',
         'slug',
-        'challenge',
-        'solution',
         'result',
         'content',
         'featured_image',
@@ -31,10 +29,26 @@ class CaseStudy extends Model
         'published_at',
     ];
 
-    protected $casts = [
-        'status' => ContentStatus::class,
-        'published_at' => 'datetime',
-    ];
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'status' => ContentStatus::class,
+            'published_at' => 'datetime',
+        ];
+    }
+
+    /**
+     * Get the challenges for the case study.
+     */
+    public function challenges(): HasMany
+    {
+        return $this->hasMany(CaseStudyChallenge::class);
+    }
 
     public function project(): BelongsTo
     {

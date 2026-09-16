@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Enums\QuoteStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class UpdateQuoteRequest extends FormRequest
 {
@@ -12,7 +15,7 @@ class UpdateQuoteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return \Illuminate\Support\Facades\Gate::allows('edit-quotes');
+        return Gate::allows('edit-quotes');
     }
 
     /**
@@ -29,7 +32,7 @@ class UpdateQuoteRequest extends FormRequest
             'description' => ['nullable', 'string'],
             'budget_min' => ['nullable', 'numeric', 'min:0'],
             'budget_max' => ['nullable', 'numeric', 'min:0', 'gte:budget_min'],
-            'status' => ['required', 'string', \Illuminate\Validation\Rule::enum(\App\Enums\QuoteStatus::class)],
+            'status' => ['required', 'string', Rule::enum(QuoteStatus::class)],
             'valid_until' => ['nullable', 'date'],
         ];
     }

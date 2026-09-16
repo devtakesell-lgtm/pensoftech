@@ -11,9 +11,11 @@ use App\Models\Industry;
 use App\Models\Project;
 use App\Models\Service;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class ProjectController extends Controller
@@ -21,7 +23,7 @@ class ProjectController extends Controller
     /**
      * Display a listing of agency client projects.
      */
-    public function index(\Illuminate\Http\Request $request): View
+    public function index(Request $request): View
     {
         Gate::authorize('view-projects');
 
@@ -163,7 +165,7 @@ class ProjectController extends Controller
             ->with('success', 'Project deleted successfully.');
     }
 
-    public function updateStatus(\Illuminate\Http\Request $request, Project $project): RedirectResponse
+    public function updateStatus(Request $request, Project $project): RedirectResponse
     {
         Gate::authorize('edit-projects');
 
@@ -172,7 +174,7 @@ class ProjectController extends Controller
         }
 
         $validated = $request->validate([
-            'status' => ['required', \Illuminate\Validation\Rule::enum(ProjectStatus::class)],
+            'status' => ['required', Rule::enum(ProjectStatus::class)],
         ]);
 
         $project->update(['status' => $validated['status']]);

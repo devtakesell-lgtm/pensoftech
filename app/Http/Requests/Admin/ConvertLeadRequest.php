@@ -14,9 +14,9 @@ class ConvertLeadRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        if ($this->website && !preg_match('~^(?:f|ht)tps?://~i', $this->website)) {
+        if ($this->website && ! preg_match('~^(?:f|ht)tps?://~i', $this->website)) {
             $this->merge([
-                'website' => 'https://' . $this->website,
+                'website' => 'https://'.$this->website,
             ]);
         }
     }
