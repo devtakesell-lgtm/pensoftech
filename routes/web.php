@@ -151,8 +151,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
         // CMS Pages Module
-        Route::prefix('pages')->group(function () {
-            Route::get('/', [AdminPageController::class, 'index'])->name('pages')->middleware('can:view-pages');
+        Route::prefix('pages')->name('pages.')->group(function () {
+            Route::get('/', [AdminPageController::class, 'index'])->name('index')->middleware('can:view-pages');
+            Route::get('/create', [AdminPageController::class, 'create'])->name('create')->middleware('can:create-pages');
+            Route::post('/', [AdminPageController::class, 'store'])->name('store')->middleware('can:create-pages');
+            Route::get('/{page}', [AdminPageController::class, 'show'])->name('show')->middleware('can:view-pages');
+            Route::get('/{page}/edit', [AdminPageController::class, 'edit'])->name('edit')->middleware('can:edit-pages');
+            Route::put('/{page}', [AdminPageController::class, 'update'])->name('update')->middleware('can:edit-pages');
+            Route::delete('/{page}', [AdminPageController::class, 'destroy'])->name('destroy')->middleware('can:delete-pages');
         });
 
         // Blog Module

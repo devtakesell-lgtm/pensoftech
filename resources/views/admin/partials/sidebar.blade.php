@@ -102,7 +102,7 @@
         @canany(['view-pages', 'view-blogs', 'view-jobs'])
             <div class="label">CONTENT</div>
             @can('view-pages')
-                <a class="nav {{ request()->routeIs('admin.pages*') ? 'active' : '' }}" href="{{ route('admin.pages') }}"
+                <a class="nav {{ request()->routeIs('admin.pages*') ? 'active' : '' }}" href="{{ route('admin.pages.index') }}"
                     title="Pages">
                     <i class="bi bi-file-richtext"></i>
                     <span class="nav-title">Pages</span>
