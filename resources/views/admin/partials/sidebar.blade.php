@@ -132,7 +132,7 @@
                     </a>
                     <div class="collapse {{ $isJobsActive ? 'show' : '' }} nav-submenu" id="jobsSubmenu">
                         <a class="nav-sub-link {{ request()->routeIs('admin.jobs*') ? 'active' : '' }}"
-                            href="#">
+                            href="{{ route('admin.jobs.index') }}">
                             <i class="bi bi-briefcase"></i>
                             <span>All Jobs</span>
                         </a>

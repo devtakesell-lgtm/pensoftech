@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AnalyticsController as AdminAnalyticsController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\JobCategoryController as AdminJobCategoryController;
+use App\Http\Controllers\Admin\JobController as AdminJobController;
 use App\Http\Controllers\Admin\CaseStudyController as AdminCaseStudyController;
 use App\Http\Controllers\Admin\ClientController as AdminClientController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -165,8 +166,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::prefix('blog')->group(function () {
             Route::get('/', [AdminBlogController::class, 'index'])->name('blog')->middleware('can:view-blogs');
         });
-
         // Careers / Jobs Module
+        Route::prefix('jobs')->name('jobs.')->group(function () {
+            Route::get('/', [AdminJobController::class, 'index'])->name('index')->middleware('can:view-jobs');
+            Route::get('/create', [AdminJobController::class, 'create'])->name('create')->middleware('can:create-jobs');
+            Route::post('/', [AdminJobController::class, 'store'])->name('store')->middleware('can:create-jobs');
+            Route::get('/{job}/edit', [AdminJobController::class, 'edit'])->name('edit')->middleware('can:edit-jobs');
+            Route::put('/{job}', [AdminJobController::class, 'update'])->name('update')->middleware('can:edit-jobs');
+            Route::delete('/{job}', [AdminJobController::class, 'destroy'])->name('destroy')->middleware('can:delete-jobs');
+        });
+
         Route::prefix('job-categories')->name('job-categories.')->group(function () {
             Route::get('/', [AdminJobCategoryController::class, 'index'])->name('index')->middleware('can:view-jobs');
             Route::get('/create', [AdminJobCategoryController::class, 'create'])->name('create')->middleware('can:create-jobs');
