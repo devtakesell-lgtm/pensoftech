@@ -118,11 +118,36 @@
             @endcan
 
             @can('view-jobs')
-                <a class="nav {{ request()->routeIs('admin.careers*') ? 'active' : '' }}" href="{{ route('admin.careers') }}"
-                    title="Careers">
-                    <i class="bi bi-briefcase"></i>
-                    <span class="nav-title">Careers</span>
-                </a>
+                @php
+                    $isJobsActive =
+                        request()->routeIs('admin.jobs*') || request()->routeIs('admin.job-categories*') || request()->routeIs('admin.job-applications*');
+                @endphp
+                <div class="nav-item-dropdown {{ $isJobsActive ? 'open' : '' }}">
+                    <a class="nav nav-parent {{ $isJobsActive ? 'parent-active' : 'collapsed' }}" data-bs-toggle="collapse"
+                        href="#jobsSubmenu" role="button" aria-expanded="{{ $isJobsActive ? 'true' : 'false' }}"
+                        aria-controls="jobsSubmenu" title="Careers">
+                        <i class="bi bi-briefcase"></i>
+                        <span class="nav-title">Careers</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                    <div class="collapse {{ $isJobsActive ? 'show' : '' }} nav-submenu" id="jobsSubmenu">
+                        <a class="nav-sub-link {{ request()->routeIs('admin.jobs*') ? 'active' : '' }}"
+                            href="#">
+                            <i class="bi bi-briefcase"></i>
+                            <span>All Jobs</span>
+                        </a>
+                        <a class="nav-sub-link {{ request()->routeIs('admin.job-categories*') ? 'active' : '' }}"
+                            href="{{ route('admin.job-categories.index') }}">
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Categories</span>
+                        </a>
+                        <a class="nav-sub-link {{ request()->routeIs('admin.job-applications*') ? 'active' : '' }}"
+                            href="#">
+                            <i class="bi bi-file-earmark-person"></i>
+                            <span>Applications</span>
+                        </a>
+                    </div>
+                </div>
             @endcan
         @endcanany
 
