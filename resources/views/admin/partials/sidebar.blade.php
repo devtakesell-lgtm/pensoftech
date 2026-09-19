@@ -102,8 +102,8 @@
         @canany(['view-pages', 'view-blogs', 'view-jobs'])
             <div class="label">CONTENT</div>
             @can('view-pages')
-                <a class="nav {{ request()->routeIs('admin.pages*') ? 'active' : '' }}" href="{{ route('admin.pages.index') }}"
-                    title="Pages">
+                <a class="nav {{ request()->routeIs('admin.pages*') ? 'active' : '' }}"
+                    href="{{ route('admin.pages.index') }}" title="Pages">
                     <i class="bi bi-file-richtext"></i>
                     <span class="nav-title">Pages</span>
                 </a>
@@ -120,7 +120,9 @@
             @can('view-jobs')
                 @php
                     $isJobsActive =
-                        request()->routeIs('admin.jobs*') || request()->routeIs('admin.job-categories*') || request()->routeIs('admin.job-applications*');
+                        request()->routeIs('admin.jobs*') ||
+                        request()->routeIs('admin.job-categories*') ||
+                        request()->routeIs('admin.job-applications*');
                 @endphp
                 <div class="nav-item-dropdown {{ $isJobsActive ? 'open' : '' }}">
                     <a class="nav nav-parent {{ $isJobsActive ? 'parent-active' : 'collapsed' }}" data-bs-toggle="collapse"
@@ -142,7 +144,7 @@
                             <span>Categories</span>
                         </a>
                         <a class="nav-sub-link {{ request()->routeIs('admin.job-applications*') ? 'active' : '' }}"
-                            href="#">
+                            href="{{ route('admin.job-applications.index') }}">
                             <i class="bi bi-file-earmark-person"></i>
                             <span>Applications</span>
                         </a>

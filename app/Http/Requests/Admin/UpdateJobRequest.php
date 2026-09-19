@@ -34,12 +34,12 @@ class UpdateJobRequest extends FormRequest
             'status' => ['required', 'string', Rule::enum(JobStatus::class)],
         ];
     }
-    
+
     public function prepareForValidation()
     {
-        if (empty($this->slug) && !empty($this->title)) {
+        if (empty($this->slug) && ! empty($this->title)) {
             $this->merge([
-                'slug' => \Str::slug($this->title)
+                'slug' => \Str::slug($this->title),
             ]);
         }
     }

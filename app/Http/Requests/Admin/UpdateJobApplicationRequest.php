@@ -2,19 +2,19 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Enums\JobApplicationStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
-class UpdateJobCategoryRequest extends FormRequest
+class UpdateJobApplicationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Gate::allows('edit-jobs');
+        return $this->user()->can('edit-job-applications');
     }
 
     /**
@@ -25,13 +25,9 @@ class UpdateJobCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'slug' => [
-                'nullable',
-                'string',
-                'max:255',
-                Rule::unique('job_categories', 'slug')->ignore($this->route('job_category')),
-            ],
+            'status' => ['required', Rule::enum(JobApplicationStatus::class)],
+            'notify_candidate' => ['nullable', 'boolean'],
+            'notes' => ['nullable', 'string', 'max:5000'],
         ];
     }
 }

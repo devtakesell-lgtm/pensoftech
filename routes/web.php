@@ -3,12 +3,13 @@
 use App\Http\Controllers\Admin\AnalyticsController as AdminAnalyticsController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
-use App\Http\Controllers\Admin\JobCategoryController as AdminJobCategoryController;
-use App\Http\Controllers\Admin\JobController as AdminJobController;
 use App\Http\Controllers\Admin\CaseStudyController as AdminCaseStudyController;
 use App\Http\Controllers\Admin\ClientController as AdminClientController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\IndustryController as AdminIndustryController;
+use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
+use App\Http\Controllers\Admin\JobCategoryController as AdminJobCategoryController;
+use App\Http\Controllers\Admin\JobController as AdminJobController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PermissionController as AdminPermissionController;
@@ -185,6 +186,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/{jobCategory}', [AdminJobCategoryController::class, 'destroy'])->name('destroy')->middleware('can:delete-jobs');
         });
 
+        Route::prefix('job-applications')->name('job-applications.')->group(function () {
+            Route::get('/', [AdminJobApplicationController::class, 'index'])->name('index')->middleware('can:view-job-applications');
+            Route::get('/{jobApplication}', [AdminJobApplicationController::class, 'show'])->name('show')->middleware('can:view-job-applications');
+            Route::get('/{jobApplication}/edit', [AdminJobApplicationController::class, 'edit'])->name('edit')->middleware('can:edit-job-applications');
+            Route::put('/{jobApplication}', [AdminJobApplicationController::class, 'update'])->name('update')->middleware('can:edit-job-applications');
+            Route::delete('/{jobApplication}', [AdminJobApplicationController::class, 'destroy'])->name('destroy')->middleware('can:delete-job-applications');
+        });
+
         // Users Module (Granular Capabilities)
         Route::prefix('users')->group(function () {
             Route::get('/', [AdminUserController::class, 'index'])->name('users')->middleware('can:view-users');
@@ -234,3 +243,9 @@ Route::prefix('client')->name('client.')->middleware('auth')->group(function () 
     Route::get('/leads/create', [ClientLeadController::class, 'create'])->name('leads.create');
     Route::post('/leads', [ClientLeadController::class, 'store'])->name('leads.store');
 });
+
+// Route::get('/email', function () {
+//     $jobApplication = \App\Models\JobApplication::where('id', 3)->firstOrFail();
+//     // In Laravel, you can preview emails in the browser simply by returning the Mailable!
+//     return new \App\Mail\JobApplicationStatusUpdated($jobApplication);
+// });

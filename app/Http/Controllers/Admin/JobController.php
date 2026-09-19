@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Job;
-use App\Models\JobCategory;
 use App\Enums\EmploymentType;
 use App\Enums\JobStatus;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreJobRequest;
 use App\Http\Requests\Admin\UpdateJobRequest;
+use App\Models\Job;
+use App\Models\JobCategory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 
 class JobController extends Controller
 {
@@ -26,8 +26,8 @@ class JobController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('slug', 'like', "%{$search}%")
-                  ->orWhere('location', 'like', "%{$search}%");
+                    ->orWhere('slug', 'like', "%{$search}%")
+                    ->orWhere('location', 'like', "%{$search}%");
             });
         }
 
@@ -55,7 +55,7 @@ class JobController extends Controller
     public function create(): View
     {
         Gate::authorize('create-jobs');
-        
+
         return view('admin.pages.jobs.create')->with($this->getFormData());
     }
 
@@ -92,7 +92,7 @@ class JobController extends Controller
 
         // Check for applications here when applications module is built.
         // For now, just soft delete.
-        
+
         $job->delete();
 
         return redirect()
