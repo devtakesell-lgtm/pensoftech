@@ -263,6 +263,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Settings Module
         Route::prefix('settings')->group(function () {
             Route::get('/', [AdminSettingController::class, 'index'])->name('settings')->middleware('can:view-settings');
+            Route::post('/', [AdminSettingController::class, 'update'])->name('settings.update')->middleware('can:edit-settings');
         });
     });
 });
