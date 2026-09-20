@@ -114,7 +114,8 @@
                     $isBlogActive =
                         request()->routeIs('admin.blog*') ||
                         request()->routeIs('admin.blog-categories*') ||
-                        request()->routeIs('admin.blog-tags*');
+                        request()->routeIs('admin.blog-tags*') ||
+                        request()->routeIs('admin.blog-comments*');
                 @endphp
                 <div class="nav-item-dropdown {{ $isBlogActive ? 'open' : '' }}">
                     <a class="nav nav-parent {{ $isBlogActive ? 'parent-active' : 'collapsed' }}" data-bs-toggle="collapse"
@@ -144,6 +145,11 @@
                                 <span>Tags</span>
                             </a>
                         @endcan
+                        <a class="nav-sub-link {{ request()->routeIs('admin.blog-comments*') ? 'active' : '' }}"
+                            href="{{ route('admin.blog-comments.index') }}">
+                            <i class="bi bi-chat-dots"></i>
+                            <span>Comments</span>
+                        </a>
                     </div>
                 </div>
             @endcan

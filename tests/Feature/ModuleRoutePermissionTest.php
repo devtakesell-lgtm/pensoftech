@@ -26,9 +26,9 @@ test('administrator can access all admin module routes', function (string $route
     'admin.projects.index',
     'admin.case-studies.index',
     'admin.industries',
-    'admin.pages',
-    'admin.blog',
-    'admin.careers',
+    'admin.pages.index',
+    'admin.blog.index',
+    'admin.jobs.index',
     'admin.users',
     'admin.roles.index',
     'admin.permissions.index',
@@ -50,7 +50,7 @@ test('sales manager can access sales module routes but is forbidden from unautho
     $this->actingAs($salesUser)->get(route('admin.users'))->assertStatus(403);
     $this->actingAs($salesUser)->get(route('admin.roles.index'))->assertStatus(403);
     $this->actingAs($salesUser)->get(route('admin.settings'))->assertStatus(403);
-    $this->actingAs($salesUser)->get(route('admin.blog'))->assertStatus(403);
+    $this->actingAs($salesUser)->get(route('admin.blog.index'))->assertStatus(403);
 });
 
 test('content writer can access content module routes but is forbidden from system routes', function () {
@@ -58,8 +58,8 @@ test('content writer can access content module routes but is forbidden from syst
     $writer->assignRole('content-writer');
 
     // Permitted routes
-    $this->actingAs($writer)->get(route('admin.blog'))->assertStatus(200);
-    $this->actingAs($writer)->get(route('admin.pages'))->assertStatus(200);
+    $this->actingAs($writer)->get(route('admin.blog.index'))->assertStatus(200);
+    $this->actingAs($writer)->get(route('admin.pages.index'))->assertStatus(200);
     $this->actingAs($writer)->get(route('admin.case-studies.index'))->assertStatus(200);
 
     // Forbidden routes
@@ -98,5 +98,5 @@ test('sidebar navigation only renders links matching user capabilities', functio
     // Should NOT see unauthorized links in the navigation
     $response->assertDontSee(route('admin.users'));
     $response->assertDontSee(route('admin.settings'));
-    $response->assertDontSee(route('admin.blog'));
+    $response->assertDontSee(route('admin.blog.index'));
 });

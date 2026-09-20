@@ -4,25 +4,25 @@ namespace App\Enums;
 
 enum SolutionStatus: string
 {
-    case SUCCESS = 'success';
-    case FAILED = 'failed';
-    case ATTEMPTED = 'attempted';
+    case Success = 'success';
+    case Failed = 'failed';
+    case Attempted = 'attempted';
 
     public function label(): string
     {
         return match ($this) {
-            self::SUCCESS => 'Success',
-            self::FAILED => 'Failed',
-            self::ATTEMPTED => 'Attempted',
+            self::Success => 'Success',
+            self::Failed => 'Failed',
+            self::Attempted => 'Attempted',
         };
     }
 
     public function badgeClass(): string
     {
         return match ($this) {
-            self::SUCCESS => 'bg-success',
-            self::FAILED => 'bg-danger',
-            self::ATTEMPTED => 'bg-secondary',
+            self::Success => 'bg-success',
+            self::Failed => 'bg-danger',
+            self::Attempted => 'bg-secondary',
         };
     }
 }

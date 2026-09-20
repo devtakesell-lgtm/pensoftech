@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AnalyticsController as AdminAnalyticsController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\BlogCategoryController as AdminBlogCategoryController;
+use App\Http\Controllers\Admin\BlogCommentController as AdminBlogCommentController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\CaseStudyController as AdminCaseStudyController;
 use App\Http\Controllers\Admin\ClientController as AdminClientController;
@@ -193,6 +195,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{blog_tag}/edit', [\App\Http\Controllers\Admin\BlogTagController::class, 'edit'])->name('edit')->middleware('can:edit-blog-tags');
             Route::put('/{blog_tag}', [\App\Http\Controllers\Admin\BlogTagController::class, 'update'])->name('update')->middleware('can:edit-blog-tags');
             Route::delete('/{blog_tag}', [\App\Http\Controllers\Admin\BlogTagController::class, 'destroy'])->name('destroy')->middleware('can:delete-blog-tags');
+        });
+
+        Route::prefix('blog-comments')->name('blog-comments.')->group(function () {
+            Route::get('/', [AdminBlogCommentController::class, 'index'])->name('index')->middleware('can:view-blogs');
+            Route::patch('/{comment}/status', [AdminBlogCommentController::class, 'updateStatus'])->name('update-status')->middleware('can:edit-blogs');
+            Route::post('/{comment}/reply', [AdminBlogCommentController::class, 'reply'])->name('reply')->middleware('can:edit-blogs');
+            Route::delete('/{comment}', [AdminBlogCommentController::class, 'destroy'])->name('destroy')->middleware('can:delete-blogs');
         });
         // Careers / Jobs Module
         Route::prefix('jobs')->name('jobs.')->group(function () {
