@@ -110,11 +110,42 @@
             @endcan
 
             @can('view-blogs')
-                <a class="nav {{ request()->routeIs('admin.blog*') ? 'active' : '' }}" href="{{ route('admin.blog') }}"
-                    title="Blog">
-                    <i class="bi bi-pencil-square"></i>
-                    <span class="nav-title">Blog</span>
-                </a>
+                @php
+                    $isBlogActive =
+                        request()->routeIs('admin.blog*') ||
+                        request()->routeIs('admin.blog-categories*') ||
+                        request()->routeIs('admin.blog-tags*');
+                @endphp
+                <div class="nav-item-dropdown {{ $isBlogActive ? 'open' : '' }}">
+                    <a class="nav nav-parent {{ $isBlogActive ? 'parent-active' : 'collapsed' }}" data-bs-toggle="collapse"
+                        href="#blogSubmenu" role="button" aria-expanded="{{ $isBlogActive ? 'true' : 'false' }}"
+                        aria-controls="blogSubmenu" title="Blog">
+                        <i class="bi bi-journal-text"></i>
+                        <span class="nav-title">Blog</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                    <div class="collapse {{ $isBlogActive ? 'show' : '' }} nav-submenu" id="blogSubmenu">
+                        <a class="nav-sub-link {{ request()->routeIs('admin.blog.index') ? 'active' : '' }}"
+                            href="{{ route('admin.blog.index') }}">
+                            <i class="bi bi-pencil-square"></i>
+                            <span>All Posts</span>
+                        </a>
+                        @can('view-blog-categories')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.blog-categories*') ? 'active' : '' }}"
+                                href="{{ route('admin.blog-categories.index') }}">
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Categories</span>
+                            </a>
+                        @endcan
+                        @can('view-blog-tags')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.blog-tags*') ? 'active' : '' }}"
+                                href="{{ route('admin.blog-tags.index') }}">
+                                <i class="bi bi-tags"></i>
+                                <span>Tags</span>
+                            </a>
+                        @endcan
+                    </div>
+                </div>
             @endcan
 
             @can('view-jobs')

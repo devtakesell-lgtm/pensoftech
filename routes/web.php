@@ -164,8 +164,32 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
         // Blog Module
-        Route::prefix('blog')->group(function () {
-            Route::get('/', [AdminBlogController::class, 'index'])->name('blog')->middleware('can:view-blogs');
+        Route::prefix('blog')->name('blog.')->group(function () {
+            Route::get('/', [AdminBlogController::class, 'index'])->name('index')->middleware('can:view-blogs');
+            Route::get('/create', [AdminBlogController::class, 'create'])->name('create')->middleware('can:create-blogs');
+            Route::post('/', [AdminBlogController::class, 'store'])->name('store')->middleware('can:create-blogs');
+            Route::get('/{blog}', [AdminBlogController::class, 'show'])->name('show')->middleware('can:view-blogs');
+            Route::get('/{blog}/edit', [AdminBlogController::class, 'edit'])->name('edit')->middleware('can:edit-blogs');
+            Route::put('/{blog}', [AdminBlogController::class, 'update'])->name('update')->middleware('can:edit-blogs');
+            Route::delete('/{blog}', [AdminBlogController::class, 'destroy'])->name('destroy')->middleware('can:delete-blogs');
+        });
+
+        Route::prefix('blog-categories')->name('blog-categories.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\BlogCategoryController::class, 'index'])->name('index')->middleware('can:view-blog-categories');
+            Route::get('/create', [\App\Http\Controllers\Admin\BlogCategoryController::class, 'create'])->name('create')->middleware('can:create-blog-categories');
+            Route::post('/', [\App\Http\Controllers\Admin\BlogCategoryController::class, 'store'])->name('store')->middleware('can:create-blog-categories');
+            Route::get('/{blog_category}/edit', [\App\Http\Controllers\Admin\BlogCategoryController::class, 'edit'])->name('edit')->middleware('can:edit-blog-categories');
+            Route::put('/{blog_category}', [\App\Http\Controllers\Admin\BlogCategoryController::class, 'update'])->name('update')->middleware('can:edit-blog-categories');
+            Route::delete('/{blog_category}', [\App\Http\Controllers\Admin\BlogCategoryController::class, 'destroy'])->name('destroy')->middleware('can:delete-blog-categories');
+        });
+
+        Route::prefix('blog-tags')->name('blog-tags.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\BlogTagController::class, 'index'])->name('index')->middleware('can:view-blog-tags');
+            Route::get('/create', [\App\Http\Controllers\Admin\BlogTagController::class, 'create'])->name('create')->middleware('can:create-blog-tags');
+            Route::post('/', [\App\Http\Controllers\Admin\BlogTagController::class, 'store'])->name('store')->middleware('can:create-blog-tags');
+            Route::get('/{blog_tag}/edit', [\App\Http\Controllers\Admin\BlogTagController::class, 'edit'])->name('edit')->middleware('can:edit-blog-tags');
+            Route::put('/{blog_tag}', [\App\Http\Controllers\Admin\BlogTagController::class, 'update'])->name('update')->middleware('can:edit-blog-tags');
+            Route::delete('/{blog_tag}', [\App\Http\Controllers\Admin\BlogTagController::class, 'destroy'])->name('destroy')->middleware('can:delete-blog-tags');
         });
         // Careers / Jobs Module
         Route::prefix('jobs')->name('jobs.')->group(function () {

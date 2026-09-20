@@ -10,6 +10,7 @@
 @import "./pages/leads.css";
 @import "./pages/quotes.css";
 @import "./pages/projects.css";
+@import "./pages/blogs.css";
 
 * {
     box-sizing: border-box
@@ -504,7 +505,7 @@ body {
     background: repeating-linear-gradient(to bottom, transparent 0, transparent 51px, #f0f1f5 52px)
 }
 
-svg {
+.graph svg {
     position: absolute;
     inset: 0 0 25px;
     width: 100%;
