@@ -360,7 +360,7 @@ body {
 
 .btn {
     border: 1px solid #e5e8ef;
-    background: #fff;
+    /* background: #fff; */
     border-radius: 7px;
     padding: 9px 13px;
     font-size: 10px;
