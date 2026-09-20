@@ -210,40 +210,18 @@
 @endpush
 
 @push('scripts')
-    <!-- TinyMCE -->
-    <script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.3/tinymce.min.js"></script>
     <!-- Select2 JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize TinyMCE
-            tinymce.init({
-                selector: '.tinymce-editor',
-                height: 400,
-                menubar: true,
-                plugins: [
-                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                    'insertdatetime', 'media', 'table', 'wordcount'
-                ],
-                toolbar: 'undo redo | blocks | ' +
-                    'bold italic forecolor backcolor | alignleft aligncenter ' +
-                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                    'link image media table | removeformat | code fullscreen',
-                content_style: 'body { font-family:Inter,Helvetica,Arial,sans-serif; font-size:14px }',
-                promotion: false,
-                branding: false,
-            });
+    @include('admin.components.tinymce-script')
 
-            // Initialize Select2
-            $(document).ready(function() {
-                $('.select2-tags').select2({
-                    placeholder: "Select tags...",
-                    allowClear: true,
-                    width: '100%'
-                });
+    <script>
+        $(document).ready(function() {
+            $('.select2-tags').select2({
+                placeholder: "Select tags...",
+                allowClear: true,
+                width: '100%'
             });
         });
     </script>

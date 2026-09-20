@@ -153,26 +153,5 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.3/tinymce.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        tinymce.init({
-            selector: '.tinymce-editor',
-            height: 400,
-            menubar: true,
-            plugins: [
-                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'wordcount'
-            ],
-            toolbar: 'undo redo | blocks | ' +
-            'bold italic forecolor backcolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'link image media table | removeformat | code fullscreen',
-            content_style: 'body { font-family:Inter,Helvetica,Arial,sans-serif; font-size:14px }',
-            promotion: false,
-            branding: false
-        });
-    });
-</script>
+    @include('admin.components.tinymce-script')
 @endpush

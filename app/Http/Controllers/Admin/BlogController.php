@@ -9,6 +9,7 @@ use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\BlogTag;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
@@ -79,7 +80,7 @@ class BlogController extends Controller
 
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
-        $data['author_id'] = auth()->id();
+        $data['author_id'] = Auth::id();
 
         // Handle publishing logic
         if ($data['status'] === \App\Enums\ContentStatus::Published->value) {
@@ -98,7 +99,7 @@ class BlogController extends Controller
         }
 
         // Handle SEO Meta
-        $blog->seoMeta()->create([
+        $blog->seo()->create([
             'meta_title' => $data['meta_title'] ?? null,
             'meta_description' => $data['meta_description'] ?? null,
         ]);

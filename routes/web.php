@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\CaseStudyController as AdminCaseStudyController;
 use App\Http\Controllers\Admin\ClientController as AdminClientController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ImageUploadController;
 use App\Http\Controllers\Admin\IndustryController as AdminIndustryController;
 use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
 use App\Http\Controllers\Admin\JobCategoryController as AdminJobCategoryController;
@@ -58,6 +59,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // Protected Staff Routes
     Route::middleware(['auth', 'admin'])->group(function () {
+        Route::post('/upload-image', [ImageUploadController::class, 'upload'])->name('upload-image');
+        
         Route::get('/', function () {
             return redirect()->route('admin.dashboard');
         });
