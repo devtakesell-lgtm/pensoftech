@@ -7,13 +7,17 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/frontend/app.css', 
+                'resources/css/frontend/app.css',
                 'resources/js/frontend/app.js',
                 'resources/css/admin/app.css',
                 'resources/js/admin/app.js',
                 'resources/css/admin/guest.css',
                 'resources/css/client/app.css',
-                'resources/js/client/app.js'
+                'resources/js/client/app.js',
+                'resources/js/client/app.js',
+                // Frontend Demo Vertical (separate from live frontend)
+                'resources/css/demo/app.css',
+                'resources/js/demo/app.js',
             ],
             refresh: true,
             fonts: [
