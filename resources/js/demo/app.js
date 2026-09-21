@@ -5,6 +5,28 @@
  */
 
 document.addEventListener('DOMContentLoaded', function () {
+    
+    // ── 0. LENIS SMOOTH SCROLL ────────────────────────────────────────
+    let lenis;
+    if (typeof Lenis !== 'undefined') {
+        lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+    }
 
     // ── 1. CUSTOM CURSOR ──────────────────────────────────────────────
     const cursor      = document.getElementById('demoCursor');
@@ -94,6 +116,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // ── 4. GSAP ANIMATIONS ───────────────────────────────────────────
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
+
+        // Sync Lenis scroll with GSAP ScrollTrigger
+        if (lenis) {
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time)=>{
+                lenis.raf(time * 1000)
+            });
+            gsap.ticker.lagSmoothing(0, 0);
+        }
 
         // Hero headline — staggered word reveal
         const heroWords = document.querySelectorAll('.demo-hero-word');
