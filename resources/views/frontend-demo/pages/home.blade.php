@@ -30,38 +30,58 @@
     </nav>
 
     <main class="bg-black">
-        {{-- 1. Cinematic Video Hero --}}
+        {{-- 1. Cinematic Video Hero (Dark) --}}
         @include('frontend-demo.components.hero')
 
-        {{-- 2. Ecosystem Sticky Reveal (Light Mode) --}}
+        {{-- 2. Ecosystem (Light) --}}
         @include('frontend-demo.components.ecosystem')
 
-        {{-- 3. Our Services Grid (Light Mode) --}}
-        <div id="services">
-            @include('frontend-demo.components.services')
-        </div>
-
-        {{-- 4. Careers / Join Our Team (Dark Mode) --}}
-        <div id="careers">
-            @include('frontend-demo.components.careers')
-        </div>
-
-        {{-- 5. Leadership Team Swiper (Light Mode) --}}
-        <div id="team">
-            @include('frontend-demo.components.team')
-        </div>
-
-        {{-- 6. Tech Stack Marquee (Light Mode) --}}
+        {{-- 3. Technologies (Dark) --}}
         <div id="tech">
             @include('frontend-demo.components.technologies')
         </div>
 
-        {{-- 7. Customer Reviews (Light Mode) --}}
+        {{-- 4. Services (Light) --}}
+        <div id="services">
+            @include('frontend-demo.components.services')
+        </div>
+
+        {{-- 5. Projects (Dark) --}}
+        <div id="projects">
+            @include('frontend-demo.components.projects')
+        </div>
+
+        {{-- 6. Case Studies (Light) --}}
+        <div id="case-studies">
+            @include('frontend-demo.components.case-studies')
+        </div>
+
+        {{-- 7. Industries (Dark) --}}
+        <div id="industries">
+            @include('frontend-demo.components.industries')
+        </div>
+
+        {{-- 8. Blog (Light) --}}
+        <div id="blog">
+            @include('frontend-demo.components.blog')
+        </div>
+
+        {{-- 9. Careers (Dark) --}}
+        <div id="careers">
+            @include('frontend-demo.components.careers')
+        </div>
+
+        {{-- 10. Leadership Team (Light) --}}
+        <div id="team">
+            @include('frontend-demo.components.team')
+        </div>
+
+        {{-- 11. Customer Reviews (Light) --}}
         <div id="reviews">
             @include('frontend-demo.components.reviews')
         </div>
 
-        {{-- 8. Interactive SVG Map (Dark Mode) --}}
+        {{-- 12. Interactive SVG Map (Dark) --}}
         @include('frontend-demo.components.map')
     </main>
 

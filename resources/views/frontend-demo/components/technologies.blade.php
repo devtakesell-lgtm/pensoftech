@@ -1,4 +1,4 @@
-<section class="bg-white py-16 border-t border-gray-100 overflow-hidden">
+<section class="bg-[#0a0a0a] py-16 border-t border-white/10 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 lg:px-12 mb-8 text-center">
         <span class="text-gray-400 font-semibold tracking-widest uppercase text-sm">Technologies We Master</span>
     </div>
@@ -36,8 +36,8 @@
 
     <div class="relative w-full overflow-hidden">
         {{-- Fade gradients for edges --}}
-        <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
-        <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
+        <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10"></div>
+        <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10"></div>
 
         <div class="tech-marquee-wrapper">
             @php
