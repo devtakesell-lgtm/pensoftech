@@ -24,8 +24,8 @@
         {{-- Location 1: North America --}}
         <div class="absolute top-[30%] left-[25%] -translate-x-1/2 -translate-y-1/2 group" data-cursor-expand>
             <div class="relative w-4 h-4">
-                <div class="absolute inset-0 bg-[#7655ff] rounded-full opacity-75 animate-ping"></div>
-                <div class="relative w-4 h-4 bg-[#7655ff] rounded-full border-2 border-black"></div>
+                <div class="absolute inset-0 bg-[#4fd1c5] rounded-full opacity-75 animate-ping"></div>
+                <div class="relative w-4 h-4 bg-[#4fd1c5] rounded-full border-2 border-black"></div>
             </div>
             {{-- Tooltip --}}
             <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-3 py-1 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
@@ -73,7 +73,7 @@
         <svg class="absolute inset-0 w-full h-full pointer-events-none z-10" aria-hidden="true">
             <defs>
                 <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#7655ff" stop-opacity="0.8" />
+                    <stop offset="0%" stop-color="#4fd1c5" stop-opacity="0.8" />
                     <stop offset="100%" stop-color="#4fd1c5" stop-opacity="0.2" />
                 </linearGradient>
             </defs>

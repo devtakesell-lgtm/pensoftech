@@ -30,6 +30,8 @@
 
     @yield('content')
 
+    {{-- Alpine JS for UI state (e.g. Services tabs) --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     {{-- GSAP + ScrollTrigger — Demo only, loaded via CDN as approved in coding-rules Section 26 --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>

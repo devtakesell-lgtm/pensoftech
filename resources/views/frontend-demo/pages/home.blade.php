@@ -36,36 +36,37 @@
         {{-- 2. Ecosystem Sticky Reveal (Light Mode) --}}
         @include('frontend-demo.components.ecosystem')
 
-        {{-- 3. Tech Stack Marquee (Dark Mode) --}}
-        <div id="tech">
-            @include('frontend-demo.components.tech-stack')
+        {{-- 3. Our Services Grid (Light Mode) --}}
+        <div id="services">
+            @include('frontend-demo.components.services')
         </div>
 
-        {{-- 4. Leadership Team Swiper (Light Mode) --}}
+        {{-- 4. Careers / Join Our Team (Dark Mode) --}}
+        <div id="careers">
+            @include('frontend-demo.components.careers')
+        </div>
+
+        {{-- 5. Leadership Team Swiper (Light Mode) --}}
         <div id="team">
             @include('frontend-demo.components.team')
         </div>
 
-        {{-- 5. Interactive SVG Map (Dark Mode) --}}
+        {{-- 6. Tech Stack Marquee (Light Mode) --}}
+        <div id="tech">
+            @include('frontend-demo.components.technologies')
+        </div>
+
+        {{-- 7. Customer Reviews (Light Mode) --}}
+        <div id="reviews">
+            @include('frontend-demo.components.reviews')
+        </div>
+
+        {{-- 8. Interactive SVG Map (Dark Mode) --}}
         @include('frontend-demo.components.map')
     </main>
 
-    {{-- Footer --}}
-    <footer class="bg-black text-white py-12 border-t border-white/10">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center">
-            <h2 class="text-4xl font-bold mb-8">Ready to Scale?</h2>
-            <a href="#contact" data-cursor-expand class="inline-block px-10 py-5 bg-[#7655ff] text-white font-semibold rounded-full hover:bg-[#6042db] transition-colors text-lg mb-16">
-                Let's Talk
-            </a>
-            <div class="text-white/40 text-sm flex justify-between items-center border-t border-white/10 pt-8">
-                <p>&copy; {{ date('Y') }} PenSoftTech. All rights reserved.</p>
-                <div class="flex gap-4">
-                    <a href="#" data-cursor-expand class="hover:text-white transition-colors">Privacy</a>
-                    <a href="#" data-cursor-expand class="hover:text-white transition-colors">Terms</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    {{-- Footer (Dark Mode) --}}
+    @include('frontend-demo.components.footer')
 
 @endsection
 

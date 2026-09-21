@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <div class="flex flex-col md:flex-row justify-between items-end mb-16">
             <div>
-                <span class="text-[#7655ff] font-bold tracking-widest uppercase text-sm mb-4 block">Leadership</span>
+                <span class="text-[#4fd1c5] font-bold tracking-widest uppercase text-sm mb-4 block">Leadership</span>
                 <h2 class="text-4xl md:text-5xl font-bold text-black tracking-tight">
                     Minds behind the machine.
                 </h2>
@@ -45,14 +45,14 @@
                         <h3 class="text-white text-3xl font-bold mb-1">{{ $ceo['name'] }}</h3>
                         <p class="text-white/80 font-medium text-lg mb-6">{{ $ceo['role'] }}</p>
                         
-                        <p class="text-white/90 text-sm italic border-l-2 border-[#7655ff] pl-4">
+                        <p class="text-white/90 text-sm italic border-l-2 border-[#4fd1c5] pl-4">
                             "Visionary leadership is about empowering others to achieve the extraordinary. It's the art of transforming potential into global impact."
                         </p>
                         
                         {{-- Social links --}}
                         <div class="mt-6 flex gap-3">
-                            <a href="#" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#7655ff] hover:text-white transition-colors">in</a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#7655ff] hover:text-white transition-colors">𝕏</a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#4fd1c5] hover:text-white transition-colors">in</a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#4fd1c5] hover:text-white transition-colors">𝕏</a>
                         </div>
                     </div>
                 </div>
@@ -80,8 +80,8 @@
                                     
                                     {{-- Social links reveal on hover --}}
                                     <div class="mt-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                        <a href="#" class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#7655ff] hover:text-white transition-colors text-sm">in</a>
-                                        <a href="#" class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#7655ff] hover:text-white transition-colors text-sm">𝕏</a>
+                                        <a href="#" class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#4fd1c5] hover:text-white transition-colors text-sm">in</a>
+                                        <a href="#" class="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#4fd1c5] hover:text-white transition-colors text-sm">𝕏</a>
                                     </div>
                                 </div>
                             </div>
