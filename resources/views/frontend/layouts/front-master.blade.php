@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'PenSoftTech — Scalable Software & Digital Transformation')</title>
-    <meta name="description" content="PenSoftTech specializes in launching and scaling world-class B2B SaaS platforms with expert product, engineering, and growth strategies.">
+    <meta name="description"
+        content="PenSoftTech specializes in launching and scaling world-class B2B SaaS platforms with expert product, engineering, and growth strategies.">
     <link rel="canonical" href="{{ config('app.url') }}">
-    
+
     <!-- Open Graph / Meta -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="PenSoftTech — Scalable Software Solutions">
@@ -33,8 +34,14 @@
     {{-- Custom cursor elements --}}
     <div class="frontend-cursor hidden lg:block" id="frontendCursor"></div>
     <div class="frontend-cursor-trail hidden lg:block" id="frontendCursorTrail"></div>
+    {{-- Header --}}
+    @include('frontend.partials.header')
 
+    {{-- Main Content --}}
     @yield('content')
+
+    {{-- Footer (Dark Mode) --}}
+    @include('frontend.partials.footer')
 
     {{-- Alpine JS for UI state --}}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>

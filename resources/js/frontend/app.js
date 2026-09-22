@@ -63,13 +63,21 @@ document.addEventListener('DOMContentLoaded', function () {
     // ── 2. NAVBAR SCROLL EFFECT ──────────────────────────────────────
     const navbar = document.getElementById('mainNav');
     if (navbar) {
+        const isHome = navbar.getAttribute('data-is-home') === 'true';
+
         window.addEventListener('scroll', function () {
-            if (window.scrollY > 50) {
+            if (window.scrollY > 30) {
                 navbar.classList.remove('bg-transparent', 'py-6');
-                navbar.classList.add('bg-black/85', 'backdrop-blur-xl', 'py-4', 'border-b', 'border-white/10');
+                navbar.classList.add('bg-black/90', 'backdrop-blur-xl', 'py-4', 'border-b', 'border-white/10');
             } else {
-                navbar.classList.add('bg-transparent', 'py-6');
-                navbar.classList.remove('bg-black/85', 'backdrop-blur-xl', 'py-4', 'border-b', 'border-white/10');
+                if (isHome) {
+                    navbar.classList.add('bg-transparent', 'py-6');
+                    navbar.classList.remove('bg-black/90', 'backdrop-blur-xl', 'py-4', 'border-b', 'border-white/10');
+                } else {
+                    // On inner pages, always keep the dark solid glass background
+                    navbar.classList.add('bg-black/90', 'backdrop-blur-xl', 'py-4', 'border-b', 'border-white/10');
+                    navbar.classList.remove('bg-transparent', 'py-6');
+                }
             }
         }, { passive: true });
     }
