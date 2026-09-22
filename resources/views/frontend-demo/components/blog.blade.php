@@ -1,10 +1,10 @@
-<section class="bg-[#f9fafb] py-24 md:py-32 overflow-hidden border-t border-gray-100 relative">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12 mb-16 text-center">
-        <span class="text-[#4fd1c5] font-bold tracking-widest uppercase text-sm mb-4 block">Thought Leadership</span>
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+<section class="bg-[#f9fafb] py-10 md:py-24 overflow-hidden border-t border-gray-100 relative">
+    <div class="max-w-7xl mx-auto px-5 lg:px-12 mb-6 md:mb-12 text-center">
+        <span class="text-[#4fd1c5] font-bold tracking-widest uppercase text-xs md:text-sm mb-1.5 md:mb-3 block">Thought Leadership</span>
+        <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">
             Latest Insights
         </h2>
-        <p class="text-gray-500 mt-6 max-w-2xl mx-auto text-lg">
+        <p class="text-gray-500 mt-2 max-w-xl mx-auto text-xs md:text-base leading-relaxed">
             Exploring the intersection of SaaS growth, strategy, and innovation.
         </p>
     </div>
@@ -38,26 +38,26 @@
         ];
     @endphp
 
-    <div class="max-w-7xl mx-auto px-6 lg:px-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="max-w-7xl mx-auto px-5 lg:px-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
             
             @foreach($articles as $article)
-            <article class="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] transition-all duration-300 group flex flex-col h-full cursor-pointer">
+            <article class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] md:shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] transition-all duration-300 group flex flex-col h-full cursor-pointer">
                 
                 {{-- Image Container --}}
                 <div class="relative w-full aspect-[16/10] overflow-hidden">
                     <img src="{{ $article['img'] }}" alt="{{ $article['title'] }}" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105">
                     
                     {{-- Badge --}}
-                    <div class="absolute top-4 left-4">
-                        <span class="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-[#4fd1c5] text-xs font-bold uppercase tracking-wider shadow-sm">
+                    <div class="absolute top-3 left-3 md:top-4 md:left-4">
+                        <span class="inline-block px-2.5 py-0.5 md:px-3 md:py-1 bg-white/90 backdrop-blur-sm rounded-full text-[#4fd1c5] text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-sm">
                             {{ $article['category'] }}
                         </span>
                     </div>
                 </div>
 
                 {{-- Content Container --}}
-                <div class="p-8 flex flex-col flex-grow">
+                <div class="p-5 md:p-8 flex flex-col flex-grow">
                     <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#4fd1c5] transition-colors duration-300 leading-snug">
                         {{ $article['title'] }}
                     </h3>

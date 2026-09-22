@@ -1,37 +1,37 @@
-<section class="bg-gray-50 py-24 md:py-32">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12" x-data="{ activeTab: 'web-development' }">
+<section class="bg-gray-50 py-10 md:py-24">
+    <div class="max-w-7xl mx-auto px-5 lg:px-12" x-data="{ activeTab: 'web-development' }">
         
-        <div class="text-center mb-16">
-            <span class="text-[#4fd1c5] font-bold tracking-widest uppercase text-sm mb-4 block">Our Expertise</span>
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+        <div class="text-center mb-6 md:mb-10">
+            <span class="text-[#4fd1c5] font-bold tracking-widest uppercase text-xs md:text-sm mb-1.5 md:mb-3 block">Our Expertise</span>
+            <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">
                 Our Services
             </h2>
-            <p class="text-gray-500 mt-4 max-w-2xl mx-auto text-lg">
+            <p class="text-gray-500 mt-2 max-w-xl mx-auto text-xs md:text-base leading-relaxed">
                 We deliver scalable, world-class technology solutions tailored to your business needs.
             </p>
         </div>
 
         {{-- Category Tabs --}}
-        <div class="flex flex-wrap justify-center gap-3 mb-16">
+        <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-6 md:mb-10">
             <button @click="activeTab = 'web-development'" 
                     :class="activeTab === 'web-development' ? 'bg-[#4fd1c5] text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300 hover:bg-gray-50'"
-                    class="px-6 py-2.5 rounded-full font-medium transition-all duration-300">
+                    class="px-4 md:px-6 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300">
                 Web Development
             </button>
             <button @click="activeTab = 'ai-solutions'" 
                     :class="activeTab === 'ai-solutions' ? 'bg-[#4fd1c5] text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300 hover:bg-gray-50'"
-                    class="px-6 py-2.5 rounded-full font-medium transition-all duration-300">
+                    class="px-4 md:px-6 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300">
                 AI Solutions
             </button>
             <button @click="activeTab = 'cloud-ops'" 
                     :class="activeTab === 'cloud-ops' ? 'bg-[#4fd1c5] text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300 hover:bg-gray-50'"
-                    class="px-6 py-2.5 rounded-full font-medium transition-all duration-300">
+                    class="px-4 md:px-6 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300">
                 Cloud Ops
             </button>
         </div>
 
         {{-- Service Grids --}}
-        <div class="relative min-h-[400px]">
+        <div class="relative min-h-[350px]">
             
             {{-- Web Development Grid --}}
             <div x-show="activeTab === 'web-development'" 
@@ -41,23 +41,23 @@
                  x-transition:leave="transition ease-in duration-300 absolute top-0 left-0 w-full"
                  x-transition:leave-start="opacity-100"
                  x-transition:leave-end="opacity-0"
-                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
                 
                 {{-- Card 1 --}}
-                <div class="bg-white rounded-3xl p-8 border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group">
-                    <div class="w-14 h-14 rounded-2xl bg-[#4fd1c5]/10 flex items-center justify-center mb-6 text-[#4fd1c5] text-2xl group-hover:scale-110 transition-transform duration-300">
+                <div class="bg-white rounded-2xl md:rounded-3xl p-5 md:p-8 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] md:shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group">
+                    <div class="w-11 h-11 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-[#4fd1c5]/10 flex items-center justify-center mb-4 md:mb-6 text-[#4fd1c5] text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300">
                         💻
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Custom Web Apps</h3>
-                    <p class="text-gray-500 mb-6 leading-relaxed">Scale your SaaS with robust, high-performance web applications and dynamic user experiences built on modern frameworks.</p>
-                    <a href="#" class="text-[#4fd1c5] font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all">
-                        Learn More <span class="text-lg">→</span>
+                    <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3">Custom Web Apps</h3>
+                    <p class="text-xs md:text-sm text-gray-500 mb-4 md:mb-6 leading-relaxed">Scale your SaaS with robust, high-performance web applications and dynamic user experiences built on modern frameworks.</p>
+                    <a href="#" class="text-[#4fd1c5] text-xs md:text-sm font-semibold inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                        Learn More <span class="text-base md:text-lg">→</span>
                     </a>
                 </div>
 
                 {{-- Card 2 --}}
-                <div class="bg-white rounded-3xl p-8 border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group">
-                    <div class="w-14 h-14 rounded-2xl bg-[#4fd1c5]/10 flex items-center justify-center mb-6 text-[#4fd1c5] text-2xl group-hover:scale-110 transition-transform duration-300">
+                <div class="bg-white rounded-2xl md:rounded-3xl p-5 md:p-8 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] md:shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group">
+                    <div class="w-11 h-11 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-[#4fd1c5]/10 flex items-center justify-center mb-4 md:mb-6 text-[#4fd1c5] text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300">
                         🛒
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">E-Commerce Platforms</h3>

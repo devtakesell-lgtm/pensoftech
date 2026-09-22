@@ -1,20 +1,20 @@
-<section class="bg-[#050505] py-24 md:py-32 overflow-hidden relative">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12 mb-16 relative z-20">
-        <div class="flex flex-col md:flex-row justify-between items-end">
+<section class="bg-[#050505] py-10 md:py-24 overflow-hidden relative">
+    <div class="max-w-7xl mx-auto px-5 lg:px-12 mb-6 md:mb-16 relative z-20">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end">
             <div>
-                <span class="text-[#4fd1c5] font-bold tracking-widest uppercase text-sm mb-4 block">Global Presence</span>
-                <h2 class="text-3xl md:text-5xl font-bold text-white tracking-tight">
-                    Powering scale,<br>worldwide.
+                <span class="text-[#4fd1c5] font-bold tracking-widest uppercase text-xs md:text-sm mb-1.5 md:mb-4 block">Global Presence</span>
+                <h2 class="text-2xl md:text-5xl font-extrabold text-white tracking-tight">
+                    Powering scale,<br class="hidden md:block"> worldwide.
                 </h2>
             </div>
-            <div class="mt-6 md:mt-0 text-gray-400">
-                <p class="max-w-xs">Operating across 3 continents, delivering enterprise solutions to clients globally.</p>
+            <div class="mt-2 md:mt-0 text-gray-400">
+                <p class="max-w-xs text-xs md:text-base">Operating across 3 continents, delivering enterprise solutions to clients globally.</p>
             </div>
         </div>
     </div>
 
     {{-- Map Container --}}
-    <div class="relative w-full max-w-6xl mx-auto h-[400px] md:h-[600px] mt-10">
+    <div class="relative w-full max-w-6xl mx-auto h-[280px] sm:h-[350px] md:h-[600px] mt-4 md:mt-10">
         
         {{-- Custom SVG Map Pattern (Simplified dotted world map approximation for a premium tech vibe) --}}
         <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 15px 15px; mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);"></div>

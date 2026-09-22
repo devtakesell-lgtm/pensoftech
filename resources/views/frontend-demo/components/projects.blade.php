@@ -1,14 +1,14 @@
-<section class="bg-[#050505] py-24 md:py-32 overflow-hidden border-t border-white/10 relative">
+<section class="bg-[#050505] py-10 md:py-24 overflow-hidden border-t border-white/10 relative">
     
     {{-- Glow effect --}}
     <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-[#4fd1c5]/5 rounded-full blur-[120px] pointer-events-none"></div>
 
-    <div class="max-w-7xl mx-auto px-6 lg:px-12 mb-16 text-center relative z-10">
-        <span class="text-[#4fd1c5] font-bold tracking-widest uppercase text-sm mb-4 block">Our Portfolio</span>
-        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight">
+    <div class="max-w-7xl mx-auto px-5 lg:px-12 mb-6 md:mb-12 text-center relative z-10">
+        <span class="text-[#4fd1c5] font-bold tracking-widest uppercase text-xs md:text-sm mb-1.5 md:mb-3 block">Our Portfolio</span>
+        <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
             Featured Projects
         </h2>
-        <p class="text-gray-400 mt-6 max-w-2xl mx-auto text-lg">
+        <p class="text-gray-400 mt-2 max-w-xl mx-auto text-xs md:text-base leading-relaxed">
             Explore our world-class enterprise solutions, custom-built to drive revenue and scale operations.
         </p>
     </div>

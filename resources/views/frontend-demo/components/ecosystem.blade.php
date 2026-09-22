@@ -1,16 +1,16 @@
-<section id="ecosystem" class="relative bg-[#fafafa] text-[#10151A] min-h-screen flex flex-col justify-center overflow-hidden py-12">
+<section id="ecosystem" class="relative bg-[#fafafa] text-[#10151A] py-10 md:py-16 lg:min-h-screen flex flex-col justify-center overflow-hidden">
     {{-- Background Pattern --}}
     <div class="absolute inset-0 pointer-events-none z-0">
         <div class="absolute inset-0" style="background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px); background-size: 30px 30px;"></div>
     </div>
 
     {{-- Header --}}
-    <div class="max-w-7xl mx-auto px-6 relative z-10 text-center mb-8 lg:mb-12">
-        <span class="text-[#FF5A36] font-bold tracking-widest uppercase text-sm mb-3 block">The Ecosystem</span>
-        <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
+    <div class="max-w-7xl mx-auto px-6 relative z-10 text-center mb-6 lg:mb-12">
+        <span class="text-[#FF5A36] font-bold tracking-widest uppercase text-xs md:text-sm mb-1.5 md:mb-3 block">The Ecosystem</span>
+        <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold tracking-tight">
             Engineered for <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-orange-500" style="background-image: linear-gradient(to right, #3B4FE0, #FF5A36); -webkit-background-clip: text; color: transparent;">Growth</span>
         </h2>
-        <p class="text-gray-500 mt-4 max-w-2xl mx-auto text-lg">
+        <p class="text-gray-500 mt-2 max-w-xl mx-auto text-xs md:text-base leading-relaxed">
             A unified high-performance ecosystem where your software and marketing work together seamlessly.
         </p>
     </div>

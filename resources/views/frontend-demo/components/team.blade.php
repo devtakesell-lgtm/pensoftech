@@ -1,9 +1,9 @@
-<section class="bg-white py-24 md:py-32 overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+<section class="bg-white py-10 md:py-24 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-5 lg:px-12">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 md:mb-12">
             <div>
-                <span class="text-[#4fd1c5] font-bold tracking-widest uppercase text-sm mb-4 block">Leadership</span>
-                <h2 class="text-4xl md:text-5xl font-bold text-black tracking-tight">
+                <span class="text-[#4fd1c5] font-bold tracking-widest uppercase text-xs md:text-sm mb-1.5 md:mb-3 block">Leadership</span>
+                <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-black tracking-tight">
                     Minds behind the machine.
                 </h2>
             </div>
@@ -28,11 +28,11 @@
             ];
         @endphp
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
             
             {{-- Left Column: Anchored CEO --}}
             <div class="lg:col-span-4 flex flex-col">
-                <div class="group relative w-full h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-lg" data-cursor-expand>
+                <div class="group relative w-full h-[400px] md:h-[500px] lg:h-[600px] rounded-2xl md:rounded-3xl overflow-hidden shadow-lg" data-cursor-expand>
                     {{-- Image --}}
                     <img src="{{ $ceo['img'] }}" alt="{{ $ceo['name'] }}" 
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 filter group-hover:scale-105" loading="lazy">
@@ -41,18 +41,18 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
                     
                     {{-- Text Content --}}
-                    <div class="absolute bottom-0 left-0 w-full p-8">
-                        <h3 class="text-white text-3xl font-bold mb-1">{{ $ceo['name'] }}</h3>
-                        <p class="text-white/80 font-medium text-lg mb-6">{{ $ceo['role'] }}</p>
+                    <div class="absolute bottom-0 left-0 w-full p-5 md:p-8">
+                        <h3 class="text-white text-2xl md:text-3xl font-bold mb-1">{{ $ceo['name'] }}</h3>
+                        <p class="text-white/80 font-medium text-sm md:text-lg mb-4 md:mb-6">{{ $ceo['role'] }}</p>
                         
-                        <p class="text-white/90 text-sm italic border-l-2 border-[#4fd1c5] pl-4">
+                        <p class="text-white/90 text-xs md:text-sm italic border-l-2 border-[#4fd1c5] pl-3 md:pl-4 line-clamp-3 md:line-clamp-none">
                             "Visionary leadership is about empowering others to achieve the extraordinary. It's the art of transforming potential into global impact."
                         </p>
                         
                         {{-- Social links --}}
-                        <div class="mt-6 flex gap-3">
-                            <a href="#" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#4fd1c5] hover:text-white transition-colors">in</a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#4fd1c5] hover:text-white transition-colors">𝕏</a>
+                        <div class="mt-4 md:mt-6 flex gap-2.5 md:gap-3">
+                            <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-xs md:text-sm text-white hover:bg-[#4fd1c5] hover:text-white transition-colors">in</a>
+                            <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-xs md:text-sm text-white hover:bg-[#4fd1c5] hover:text-white transition-colors">𝕏</a>
                         </div>
                     </div>
                 </div>
