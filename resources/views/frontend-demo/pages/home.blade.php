@@ -76,13 +76,21 @@
             @include('frontend-demo.components.team')
         </div>
 
-        {{-- 11. Customer Reviews (Light) --}}
+        {{-- 11. Company Stats (Dark Bridge) --}}
+        <div id="stats">
+            @include('frontend-demo.components.stats')
+        </div>
+
+        {{-- 12. Customer Reviews (Light) --}}
         <div id="reviews">
             @include('frontend-demo.components.reviews')
         </div>
 
-        {{-- 12. Interactive SVG Map (Dark) --}}
+        {{-- 13. Interactive SVG Map (Dark) --}}
         @include('frontend-demo.components.map')
+
+        {{-- 14. CTA Section (Dark) --}}
+        @include('frontend-demo.components.cta')
     </main>
 
     {{-- Footer (Dark Mode) --}}
