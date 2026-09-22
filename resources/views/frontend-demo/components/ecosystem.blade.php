@@ -112,42 +112,228 @@
         </div>
     </div>
 
-    {{-- Mobile Layout (Stacked Grid) --}}
-    <div class="block lg:hidden relative w-full max-w-lg mx-auto z-10 px-6 mt-12 space-y-4">
-        {{-- Custom ERP & CRM --}}
-        <div class="w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-            <h3 class="text-lg font-bold mb-2 text-gray-900">Custom ERP & CRM</h3>
-            <p class="text-sm text-gray-500 leading-relaxed">Streamline operations with enterprise-grade internal tools.</p>
-        </div>
+    {{-- Mobile Layout (Centered Animated Circuit with Connecting Beams & Border Traces) --}}
+    <style>
+        @media (max-width: 1023px) {
+            .mobile-eco-section {
+                position: relative;
+                width: 100%;
+                max-width: 360px;
+                margin: 0 auto;
+            }
 
-        {{-- FinTech Solutions --}}
-        <div class="w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-            <h3 class="text-lg font-bold mb-2 text-gray-900">FinTech Solutions</h3>
-            <p class="text-sm text-gray-500 leading-relaxed">Secure payment gateways and blockchain integration.</p>
-        </div>
+            /* Connecting vertical line styling */
+            .mobile-beam-track {
+                width: 2px;
+                height: 28px;
+                margin: 0 auto;
+                background: rgba(0, 0, 0, 0.1);
+                position: relative;
+                overflow: hidden;
+            }
 
-        {{-- Enterprise Mobility --}}
-        <div class="w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-            <h3 class="text-lg font-bold mb-2 text-gray-900">Enterprise Mobility</h3>
-            <p class="text-sm text-gray-500 leading-relaxed">Secure, scalable applications for global enterprises.</p>
-        </div>
+            .mobile-beam-head {
+                position: absolute;
+                left: 0;
+                width: 100%;
+                height: 14px;
+                background: linear-gradient(to bottom, #3B4FE0, #FF5A36);
+                box-shadow: 0 0 8px #FF5A36;
+                border-radius: 2px;
+                opacity: 0;
+            }
 
-        {{-- Agro & Health --}}
-        <div class="w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-            <h3 class="text-lg font-bold mb-2 text-gray-900">Agro & Health</h3>
-            <p class="text-sm text-gray-500 leading-relaxed">Data-driven systems ensuring safety and high yield.</p>
-        </div>
+            /* Card SVG border trace path */
+            .mobile-rect-trace {
+                stroke-dasharray: 120 1200;
+                stroke-dashoffset: 1200;
+                opacity: 0;
+                filter: drop-shadow(0 0 6px #FF5A36) drop-shadow(0 0 10px #3B4FE0);
+                transition: opacity 0.2s;
+            }
 
-        {{-- Cloud & Infra --}}
-        <div class="w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-            <h3 class="text-lg font-bold mb-2 text-gray-900">Cloud & Infra</h3>
-            <p class="text-sm text-gray-500 leading-relaxed">High-availability cloud architecture for zero downtime.</p>
-        </div>
+            /* 6s cycle for total loop, 1s per card step */
+            /* Loop 1 */
+            .card-step-1 .mobile-beam-head { animation: beamDrop 6s infinite 0s; }
+            .card-step-1 .mobile-rect-trace { animation: rectTrace 6s infinite 0.2s; }
 
-        {{-- Digital Platforms --}}
-        <div class="w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-            <h3 class="text-lg font-bold mb-2 text-gray-900">Digital Platforms</h3>
-            <p class="text-sm text-gray-500 leading-relaxed">Immersive e-commerce and customer experience portals.</p>
+            .card-step-2 .mobile-beam-head { animation: beamDrop 6s infinite 1s; }
+            .card-step-2 .mobile-rect-trace { animation: rectTrace 6s infinite 1.2s; }
+
+            .card-step-3 .mobile-beam-head { animation: beamDrop 6s infinite 2s; }
+            .card-step-3 .mobile-rect-trace { animation: rectTrace 6s infinite 2.2s; }
+
+            .card-step-4 .mobile-beam-head { animation: beamDrop 6s infinite 3s; }
+            .card-step-4 .mobile-rect-trace { animation: rectTrace 6s infinite 3.2s; }
+
+            .card-step-5 .mobile-beam-head { animation: beamDrop 6s infinite 4s; }
+            .card-step-5 .mobile-rect-trace { animation: rectTrace 6s infinite 4.2s; }
+
+            .card-step-6 .mobile-beam-head { animation: beamDrop 6s infinite 5s; }
+            .card-step-6 .mobile-rect-trace { animation: rectTrace 6s infinite 5.2s; }
+
+            /* Keyframes */
+            @keyframes beamDrop {
+                0% { top: -14px; opacity: 1; }
+                15% { top: 100%; opacity: 1; }
+                20% { top: 100%; opacity: 0; }
+                100% { top: 100%; opacity: 0; }
+            }
+
+            @keyframes rectTrace {
+                0% { stroke-dashoffset: 1200; opacity: 0; }
+                5% { opacity: 1; }
+                25% { stroke-dashoffset: 0; opacity: 1; }
+                30% { opacity: 0; }
+                100% { opacity: 0; }
+            }
+        }
+    </style>
+
+    <div class="block lg:hidden relative w-full z-10 px-4 mt-6">
+        {{-- Gradient definition for mobile traces --}}
+        <svg class="w-0 h-0 absolute pointer-events-none">
+            <defs>
+                <linearGradient id="mobileBrandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#3B4FE0" />
+                    <stop offset="100%" stop-color="#FF5A36" />
+                </linearGradient>
+            </defs>
+        </svg>
+
+        <div class="mobile-eco-section">
+            
+            {{-- Top lead-in beam --}}
+            <div class="mobile-beam-track card-step-1">
+                <div class="mobile-beam-head"></div>
+            </div>
+
+            {{-- Card 1: AI & Deep Tech --}}
+            <div class="relative w-full card-step-1">
+                <div class="relative w-full rounded-2xl bg-[#0B111E] p-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" preserveAspectRatio="none">
+                        <rect width="100%" height="100%" rx="16" fill="none" stroke="url(#mobileBrandGrad)" stroke-width="3" class="mobile-rect-trace"></rect>
+                    </svg>
+                    <div class="relative z-10 flex items-center gap-3.5 p-1">
+                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">🧠</div>
+                        <div>
+                            <h3 class="text-base font-bold text-white leading-tight">AI & Deep Tech</h3>
+                            <p class="text-xs text-gray-400 mt-1 leading-normal">Intelligent algorithms that optimize operations and scale growth.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Connector 1 -> 2 --}}
+            <div class="mobile-beam-track card-step-2">
+                <div class="mobile-beam-head"></div>
+            </div>
+
+            {{-- Card 2: Real Estate --}}
+            <div class="relative w-full card-step-2">
+                <div class="relative w-full rounded-2xl bg-[#0B111E] p-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" preserveAspectRatio="none">
+                        <rect width="100%" height="100%" rx="16" fill="none" stroke="url(#mobileBrandGrad)" stroke-width="3" class="mobile-rect-trace"></rect>
+                    </svg>
+                    <div class="relative z-10 flex items-center gap-3.5 p-1">
+                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">🏭</div>
+                        <div>
+                            <h3 class="text-base font-bold text-white leading-tight">Real Estate</h3>
+                            <p class="text-xs text-gray-400 mt-1 leading-normal">Digital twins and property management platforms.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Connector 2 -> 3 --}}
+            <div class="mobile-beam-track card-step-3">
+                <div class="mobile-beam-head"></div>
+            </div>
+
+            {{-- Card 3: Enterprise Mobility --}}
+            <div class="relative w-full card-step-3">
+                <div class="relative w-full rounded-2xl bg-[#0B111E] p-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" preserveAspectRatio="none">
+                        <rect width="100%" height="100%" rx="16" fill="none" stroke="url(#mobileBrandGrad)" stroke-width="3" class="mobile-rect-trace"></rect>
+                    </svg>
+                    <div class="relative z-10 flex items-center gap-3.5 p-1">
+                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">🌍</div>
+                        <div>
+                            <h3 class="text-base font-bold text-white leading-tight">Enterprise Mobility</h3>
+                            <p class="text-xs text-gray-400 mt-1 leading-normal">Secure, scalable applications for global enterprises.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Connector 3 -> 4 --}}
+            <div class="mobile-beam-track card-step-4">
+                <div class="mobile-beam-head"></div>
+            </div>
+
+            {{-- Card 4: Agro & Health --}}
+            <div class="relative w-full card-step-4">
+                <div class="relative w-full rounded-2xl bg-[#0B111E] p-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" preserveAspectRatio="none">
+                        <rect width="100%" height="100%" rx="16" fill="none" stroke="url(#mobileBrandGrad)" stroke-width="3" class="mobile-rect-trace"></rect>
+                    </svg>
+                    <div class="relative z-10 flex items-center gap-3.5 p-1">
+                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">🛡️</div>
+                        <div>
+                            <h3 class="text-base font-bold text-white leading-tight">Agro & Health</h3>
+                            <p class="text-xs text-gray-400 mt-1 leading-normal">Data-driven systems ensuring safety and high yield.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Connector 4 -> 5 --}}
+            <div class="mobile-beam-track card-step-5">
+                <div class="mobile-beam-head"></div>
+            </div>
+
+            {{-- Card 5: Cloud & Infra --}}
+            <div class="relative w-full card-step-5">
+                <div class="relative w-full rounded-2xl bg-[#0B111E] p-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" preserveAspectRatio="none">
+                        <rect width="100%" height="100%" rx="16" fill="none" stroke="url(#mobileBrandGrad)" stroke-width="3" class="mobile-rect-trace"></rect>
+                    </svg>
+                    <div class="relative z-10 flex items-center gap-3.5 p-1">
+                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">☁️</div>
+                        <div>
+                            <h3 class="text-base font-bold text-white leading-tight">Cloud & Infra</h3>
+                            <p class="text-xs text-gray-400 mt-1 leading-normal">High-availability cloud architecture for zero downtime.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Connector 5 -> 6 --}}
+            <div class="mobile-beam-track card-step-6">
+                <div class="mobile-beam-head"></div>
+            </div>
+
+            {{-- Card 6: Digital Platforms --}}
+            <div class="relative w-full card-step-6">
+                <div class="relative w-full rounded-2xl bg-[#0B111E] p-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" preserveAspectRatio="none">
+                        <rect width="100%" height="100%" rx="16" fill="none" stroke="url(#mobileBrandGrad)" stroke-width="3" class="mobile-rect-trace"></rect>
+                    </svg>
+                    <div class="relative z-10 flex items-center gap-3.5 p-1">
+                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">🛍️</div>
+                        <div>
+                            <h3 class="text-base font-bold text-white leading-tight">Digital Platforms</h3>
+                            <p class="text-xs text-gray-400 mt-1 leading-normal">Immersive e-commerce and customer experience portals.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Bottom lead-out beam --}}
+            <div class="mobile-beam-track card-step-1">
+                <div class="mobile-beam-head"></div>
+            </div>
+
         </div>
     </div>
 </section>
