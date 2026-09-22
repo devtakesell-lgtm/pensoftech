@@ -1,34 +1,51 @@
-<section class="bg-[#0a0a0a] py-10 md:py-24 overflow-hidden relative">
-    
-    {{-- Background Glow --}}
-    <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-[#4fd1c5]/10 rounded-full blur-[100px] pointer-events-none"></div>
-
-    <div class="max-w-7xl mx-auto px-5 lg:px-12 relative z-10">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+<section class="py-10 md:py-24 relative overflow-hidden bg-black border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-5 lg:px-12">
+        
+        {{-- Immersive Background Hero Card --}}
+        <div class="relative rounded-2xl md:rounded-3xl overflow-hidden border border-white/15 shadow-2xl p-6 sm:p-10 md:p-16 flex flex-col justify-center min-h-[360px] md:min-h-[460px] bg-cover bg-center group"
+             style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1400');">
             
-            {{-- Left Content --}}
-            <div class="flex flex-col items-start">
-                <span class="text-[#4fd1c5] font-bold tracking-widest uppercase text-xs md:text-sm mb-1.5 md:mb-3 block">Join Our Team</span>
-                <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight mb-3 md:mb-6" style="text-shadow: 0 0 40px rgba(255,255,255,0.1);">
+            {{-- Dark cinematic multi-gradient overlay --}}
+            <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/85 to-black/60 sm:to-black/40"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+            <div class="absolute top-0 right-0 w-80 h-80 bg-[#4fd1c5]/15 rounded-full blur-[100px] pointer-events-none"></div>
+
+            {{-- Content --}}
+            <div class="relative z-10 max-w-xl">
+                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#4fd1c5]/10 border border-[#4fd1c5]/30 text-[#4fd1c5] font-bold tracking-widest uppercase text-[10px] sm:text-xs mb-3 md:mb-4">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#4fd1c5] animate-pulse"></span> We Are Hiring
+                </span>
+
+                <h2 class="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-3 md:mb-5">
                     Join Our Dynamic Team of Innovators
                 </h2>
-                <p class="text-gray-400 text-xs md:text-base mb-6 md:mb-10 max-w-lg leading-relaxed">
-                    We always welcome talented professionals to strengthen our team. Shape the future of SaaS and digital transformation with us.
-                </p>
-                <a href="#" class="bg-[#4fd1c5] hover:bg-teal-500 text-black font-bold py-3 px-6 md:py-4 md:px-8 text-xs md:text-sm rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_rgba(79,209,197,0.3)] inline-flex items-center gap-2">
-                    Visit Career <span>→</span>
-                </a>
-            </div>
 
-            {{-- Right Image --}}
-            <div class="relative">
-                <div class="absolute inset-0 bg-gradient-to-tr from-[#4fd1c5]/20 to-transparent rounded-2xl md:rounded-3xl blur-2xl transform translate-x-2 translate-y-2 md:translate-x-4 md:translate-y-4"></div>
-                <div class="relative rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 shadow-2xl group">
-                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1000" alt="Team Collaboration" class="w-full h-full object-cover aspect-[16/10] md:aspect-[4/3] group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500"></div>
+                <p class="text-gray-300 text-xs sm:text-sm md:text-base mb-5 md:mb-8 leading-relaxed">
+                    We always welcome talented professionals to strengthen our engineering, design, and growth squads. Shape the future of global SaaS with us.
+                </p>
+
+                {{-- Perk Badges --}}
+                <div class="flex flex-wrap gap-2 mb-6 md:mb-8">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white text-[10px] sm:text-xs font-semibold">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#4fd1c5]"></span> Remote-First
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white text-[10px] sm:text-xs font-semibold">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#4fd1c5]"></span> Competitive Pay
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white text-[10px] sm:text-xs font-semibold">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#4fd1c5]"></span> Global Impact
+                    </span>
+                </div>
+
+                <div>
+                    <a href="{{ url('/careers') }}" class="bg-[#4fd1c5] hover:bg-[#38b2a6] text-black font-extrabold py-3 px-7 md:py-4 md:px-9 text-xs md:text-sm rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(79,209,197,0.5)] inline-flex items-center gap-2">
+                        <span>Explore Open Roles</span>
+                        <span class="text-base font-bold">→</span>
+                    </a>
                 </div>
             </div>
 
         </div>
+
     </div>
 </section>
