@@ -111,6 +111,45 @@
             </div>
         </div>
     </div>
+
+    {{-- Mobile Layout (Stacked Grid) --}}
+    <div class="block lg:hidden relative w-full max-w-lg mx-auto z-10 px-6 mt-12 space-y-4">
+        {{-- Custom ERP & CRM --}}
+        <div class="w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+            <h3 class="text-lg font-bold mb-2 text-gray-900">Custom ERP & CRM</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">Streamline operations with enterprise-grade internal tools.</p>
+        </div>
+
+        {{-- FinTech Solutions --}}
+        <div class="w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+            <h3 class="text-lg font-bold mb-2 text-gray-900">FinTech Solutions</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">Secure payment gateways and blockchain integration.</p>
+        </div>
+
+        {{-- Enterprise Mobility --}}
+        <div class="w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+            <h3 class="text-lg font-bold mb-2 text-gray-900">Enterprise Mobility</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">Secure, scalable applications for global enterprises.</p>
+        </div>
+
+        {{-- Agro & Health --}}
+        <div class="w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+            <h3 class="text-lg font-bold mb-2 text-gray-900">Agro & Health</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">Data-driven systems ensuring safety and high yield.</p>
+        </div>
+
+        {{-- Cloud & Infra --}}
+        <div class="w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+            <h3 class="text-lg font-bold mb-2 text-gray-900">Cloud & Infra</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">High-availability cloud architecture for zero downtime.</p>
+        </div>
+
+        {{-- Digital Platforms --}}
+        <div class="w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+            <h3 class="text-lg font-bold mb-2 text-gray-900">Digital Platforms</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">Immersive e-commerce and customer experience portals.</p>
+        </div>
+    </div>
 </section>
 
 @push('scripts')
