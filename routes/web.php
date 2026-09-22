@@ -280,14 +280,3 @@ Route::prefix('client')->name('client.')->middleware('auth')->group(function () 
     Route::get('/leads/create', [ClientLeadController::class, 'create'])->name('leads.create');
     Route::post('/leads', [ClientLeadController::class, 'store'])->name('leads.store');
 });
-
-// Route::get('/email', function () {
-//     $jobApplication = \App\Models\JobApplication::where('id', 3)->firstOrFail();
-//     // In Laravel, you can preview emails in the browser simply by returning the Mailable!
-//     return new \App\Mail\JobApplicationStatusUpdated($jobApplication);
-// });
-
-// ── Frontend Demo Vertical ──────────────────────────────────────────────────
-// This route is for the new design demo only. It does NOT affect the live site.
-// Remove this route (and the DemoController) if the demo is discarded.
-Route::get('/demo', [\App\Http\Controllers\Demo\DemoController::class, 'index'])->name('demo.home');

@@ -14,10 +14,6 @@ export default defineConfig({
                 'resources/css/admin/guest.css',
                 'resources/css/client/app.css',
                 'resources/js/client/app.js',
-                'resources/js/client/app.js',
-                // Frontend Demo Vertical (separate from live frontend)
-                'resources/css/demo/app.css',
-                'resources/js/demo/app.js',
             ],
             refresh: true,
             fonts: [

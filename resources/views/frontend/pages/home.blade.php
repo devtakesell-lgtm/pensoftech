@@ -1,288 +1,173 @@
-
 @extends('frontend.layouts.front-master')
 
-@section('title', 'Home')
+@section('title', 'PenSoftTech — Scalable Software Solutions & Engineering')
 
 @section('content')
-     <!-- HERO -->
-  <section class="hero">
-    <div class="container hero-grid">
-      <div>
-        <div class="kicker">PenSoftTech · Dhaka &amp; remote-first</div>
-        <h1>Software that runs your business.<br>Marketing that grows it.</h1>
-        <p class="hero-sub">PenSoftTech is a two-discipline partner: we design and build custom software, and we plan and run digital marketing that brings in customers. Most agencies do one. We're accountable for both, under one roof.</p>
-        <div class="btn-row">
-          <a href="{{ route('software-development') }}" class="btn btn-indigo">Explore Software Development</a>
-          <a href="{{ route('digital-marketing') }}" class="btn btn-coral">Explore Digital Marketing</a>
-        </div>
-        <div class="hero-meta">
-          <div><b>60+</b><span>Projects shipped</span></div>
-          <div><b>35+</b><span>Clients served</span></div>
-          <div><b>8 yrs</b><span>In business</span></div>
-          <div><b>2</b><span>Disciplines, 1 partner</span></div>
-        </div>
-      </div>
-      <div class="hero-visual reveal">
-        <div class="split-panel">
-          <svg viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg">
-            <rect width="480" height="480" fill="#10151A"/>
-            <path d="M0 480L480 0V480H0Z" fill="#181F2E"/>
-            <g stroke="#3B4FE0" stroke-width="1" opacity="0.5">
-              <path d="M40 40H240V240H40V40Z" fill="none"/>
-              <path d="M40 80H240 M40 120H240 M40 160H240 M40 200H240"/>
-              <path d="M80 40V240 M120 40V240 M160 40V240 M200 40V240"/>
-            </g>
-            <rect x="40" y="40" width="80" height="80" fill="#3B4FE0" opacity="0.85"/>
-            <rect x="160" y="160" width="80" height="80" fill="none" stroke="#8C9BFF" stroke-width="2"/>
-            <g stroke="#FF5A36" stroke-width="3" fill="none" stroke-linecap="round">
-              <path d="M260 420 C 300 380, 320 340, 300 300 S 360 220, 340 160" />
-            </g>
-            <circle cx="340" cy="160" r="7" fill="#FF5A36"/>
-            <circle cx="300" cy="300" r="5" fill="#FF8F6E"/>
-            <path d="M420 100L440 120L420 140" stroke="#FF5A36" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M260 100H400" stroke="#FF5A36" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- TRUST BAR -->
-  <section class="trust-bar">
-    <div class="container">
-      <span class="trust-label">Trusted by teams building online</span>
-      <div class="trust-logos">
-        <span>Northbay</span>
-        <span>Kolori</span>
-        <span>Vertex Retail</span>
-        <span>Harbor&amp;Co</span>
-        <span>Ashen Labs</span>
-        <span>Ferrylane</span>
-      </div>
-    </div>
-  </section>
+    {{-- ============================================================
+     NAVBAR (Premium Frosted Navbar with Responsive Mobile Menu)
+     ============================================================ --}}
+    <nav id="mainNav" x-data="{ mobileMenuOpen: false }" class="fixed top-0 left-0 w-full z-[100] transition-all duration-300 bg-transparent py-4 md:py-6">
+        <div class="max-w-7xl mx-auto px-5 lg:px-12 flex justify-between items-center relative z-[101]">
+            {{-- Logo --}}
+            <a href="{{ route('home') }}" class="text-white font-bold text-xl md:text-2xl tracking-tighter flex items-center gap-2.5 group" data-cursor-expand>
+                <span class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-extrabold group-hover:bg-[#4fd1c5] transition-colors">P</span>
+                <span>PenSoftTech</span>
+            </a>
 
-  <!-- VERTICALS -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow-line"><span class="dot"></span>What we do</div>
-        <h2>Two disciplines. Built to work together.</h2>
-        <p>Hire us for one vertical or both — either way, you get a team that understands how product and growth affect each other.</p>
-      </div>
+            {{-- Desktop Nav links --}}
+            <ul class="hidden md:flex items-center gap-8 text-white/80 font-medium text-sm">
+                <li><a href="#ecosystem" data-cursor-expand class="hover:text-[#4fd1c5] transition-colors">Ecosystem</a></li>
+                <li><a href="#tech" data-cursor-expand class="hover:text-[#4fd1c5] transition-colors">Tech Stack</a></li>
+                <li><a href="#services" data-cursor-expand class="hover:text-[#4fd1c5] transition-colors">Services</a></li>
+                <li><a href="#case-studies" data-cursor-expand class="hover:text-[#4fd1c5] transition-colors">Case Studies</a></li>
+                <li><a href="#team" data-cursor-expand class="hover:text-[#4fd1c5] transition-colors">Leadership</a></li>
+                <li><a href="#blog" data-cursor-expand class="hover:text-[#4fd1c5] transition-colors">Insights</a></li>
+            </ul>
 
-      <div class="verticals">
-        <div class="vertical-panel is-indigo reveal">
-          <span class="tag">Software Development</span>
-          <h3>Custom software, built to your workflow</h3>
-          <p class="desc">Web apps, mobile apps and internal tools engineered by a senior team — from first architecture decision to production support.</p>
-          <ul class="svc-list">
-            <li>Web &amp; SaaS application development</li>
-            <li>Mobile apps — iOS &amp; Android</li>
-            <li>Custom &amp; enterprise software</li>
-            <li>API &amp; systems integration</li>
-            <li>QA, DevOps &amp; ongoing support</li>
-          </ul>
-          <a href="{{ route('software-development') }}" class="btn btn-ghost-light">See software services</a>
+            {{-- Desktop CTA & Mobile Hamburger Wrapper --}}
+            <div class="flex items-center gap-4">
+                <a href="#contact" data-cursor-expand class="hidden md:inline-flex items-center justify-center px-6 py-2.5 bg-white/10 border border-white/20 text-white font-semibold rounded-full hover:bg-[#4fd1c5] hover:text-black hover:border-[#4fd1c5] transition-all backdrop-blur-md text-xs md:text-sm">
+                    Start a Project
+                </a>
+                
+                {{-- Hamburger Menu Button (Mobile) --}}
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg bg-white/5 border border-white/10 focus:outline-none transition-colors" :class="mobileMenuOpen ? 'bg-white/10' : ''" aria-label="Toggle navigation menu">
+                    <span class="bg-white block transition-all duration-300 ease-out h-0.5 w-5 rounded-sm" :class="mobileMenuOpen ? 'rotate-45 translate-y-[5px]' : '-translate-y-1'"></span>
+                    <span class="bg-white block transition-all duration-300 ease-out h-0.5 w-5 rounded-sm" :class="mobileMenuOpen ? 'opacity-0' : 'opacity-100'"></span>
+                    <span class="bg-white block transition-all duration-300 ease-out h-0.5 w-5 rounded-sm" :class="mobileMenuOpen ? '-rotate-45 -translate-y-[5px]' : 'translate-y-1'"></span>
+                </button>
+            </div>
         </div>
-        <div class="vertical-panel is-coral reveal">
-          <span class="tag">Digital Marketing &amp; Ads</span>
-          <h3>Marketing that's tied to revenue</h3>
-          <p class="desc">SEO, paid media and content programs run by specialists who report on pipeline and revenue, not just impressions.</p>
-          <ul class="svc-list">
-            <li>SEO &amp; organic growth</li>
-            <li>Paid search &amp; social advertising</li>
-            <li>Content &amp; social media management</li>
-            <li>Branding &amp; creative</li>
-            <li>Analytics, tracking &amp; reporting</li>
-          </ul>
-          <a href="{{ route('digital-marketing') }}" class="btn btn-ghost">See marketing services</a>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- WHY US -->
-  <section class="section section--tight">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow-line is-soft"><span class="dot"></span>Why PenSoftTech</div>
-        <h2>What you get that a single-discipline shop can't offer</h2>
-      </div>
-      <div class="diff-list">
-        <div class="diff-row reveal">
-          <h4>One accountable team</h4>
-          <p>No hand-off between a dev shop and an ad agency pointing fingers at each other. If a landing page converts poorly, the same company that built it can fix the code and the campaign.</p>
-        </div>
-        <div class="diff-row reveal">
-          <h4>Senior people on your account</h4>
-          <p>Engineers and marketers with 5+ years of experience run your work directly — not a rotating cast of junior contractors managed by an account exec.</p>
-        </div>
-        <div class="diff-row reveal">
-          <h4>Fixed scope, fixed price</h4>
-          <p>Every engagement starts with a written scope and timeline. You know the cost before work begins, and change requests are quoted, not buried in the bill.</p>
-        </div>
-        <div class="diff-row reveal">
-          <h4>Built to hand off</h4>
-          <p>You own the code, the ad accounts and the analytics from day one. If you ever want to bring work in-house, everything is documented and portable.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+        {{-- Full Screen Mobile Menu Overlay (App-Style List) --}}
+        <div x-show="mobileMenuOpen" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 backdrop-blur-none"
+             x-transition:enter-end="opacity-100 backdrop-blur-xl"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 backdrop-blur-xl"
+             x-transition:leave-end="opacity-0 backdrop-blur-none"
+             class="fixed inset-0 bg-[#050b14]/95 z-[100] md:hidden flex flex-col pt-24 px-6 pb-8 overflow-y-auto"
+             style="display: none;">
+            
+            <div class="flex flex-col flex-grow mt-4"
+                 x-show="mobileMenuOpen"
+                 x-transition:enter="transition ease-out duration-500 delay-100"
+                 x-transition:enter-start="opacity-0 translate-y-8"
+                 x-transition:enter-end="opacity-100 translate-y-0">
+                 
+                <h4 class="text-xs font-bold text-[#4fd1c5] tracking-widest uppercase mb-4 pl-2">Navigation</h4>
+                <div class="space-y-3">
+                    <a href="#ecosystem" @click="mobileMenuOpen = false" class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                        <span class="text-lg font-semibold text-white tracking-wide">Ecosystem</span>
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#tech" @click="mobileMenuOpen = false" class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                        <span class="text-lg font-semibold text-white tracking-wide">Tech Stack</span>
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#services" @click="mobileMenuOpen = false" class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                        <span class="text-lg font-semibold text-white tracking-wide">Services</span>
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#case-studies" @click="mobileMenuOpen = false" class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                        <span class="text-lg font-semibold text-white tracking-wide">Case Studies</span>
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#team" @click="mobileMenuOpen = false" class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                        <span class="text-lg font-semibold text-white tracking-wide">Leadership</span>
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#blog" @click="mobileMenuOpen = false" class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                        <span class="text-lg font-semibold text-white tracking-wide">Insights & Blog</span>
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+            </div>
 
-  <!-- STATS -->
-  <x-frontend.components.ui.status-band/>
+            {{-- Bottom Contact --}}
+            <div class="mt-8 pt-8 border-t border-white/10"
+                 x-show="mobileMenuOpen"
+                 x-transition:enter="transition ease-out duration-500 delay-200"
+                 x-transition:enter-start="opacity-0 translate-y-8"
+                 x-transition:enter-end="opacity-100 translate-y-0">
+                <a href="#contact" @click="mobileMenuOpen = false" class="block w-full py-4 text-center rounded-xl bg-gradient-to-r from-[#4fd1c5] to-[#38b2a6] text-black font-bold text-lg mb-4 shadow-[0_0_20px_rgba(79,209,197,0.2)]">
+                    Contact Us
+                    <span class="block text-[10px] font-bold text-black/60 mt-0.5 uppercase tracking-widest">Let's Connect</span>
+                </a>
+                <p class="text-center text-gray-400 text-sm">or email us: <span class="text-white font-semibold">hello@pensoftech.com</span></p>
+            </div>
+        </div>
+    </nav>
 
-  <!-- PROCESS -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow-line"><span class="dot"></span>How we work</div>
-        <h2>A process that stays the same, whichever team you hire</h2>
-      </div>
-      <div class="process-grid">
-        <div class="process-step reveal">
-          <div class="num">01</div>
-          <h4>Discover</h4>
-          <p>We audit your product, market and current numbers, then agree on what success looks like.</p>
-        </div>
-        <div class="process-step reveal">
-          <div class="num">02</div>
-          <h4>Plan</h4>
-          <p>A scoped roadmap or media plan with milestones, cost and the metrics we'll be judged on.</p>
-        </div>
-        <div class="process-step reveal">
-          <div class="num">03</div>
-          <h4>Build &amp; launch</h4>
-          <p>Sprints or campaign flights with weekly visibility — you see progress, not just a final reveal.</p>
-        </div>
-        <div class="process-step reveal">
-          <div class="num">04</div>
-          <h4>Grow</h4>
-          <p>Post-launch support, optimisation and reporting so results compound instead of plateauing.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    <main class="bg-black">
+        {{-- 1. Cinematic Video Hero (Dark) --}}
+        @include('frontend.components.hero')
 
-  <!-- CASE STUDIES -->
-  <section class="section section--tight">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow-line is-soft"><span class="dot"></span>Recent work</div>
-        <h2>A mix of builds and campaigns</h2>
-      </div>
-      <div class="card-grid cols-3">
-        <div class="case-card is-indigo reveal">
-          <div class="thumb">
-            <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-              <rect width="400" height="250" fill="#EAECFB"/>
-              <rect x="30" y="30" width="150" height="190" fill="#3B4FE0"/>
-              <rect x="200" y="30" width="170" height="88" fill="#10151A"/>
-              <rect x="200" y="132" width="170" height="88" fill="#8C9BFF"/>
-            </svg>
-          </div>
-          <div class="body">
-            <span class="tag">Software Development</span>
-            <h4>Inventory platform for Vertex Retail</h4>
-            <p>Replaced three spreadsheets with one real-time inventory and ordering system across 40 stores.</p>
-            <div class="result">Order errors down <b>72%</b> in the first quarter</div>
-          </div>
-        </div>
-        <div class="case-card reveal">
-          <div class="thumb">
-            <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-              <rect width="400" height="250" fill="#FFE9E1"/>
-              <circle cx="120" cy="125" r="70" fill="#FF5A36"/>
-              <path d="M220 60 L370 60 L370 110 L220 110Z" fill="#10151A"/>
-              <path d="M220 140 L340 140 L340 190 L220 190Z" fill="#FF8F6E"/>
-            </svg>
-          </div>
-          <div class="body">
-            <span class="tag">Digital Marketing</span>
-            <h4>Paid search relaunch for Harbor&amp;Co</h4>
-            <p>Rebuilt account structure and landing pages for a home-goods retailer's search campaigns.</p>
-            <div class="result">Cost per lead down <b>46%</b>, spend unchanged</div>
-          </div>
-        </div>
-        <div class="case-card is-indigo reveal">
-          <div class="thumb">
-            <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-              <rect width="400" height="250" fill="#EAECFB"/>
-              <rect x="30" y="60" width="340" height="30" fill="#3B4FE0"/>
-              <rect x="30" y="105" width="220" height="30" fill="#10151A"/>
-              <rect x="30" y="150" width="280" height="30" fill="#8C9BFF"/>
-            </svg>
-          </div>
-          <div class="body">
-            <span class="tag">Software Development</span>
-            <h4>Booking app for Ferrylane Tours</h4>
-            <p>iOS and Android booking app with live availability, payments and a staff-facing admin panel.</p>
-            <div class="result">4.7★ rating, <b>12,000+</b> downloads in year one</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        {{-- 2. Ecosystem (Light) --}}
+        @include('frontend.components.ecosystem')
 
-  <!-- TECH MARQUEE -->
-  <div class="marquee">
-    <div class="marquee-track">
-      <span>React</span><span>Node.js</span><span>Next.js</span><span>Flutter</span><span>PostgreSQL</span><span>AWS</span><span>Google Ads</span><span>Meta Ads</span><span>HubSpot</span><span>Shopify</span>
-      <span>React</span><span>Node.js</span><span>Next.js</span><span>Flutter</span><span>PostgreSQL</span><span>AWS</span><span>Google Ads</span><span>Meta Ads</span><span>HubSpot</span><span>Shopify</span>
-    </div>
-  </div>
+        {{-- 3. Technologies (Dark) --}}
+        <div id="tech">
+            @include('frontend.components.technologies')
+        </div>
 
-  <!-- TESTIMONIALS -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow-line"><span class="dot"></span>Client feedback</div>
-        <h2>What it's like to work with us</h2>
-      </div>
-      <div class="testimonial-wrap">
-        <div class="testimonial is-active">
-          <blockquote>"PenSoftTech rebuilt our booking system and then took over our Google Ads. Having one team accountable for both meant nothing fell through the cracks."</blockquote>
-          <div class="who">
-            <div class="initials">RA</div>
-            <div><b>Rafiq Ahmed</b><span>Founder, Ferrylane Tours</span></div>
-          </div>
+        {{-- 4. Services (Light) --}}
+        <div id="services">
+            @include('frontend.components.services')
         </div>
-        <div class="testimonial">
-          <blockquote>"Our cost per lead dropped by nearly half within two months. The reporting is honest — they tell us when something isn't working, not just when it is."</blockquote>
-          <div class="who">
-            <div class="initials">SN</div>
-            <div><b>Sadia Nasrin</b><span>Marketing Lead, Harbor&amp;Co</span></div>
-          </div>
-        </div>
-        <div class="testimonial">
-          <blockquote>"We've used three dev shops before this one. PenSoftTech is the first that shipped on the date they promised, with documentation we could actually hand to our own engineers."</blockquote>
-          <div class="who">
-            <div class="initials">TK</div>
-            <div><b>Tanvir Kabir</b><span>COO, Vertex Retail</span></div>
-          </div>
-        </div>
-        <div class="testi-nav">
-          <button data-testi-prev aria-label="Previous testimonial">&#8592;</button>
-          <button data-testi-next aria-label="Next testimonial">&#8594;</button>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- CTA -->
-  <section class="section section--tight">
-    <div class="container">
-      <div class="cta-banner">
-        <div class="content">
-          <h2>Tell us what you're trying to build or grow</h2>
-          <p>Book a 30-minute call. We'll come with questions, not a sales script.</p>
+        {{-- 5. Projects (Dark) --}}
+        <div id="projects">
+            @include('frontend.components.projects')
         </div>
-        <div class="btn-row">
-          <a href="{{ route('contact') }}" class="btn btn-coral">Start a project</a>
-          <a href="{{ route('about') }}" class="btn btn-ghost-light">Learn about us</a>
+
+        {{-- 6. Case Studies (Light) --}}
+        <div id="case-studies">
+            @include('frontend.components.case-studies')
         </div>
-      </div>
-    </div>
-  </section>
+
+        {{-- 7. Industries (Dark) --}}
+        <div id="industries">
+            @include('frontend.components.industries')
+        </div>
+
+        {{-- 8. Blog (Light) --}}
+        <div id="blog">
+            @include('frontend.components.blog')
+        </div>
+
+        {{-- 9. Careers (Dark) --}}
+        <div id="careers">
+            @include('frontend.components.careers')
+        </div>
+
+        {{-- 10. Leadership Team (Light) --}}
+        <div id="team">
+            @include('frontend.components.team')
+        </div>
+
+        {{-- 11. Company Stats (Dark Bridge) --}}
+        <div id="stats">
+            @include('frontend.components.stats')
+        </div>
+
+        {{-- 12. Customer Reviews (Light) --}}
+        <div id="reviews">
+            @include('frontend.components.reviews')
+        </div>
+
+        {{-- 13. Interactive SVG Map (Dark) --}}
+        @include('frontend.components.map')
+
+        {{-- 14. CTA Section (Dark) --}}
+        <div id="contact">
+            @include('frontend.components.cta')
+        </div>
+    </main>
+
+    {{-- Footer (Dark Mode) --}}
+    @include('frontend.components.footer')
+
 @endsection
