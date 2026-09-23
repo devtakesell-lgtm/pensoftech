@@ -25,20 +25,14 @@
                     class="{{ request()->routeIs('services') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Services</a>
             </li>
             <li><a href="{{ route('about') }}" data-cursor-expand
-                    class="{{ request()->routeIs('about') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">About
-                    Us</a></li>
+                    class="{{ request()->routeIs('about') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">About Us</a>
+            </li>
+            <li><a href="{{ route('blogs.index') }}" data-cursor-expand
+                    class="{{ request()->routeIs('blogs.*') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Blog</a>
+            </li>
             <li><a href="{{ route('contact') }}" data-cursor-expand
                     class="{{ request()->routeIs('contact') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Contact</a>
             </li>
-            {{-- <li><a href="{{ route('home') }}#case-studies" data-cursor-expand
-                    class="{{ request()->routeIs('') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Case
-                    Studies</a></li>
-            <li><a href="{{ route('about') }}" data-cursor-expand
-                    class="{{ request()->routeIs('') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Leadership</a>
-            </li>
-            <li><a href="{{ route('home') }}#blog" data-cursor-expand
-                    class="{{ request()->routeIs('') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Insights</a>
-            </li> --}}
         </ul>
 
         {{-- Desktop CTA & Mobile Hamburger Wrapper --}}
@@ -111,7 +105,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </a>
-                <a href="{{ route('home') }}#blog" @click="mobileMenuOpen = false"
+                <a href="{{ route('blogs.index') }}" @click="mobileMenuOpen = false"
                     class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
                     <span class="text-lg font-semibold text-white tracking-wide">Insights & Blog</span>
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

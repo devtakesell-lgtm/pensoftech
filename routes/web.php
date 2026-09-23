@@ -19,6 +19,9 @@ Route::get('/services', [PageController::class, 'services'])->name('services');
 Route::get('/services/{category_slug}', [PageController::class, 'serviceCategory'])->name('services.category');
 Route::get('/services/{category_slug}/{service_slug}', [PageController::class, 'singleService'])->name('services.single');
 
+Route::get('/blog', [PageController::class, 'blogs'])->name('blogs.index');
+Route::get('/blog/{slug}', [PageController::class, 'singleBlog'])->name('blogs.single');
+
 // Public Client Authentication Routes (Guests only)
 Route::middleware('guest')->group(function () {
     Route::get('/login', [FrontendAuthController::class, 'showLoginForm'])->name('login');

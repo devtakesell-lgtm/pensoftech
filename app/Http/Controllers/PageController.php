@@ -75,4 +75,35 @@ class PageController extends Controller
             'relatedServices' => $relatedServices,
         ]);
     }
+
+    public function blogs()
+    {
+        $blogs = \App\Models\Blog::with(['category', 'author'])
+            ->where('status', ContentStatus::Published)
+            ->orderBy('published_at', 'desc')
+            ->paginate(9);
+
+        return view('frontend.pages.blogs.index', compact('blogs'));
+    }
+
+    public function singleBlog($slug)
+    {
+        $blog = \App\Models\Blog::with(['category', 'author', 'seo'])
+            ->where('slug', $slug)
+            ->where('status', ContentStatus::Published)
+            ->firstOrFail();
+
+        // Increment view count
+        $blog->increment('views');
+
+        $relatedBlogs = \App\Models\Blog::with(['category', 'author'])
+            ->where('blog_category_id', $blog->blog_category_id)
+            ->where('id', '!=', $blog->id)
+            ->where('status', ContentStatus::Published)
+            ->orderBy('published_at', 'desc')
+            ->take(3)
+            ->get();
+
+        return view('frontend.pages.blogs.single', compact('blog', 'relatedBlogs'));
+    }
 }

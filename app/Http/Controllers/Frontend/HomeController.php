@@ -22,6 +22,12 @@ class HomeController extends Controller
         ->orderBy('sort_order')
         ->get();
 
-        return view('frontend.pages.home', compact('ecosystems', 'serviceCategories'));
+        $blogs = \App\Models\Blog::with(['category', 'author'])
+            ->where('status', \App\Enums\ContentStatus::Published)
+            ->latest('published_at')
+            ->take(3)
+            ->get();
+
+        return view('frontend.pages.home', compact('ecosystems', 'serviceCategories', 'blogs'));
     }
 }
