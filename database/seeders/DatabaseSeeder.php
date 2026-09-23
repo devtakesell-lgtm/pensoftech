@@ -63,5 +63,8 @@ class DatabaseSeeder extends Seeder
         $this->call(JobCategorySeeder::class);
         $this->call(JobSeeder::class);
         $this->call(JobApplicationSeeder::class);
+
+        // ── Step 13: Settings ─────────────────────────────────────────────────
+        $this->call(SettingSeeder::class);
     }
 }

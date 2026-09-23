@@ -15,38 +15,38 @@ class ServiceSeeder extends Seeder
         // Map each service to its correct category
         $servicesMap = [
             'Web Development' => [
-                'Custom Website Development',
-                'React / Next.js Development',
-                'Laravel API Development',
+                ['name' => 'Custom Website Development', 'icon' => '💻'],
+                ['name' => 'React / Next.js Development', 'icon' => '⚛️'],
+                ['name' => 'Laravel API Development', 'icon' => '🐘'],
             ],
             'Mobile Development' => [
-                'iOS App Development',
-                'Android App Development',
-                'Flutter App Development',
+                ['name' => 'iOS App Development', 'icon' => '🍎'],
+                ['name' => 'Android App Development', 'icon' => '🤖'],
+                ['name' => 'Flutter App Development', 'icon' => '🦋'],
             ],
             'UI/UX Design' => [
-                'UI Wireframing & Prototyping',
-                'Mobile UI Design',
+                ['name' => 'UI Wireframing & Prototyping', 'icon' => '📐'],
+                ['name' => 'Mobile UI Design', 'icon' => '📱'],
             ],
             'Branding & Identity' => [
-                'Brand Identity Design',
-                'Logo Design',
+                ['name' => 'Brand Identity Design', 'icon' => '✨'],
+                ['name' => 'Logo Design', 'icon' => '🎨'],
             ],
             'Digital Marketing' => [
-                'Google Ads Management',
-                'Facebook & Instagram Ads',
+                ['name' => 'Google Ads Management', 'icon' => '📊'],
+                ['name' => 'Facebook & Instagram Ads', 'icon' => '📱'],
             ],
             'SEO & Content' => [
-                'Search Engine Optimization',
-                'Content Strategy & Writing',
+                ['name' => 'Search Engine Optimization', 'icon' => '🔍'],
+                ['name' => 'Content Strategy & Writing', 'icon' => '✍️'],
             ],
             'E-Commerce Solutions' => [
-                'WooCommerce Development',
-                'Shopify Store Development',
+                ['name' => 'WooCommerce Development', 'icon' => '🛒'],
+                ['name' => 'Shopify Store Development', 'icon' => '🛍️'],
             ],
             'Cloud & DevOps' => [
-                'Cloud Server Setup & Management',
-                'CI/CD Pipeline Setup',
+                ['name' => 'Cloud Server Setup & Management', 'icon' => '☁️'],
+                ['name' => 'CI/CD Pipeline Setup', 'icon' => '⚙️'],
             ],
         ];
 
@@ -56,14 +56,14 @@ class ServiceSeeder extends Seeder
             // Find the category we already seeded
             $category = ServiceCategory::where('name', $categoryName)->first();
 
-            foreach ($services as $name) {
+            foreach ($services as $service) {
                 Service::create([
                     'service_category_id' => $category->id,
-                    'name' => $name,
-                    'slug' => Str::slug($name),
+                    'name' => $service['name'],
+                    'slug' => Str::slug($service['name']),
                     'short_description' => fake()->sentence(),
                     'description' => fake()->paragraphs(2, true),
-                    'icon' => null,
+                    'icon' => $service['icon'],
                     'featured_image' => null,
                     'banner_image' => null,
                     'status' => ContentStatus::Published,
