@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'PenSoftTech — Scalable Software & Digital Transformation')</title>
     <meta name="description"
-        content="PenSoftTech specializes in launching and scaling world-class B2B SaaS platforms with expert product, engineering, and growth strategies.">
+        content="@yield('description', 'PenSoftTech specializes in launching and scaling world-class B2B SaaS platforms with expert product, engineering, and growth strategies.')">
     <link rel="canonical" href="{{ config('app.url') }}">
 
     <!-- Open Graph / Meta -->

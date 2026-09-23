@@ -1,5 +1,6 @@
 @import "tailwindcss";
-@source "../../views/frontend";
+@source "../../views/**/*.blade.php";
+@source "../../../app/**/*.php";
 
 /* Lenis Smooth Scroll Recommended CSS */
 html.lenis, html.lenis body {
@@ -66,3 +67,108 @@ html.lenis, html.lenis body {
 [x-cloak] {
   display: none !important;
 }
+
+/* World-Class Rich Text Content (TinyMCE Renderer) */
+.service-content {
+  color: #334155;
+  font-size: 1.125rem;
+  line-height: 1.85;
+}
+
+.service-content p {
+  margin-bottom: 1.5rem;
+  color: #475569;
+}
+
+.service-content h1,
+.service-content h2,
+.service-content h3,
+.service-content h4 {
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.service-content h1 { font-size: 2.25rem; line-height: 1.25; }
+.service-content h2 { font-size: 1.75rem; line-height: 1.3; }
+.service-content h3 { font-size: 1.375rem; line-height: 1.4; }
+.service-content h4 { font-size: 1.15rem; line-height: 1.45; }
+
+.service-content ul,
+.service-content ol {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.service-content ul {
+  list-style-type: disc;
+}
+
+.service-content ol {
+  list-style-type: decimal;
+}
+
+.service-content li {
+  margin-bottom: 0.6rem;
+  color: #475569;
+}
+
+.service-content strong {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.service-content a {
+  color: #0d9488;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.service-content a:hover {
+  color: #115e59;
+}
+
+.service-content blockquote {
+  border-left: 4px solid #14b8a6;
+  padding-left: 1.25rem;
+  margin: 1.75rem 0;
+  font-style: italic;
+  color: #1e293b;
+  background: #f8fafc;
+  padding: 1rem 1.25rem;
+  border-radius: 0 0.75rem 0.75rem 0;
+}
+
+.service-content img {
+  border-radius: 1rem;
+  max-width: 100%;
+  height: auto;
+  margin: 2rem 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.service-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.95rem;
+}
+
+.service-content th,
+.service-content td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.service-content th {
+  background: #f1f5f9;
+  font-weight: 600;
+  color: #0f172a;
+}
+

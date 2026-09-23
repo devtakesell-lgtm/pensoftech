@@ -17,16 +17,16 @@
 
         {{-- Desktop Nav links --}}
         <ul class="hidden md:flex items-center gap-8 text-white/80 font-medium text-sm">
+            <li><a href="{{ route('services') }}" data-cursor-expand
+                    class="{{ request()->routeIs('services') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Services</a>
+            </li>
             <li><a href="{{ route('about') }}" data-cursor-expand
                     class="{{ request()->routeIs('about') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">About
                     Us</a></li>
             <li><a href="{{ route('contact') }}" data-cursor-expand
                     class="{{ request()->routeIs('contact') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Contact</a>
             </li>
-            <li><a href="{{ route('home') }}#services" data-cursor-expand
-                    class="{{ request()->routeIs('') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Services</a>
-            </li>
-            <li><a href="{{ route('home') }}#case-studies" data-cursor-expand
+            {{-- <li><a href="{{ route('home') }}#case-studies" data-cursor-expand
                     class="{{ request()->routeIs('') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Case
                     Studies</a></li>
             <li><a href="{{ route('about') }}" data-cursor-expand
@@ -34,7 +34,7 @@
             </li>
             <li><a href="{{ route('home') }}#blog" data-cursor-expand
                     class="{{ request()->routeIs('') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Insights</a>
-            </li>
+            </li> --}}
         </ul>
 
         {{-- Desktop CTA & Mobile Hamburger Wrapper --}}
