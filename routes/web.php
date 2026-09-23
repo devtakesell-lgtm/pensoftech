@@ -2,11 +2,15 @@
 
 use App\Http\Controllers\Frontend\AuthController as FrontendAuthController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\LeadController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 // Public Frontend Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/start-project', [LeadController::class, 'create'])->name('start-project');
+Route::post('/start-project', [LeadController::class, 'store'])->name('start-project.store');
+
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/digital-marketing', [PageController::class, 'digitalMarketing'])->name('digital-marketing');

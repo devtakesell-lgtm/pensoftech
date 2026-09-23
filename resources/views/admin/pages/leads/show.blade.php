@@ -520,7 +520,12 @@
                             <span class="utm-tag">fbclid: <strong>{{ Str::limit($lead->fbclid, 15) }}</strong></span>
                         @endif
                         @if ($lead->ip_address)
-                            <span class="utm-tag">ip: <strong>{{ $lead->ip_address }}</strong></span>
+                            <span class="utm-tag">
+                                ip: <strong>{{ $lead->ip_address }}</strong>
+                                @if($lead->country_from_ip)
+                                    <span class="text-muted ms-1">({{ $lead->country_from_ip }})</span>
+                                @endif
+                            </span>
                         @endif
                     </div>
                 @else

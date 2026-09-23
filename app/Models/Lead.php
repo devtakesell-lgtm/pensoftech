@@ -25,12 +25,15 @@ class Lead extends Model
         'lead_source',
         'lead_type',
         'name',
+        'job_title',
         'company_name',
         'email',
         'phone',
         'website',
         'message',
         'budget',
+        'timeline',
+        'attachment_path',
         'status',
         'utm_source',
         'utm_medium',
@@ -113,5 +116,27 @@ class Lead extends Model
             ->when($filters['assigned_to'] ?? null, function (Builder $q, $userId) {
                 $q->where('assigned_to', $userId);
             });
+    }
+
+    /**
+     * Get the country name from the IP address using ip-api.com
+     */
+    public function getCountryFromIpAttribute(): ?string
+    {
+        if (!$this->ip_address || $this->ip_address === '127.0.0.1' || $this->ip_address === '::1') {
+            return 'Localhost';
+        }
+
+        return cache()->remember('ip_country_' . $this->ip_address, now()->addDays(30), function () {
+            try {
+                $response = \Illuminate\Support\Facades\Http::timeout(3)->get("http://ip-api.com/json/{$this->ip_address}");
+                if ($response->successful() && $response->json('status') === 'success') {
+                    return $response->json('country');
+                }
+            } catch (\Exception $e) {
+                // Return null if API fails
+            }
+            return null;
+        });
     }
 }

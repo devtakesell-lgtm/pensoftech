@@ -19,12 +19,15 @@ return new class extends Migration
             $table->string('lead_source')->nullable()->index();
             $table->string('lead_type')->nullable();
             $table->string('name');
+            $table->string('job_title')->nullable();
             $table->string('company_name')->nullable();
             $table->string('email')->nullable()->index();
             $table->string('phone')->nullable();
             $table->string('website')->nullable();
             $table->text('message')->nullable();
             $table->decimal('budget', 15, 2)->nullable();
+            $table->string('timeline')->nullable();
+            $table->string('attachment_path')->nullable();
             $table->string('status')->default('new')->index();
             $table->string('utm_source')->nullable();
             $table->string('utm_medium')->nullable();

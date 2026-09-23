@@ -14,8 +14,8 @@
             Partner with PenSoftTech to turn your vision into innovative, scalable software solutions. From strategy to execution, we craft exceptional digital experiences that drive growth.
         </p>
         <div class="flex justify-center">
-            <a href="#contact" class="group relative inline-flex items-center justify-center px-7 py-3 md:px-10 md:py-4 text-xs md:text-sm font-bold text-black transition-all duration-300 bg-[#4fd1c5] rounded-full hover:bg-[#38b2a6] hover:shadow-[0_0_40px_rgba(79,209,197,0.4)] hover:-translate-y-1">
-                <span>GET IN TOUCH</span>
+            <a href="{{ route('start-project') }}" class="group relative inline-flex items-center justify-center px-7 py-3 md:px-10 md:py-4 text-xs md:text-sm font-bold text-black transition-all duration-300 bg-[#4fd1c5] rounded-full hover:bg-[#38b2a6] hover:shadow-[0_0_40px_rgba(79,209,197,0.4)] hover:-translate-y-1">
+                <span>START A PROJECT</span>
                 <svg class="w-4 h-4 md:w-5 md:h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </a>
         </div>

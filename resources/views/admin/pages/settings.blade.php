@@ -51,46 +51,68 @@
                     <p>Core information and brand identity for your agency.</p>
 
                     <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>Company Name</label>
-                            <input type="text" name="company_name" value="{{ setting('company_name') }}"
-                                placeholder="e.g. PenSoftTech">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Default Currency</label>
-                            <select name="default_currency_id">
-                                @foreach($currencies as $currency)
-                                    <option value="{{ $currency->id }}" {{ $currency->is_default ? 'selected' : '' }}>
-                                        {{ $currency->code }} ({{ $currency->symbol }}) - {{ $currency->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+                        <!-- Left Side: Text Inputs -->
+                        <div class="col-lg-8 col-md-7">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Company Name</label>
+                                    <input type="text" name="company_name" value="{{ setting('company_name') }}"
+                                        placeholder="e.g. PenSoftTech">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Default Currency</label>
+                                    <select name="default_currency_id">
+                                        @foreach ($currencies as $currency)
+                                            <option value="{{ $currency->id }}"
+                                                {{ $currency->is_default ? 'selected' : '' }}>
+                                                {{ $currency->code }} ({{ $currency->symbol }}) - {{ $currency->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>Contact Email</label>
-                            <input type="email" name="contact_email" value="{{ setting('contact_email') }}"
-                                placeholder="hello@company.com">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Contact Phone</label>
-                            <input type="text" name="contact_phone" value="{{ setting('contact_phone') }}"
-                                placeholder="+880...">
-                        </div>
-                    </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Contact Email</label>
+                                    <input type="email" name="contact_email" value="{{ setting('contact_email') }}"
+                                        placeholder="hello@company.com">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Contact Phone</label>
+                                    <input type="text" name="contact_phone" value="{{ setting('contact_phone') }}"
+                                        placeholder="+880...">
+                                </div>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Office Location</label>
-                        <input type="text" name="office_location" value="{{ setting('office_location') }}"
-                            placeholder="Full address">
-                    </div>
+                            <div class="form-group">
+                                <label>Sort Bio</label>
+                                <input type="text" name="sort_bio" value="{{ setting('sort_bio') }}"
+                                    placeholder="Brief description of the company">
+                            </div>
 
-                    <div class="form-group">
-                        <label>Working Hours</label>
-                        <input type="text" name="working_hours" value="{{ setting('working_hours') }}"
-                            placeholder="Sat- thu (9am -6pm)">
+                            <div class="form-group">
+                                <label>Office Location</label>
+                                <input type="text" name="office_location" value="{{ setting('office_location') }}"
+                                    placeholder="Full address">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Working Hours</label>
+                                <input type="text" name="working_hours" value="{{ setting('working_hours') }}"
+                                    placeholder="Sat- thu (9am -6pm)">
+                            </div>
+                        </div>
+
+                        <!-- Right Side: Logo -->
+                        <div class="col-lg-4 col-md-5">
+                            <div class="form-group mb-4">
+                                <x-admin.components.forms.image-upload name="company_logo" label="Company Logo"
+                                    :current="setting('company_logo')" aspect="square" />
+                                <span class="help-text d-block mt-2">Used in admin panel sidebar, frontend header, and
+                                    ecosystem sections.</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="settings-action-bar">

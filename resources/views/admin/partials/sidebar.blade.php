@@ -1,8 +1,12 @@
 <aside class="sidebar" id="sidebar">
     <a href="{{ route('admin.dashboard') }}" class="brand text-decoration-none d-flex align-items-center gap-2">
-        <b class="logo">P</b>
+        @if(setting('company_logo'))
+            <img src="{{ setting('company_logo') }}" alt="Logo" style="width: 32px; height: 32px; object-fit: contain; border-radius: 6px;">
+        @else
+            <b class="logo">{{ substr(setting('company_name', 'P'), 0, 1) }}</b>
+        @endif
         <div class="brand-info">
-            <strong>PenSoftTech</strong>
+            <strong>{{ setting('company_name', 'PenSoftTech') }}</strong>
             <small>AGENCY</small>
         </div>
     </a>

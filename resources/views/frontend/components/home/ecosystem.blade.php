@@ -39,7 +39,11 @@
         <div id="hub-center" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-[0_12px_40px_rgba(0,0,0,0.1)] z-20">
             <div class="w-16 h-16 relative flex items-center justify-center">
                 <div class="absolute inset-0 rounded-full bg-[#3B4FE0] opacity-10 animate-ping"></div>
-                <span class="text-5xl font-extrabold" style="background-image: linear-gradient(to bottom right, #3B4FE0, #FF5A36); -webkit-background-clip: text; color: transparent;">P</span>
+                @if(setting('company_logo'))
+                    <img src="{{ asset(setting('company_logo')) }}" alt="Logo" class="w-14 h-14 object-contain relative z-10 rounded-lg">
+                @else
+                    <span class="text-5xl font-extrabold relative z-10" style="background-image: linear-gradient(to bottom right, #3B4FE0, #FF5A36); -webkit-background-clip: text; color: transparent;">{{ substr(setting('company_name', 'P'), 0, 1) }}</span>
+                @endif
             </div>
         </div>
 

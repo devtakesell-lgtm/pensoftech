@@ -10,9 +10,13 @@
         <a href="{{ route('home') }}"
             class="text-white font-bold text-xl md:text-2xl tracking-tighter flex items-center gap-2.5 group"
             data-cursor-expand>
-            <span
-                class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-extrabold group-hover:bg-[#4fd1c5] transition-colors">P</span>
-            <span>PenSoftTech</span>
+            @if(setting('company_logo'))
+                <img src="{{ asset(setting('company_logo')) }}" alt="{{ setting('company_name', 'Logo') }}" class="h-10 w-auto object-contain rounded-md">
+            @else
+                <span
+                    class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-extrabold group-hover:bg-[#4fd1c5] transition-colors">{{ substr(setting('company_name', 'P'), 0, 1) }}</span>
+            @endif
+            <span>{{ setting('company_name', 'PenSoftTech') }}</span>
         </a>
 
         {{-- Desktop Nav links --}}
@@ -39,7 +43,7 @@
 
         {{-- Desktop CTA & Mobile Hamburger Wrapper --}}
         <div class="flex items-center gap-4">
-            <a href="{{ route('home') }}#contact" data-cursor-expand
+            <a href="{{ route('start-project') }}" data-cursor-expand
                 class="hidden md:inline-flex items-center justify-center px-6 py-2.5 bg-white/10 border border-white/20 text-white font-semibold rounded-full hover:bg-[#4fd1c5] hover:text-black hover:border-[#4fd1c5] transition-all backdrop-blur-md text-xs md:text-sm">
                 Start a Project
             </a>
@@ -129,7 +133,7 @@
                     Connect</span>
             </a>
             <p class="text-center text-gray-400 text-sm">or email us: <span
-                    class="text-white font-semibold">hello@pensoftech.com</span></p>
+                    class="text-white font-semibold">{{ setting('contact_email', 'hello@pensoftech.com') }}</span></p>
         </div>
     </div>
 </nav>

@@ -21,10 +21,10 @@
                 Asia's fastest-growing IT ecosystem. We build custom software and digital marketing engines that scale enterprise revenue.
             </p>
             <div class="hero-buttons mt-8 md:mt-10 flex flex-col sm:flex-row gap-4 opacity-0 translate-y-4">
-                <a href="#ecosystem" data-cursor-expand class="px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-[#4fd1c5] hover:text-white transition-colors duration-300 text-center">
-                    Explore Ecosystem
+                <a href="{{ route('start-project') }}" data-cursor-expand class="px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-[#4fd1c5] hover:text-white transition-colors duration-300 text-center">
+                    Start a Project
                 </a>
-                <a href="#work" data-cursor-expand class="px-8 py-4 bg-white/10 border border-white/20 text-white font-semibold rounded-full hover:bg-white/20 transition-colors duration-300 backdrop-blur-sm text-center">
+                <a href="#projects" data-cursor-expand class="px-8 py-4 bg-white/10 border border-white/20 text-white font-semibold rounded-full hover:bg-white/20 transition-colors duration-300 backdrop-blur-sm text-center">
                     View Our Work
                 </a>
             </div>

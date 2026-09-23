@@ -4,15 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'PenSoftTech — Scalable Software & Digital Transformation')</title>
+    <title>@yield('title', setting('seo_meta_title', setting('company_name', 'PenSoftTech') . ' — Scalable Software & Digital Transformation'))</title>
     <meta name="description"
-        content="@yield('description', 'PenSoftTech specializes in launching and scaling world-class B2B SaaS platforms with expert product, engineering, and growth strategies.')">
+        content="@yield('description', setting('seo_meta_description', 'PenSoftTech specializes in launching and scaling world-class B2B SaaS platforms with expert product, engineering, and growth strategies.'))">
     <link rel="canonical" href="{{ config('app.url') }}">
 
     <!-- Open Graph / Meta -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="PenSoftTech — Scalable Software Solutions">
-    <meta property="og:description" content="Crafting exceptional digital experiences that drive exponential growth.">
+    <meta property="og:title" content="@yield('title', setting('seo_meta_title', setting('company_name', 'PenSoftTech') . ' — Scalable Software Solutions'))">
+    <meta property="og:description" content="@yield('description', setting('seo_meta_description', 'Crafting exceptional digital experiences that drive exponential growth.'))">
+    <meta property="og:image" content="{{ url(setting('seo_og_image', '/default-og.jpg')) }}">
     <meta property="og:url" content="{{ config('app.url') }}">
 
     <!-- Fonts: Plus Jakarta Sans + Inter -->
@@ -21,6 +22,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <!-- Swiper CSS (CDN) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
