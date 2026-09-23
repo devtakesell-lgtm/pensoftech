@@ -16,7 +16,7 @@ class LeadController extends Controller
     {
         $leadTypes = \App\Enums\LeadType::options();
         $defaultCurrency = \App\Models\Currency::where('is_default', true)->first();
-        
+
         return view('frontend.pages.start-project')->with([
             'leadTypes' => $leadTypes,
             'defaultCurrency' => $defaultCurrency,
@@ -36,17 +36,17 @@ class LeadController extends Controller
 
         $lead = Lead::create($data);
 
-        $recipients = User::query()
-            ->permission('access-admin')
-            ->get();
+        // $recipients = User::query()
+        //     ->permission('view-leads')
+        //     ->get();
 
-        $adminEmail = setting('system_admin_email', 'hello@pensoftech.com');
-        \Illuminate\Support\Facades\Notification::route('mail', $adminEmail)
-            ->notify(new \App\Notifications\NewLeadNotification($lead));
+        // $adminEmail = setting('system_admin_email', 'hello@pensoftech.com');
+        // \Illuminate\Support\Facades\Notification::route('mail', $adminEmail)
+        //     ->notify(new \App\Notifications\NewLeadNotification($lead));
 
-        if ($recipients->isNotEmpty()) {
-            Notification::send($recipients, new \App\Notifications\NewLeadNotification($lead));
-        }
+        // if ($recipients->isNotEmpty()) {
+        //     Notification::send($recipients, new \App\Notifications\NewLeadNotification($lead));
+        // }
 
         return redirect()->route('start-project')->with('success', 'Thank you! Your project inquiry has been received. We will contact you soon.');
     }
