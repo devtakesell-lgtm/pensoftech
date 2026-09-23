@@ -1,0 +1,246 @@
+<?php
+
+use App\Http\Controllers\Admin\AnalyticsController as AdminAnalyticsController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\BlogCategoryController;
+use App\Http\Controllers\Admin\BlogCommentController as AdminBlogCommentController;
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
+use App\Http\Controllers\Admin\BlogTagController;
+use App\Http\Controllers\Admin\CaseStudyController as AdminCaseStudyController;
+use App\Http\Controllers\Admin\ClientController as AdminClientController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ImageUploadController;
+use App\Http\Controllers\Admin\IndustryController as AdminIndustryController;
+use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
+use App\Http\Controllers\Admin\JobCategoryController as AdminJobCategoryController;
+use App\Http\Controllers\Admin\JobController as AdminJobController;
+use App\Http\Controllers\Admin\LeadController as AdminLeadController;
+use App\Http\Controllers\Admin\PageController as AdminPageController;
+use App\Http\Controllers\Admin\PermissionController as AdminPermissionController;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\QuoteController as AdminQuoteController;
+use App\Http\Controllers\Admin\RoleController as AdminRoleController;
+use App\Http\Controllers\Admin\ServiceCategoryController as AdminServiceCategoryController;
+use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
+use App\Http\Controllers\Admin\SettingController as AdminSettingController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use Illuminate\Support\Facades\Route;
+
+// Admin Panel Routes
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Staff Login & Logout
+    Route::middleware('guest')->group(function () {
+        Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
+    });
+
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+    // Protected Staff Routes
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::post('/upload-image', [ImageUploadController::class, 'upload'])->name('upload-image');
+
+        Route::get('/', function () {
+            return redirect()->route('admin.dashboard');
+        });
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        // Leads Module
+        Route::prefix('leads')->group(function () {
+            Route::get('/', [AdminLeadController::class, 'index'])->name('leads')->middleware('can:view-leads');
+            Route::get('/create', [AdminLeadController::class, 'create'])->name('leads.create')->middleware('can:create-leads');
+            Route::post('/', [AdminLeadController::class, 'store'])->name('leads.store')->middleware('can:create-leads');
+            Route::get('/{lead}', [AdminLeadController::class, 'show'])->name('leads.show')->middleware('can:view-leads');
+            Route::get('/{lead}/edit', [AdminLeadController::class, 'edit'])->name('leads.edit')->middleware('can:edit-leads');
+            Route::put('/{lead}', [AdminLeadController::class, 'update'])->name('leads.update')->middleware('can:edit-leads');
+            Route::delete('/{lead}', [AdminLeadController::class, 'destroy'])->name('leads.destroy')->middleware('can:delete-leads');
+            Route::patch('/{lead}/status', [AdminLeadController::class, 'updateStatus'])->name('leads.update-status')->middleware('can:edit-leads');
+            Route::post('/{lead}/convert', [AdminLeadController::class, 'convert'])->name('leads.convert')->middleware('can:edit-leads');
+            Route::patch('/{lead}/assignee', [AdminLeadController::class, 'updateAssignee'])->name('leads.assignee')->middleware('can:edit-leads');
+        });
+
+        // Clients Module
+        Route::prefix('clients')->group(function () {
+            Route::get('/', [AdminClientController::class, 'index'])->name('clients')->middleware('can:view-clients');
+            Route::post('/', [AdminClientController::class, 'store'])->name('clients.store')->middleware('can:create-clients');
+            Route::get('/{client}', [AdminClientController::class, 'show'])->name('clients.show')->middleware('can:view-clients');
+            Route::get('/{client}/edit', [AdminClientController::class, 'edit'])->name('clients.edit')->middleware('can:edit-clients');
+            Route::put('/{client}', [AdminClientController::class, 'update'])->name('clients.update')->middleware('can:edit-clients');
+            Route::delete('/{client}', [AdminClientController::class, 'destroy'])->name('clients.destroy')->middleware('can:delete-clients');
+        });
+
+        // Quotes Module
+        Route::prefix('quotes')->group(function () {
+            Route::get('/', [AdminQuoteController::class, 'index'])->name('quotes')->middleware('can:view-quotes');
+            Route::get('/create', [AdminQuoteController::class, 'create'])->name('quotes.create')->middleware('can:create-quotes');
+            Route::post('/', [AdminQuoteController::class, 'store'])->name('quotes.store')->middleware('can:create-quotes');
+            Route::get('/{quote}', [AdminQuoteController::class, 'show'])->name('quotes.show')->middleware('can:view-quotes');
+            Route::get('/{quote}/edit', [AdminQuoteController::class, 'edit'])->name('quotes.edit')->middleware('can:edit-quotes');
+            Route::put('/{quote}', [AdminQuoteController::class, 'update'])->name('quotes.update')->middleware('can:edit-quotes');
+            Route::patch('/{quote}/status', [AdminQuoteController::class, 'updateStatus'])->name('quotes.update-status')->middleware('can:edit-quotes');
+            Route::delete('/{quote}', [AdminQuoteController::class, 'destroy'])->name('quotes.destroy')->middleware('can:delete-quotes');
+        });
+
+        // Services Module
+        Route::prefix('services')->group(function () {
+            Route::get('/', [AdminServiceController::class, 'index'])->name('services')->middleware('can:view-services');
+            Route::get('/create', [AdminServiceController::class, 'create'])->name('services.create')->middleware('can:create-services');
+            Route::post('/', [AdminServiceController::class, 'store'])->name('services.store')->middleware('can:create-services');
+            Route::get('/{service}/edit', [AdminServiceController::class, 'edit'])->name('services.edit')->middleware('can:edit-services');
+            Route::put('/{service}', [AdminServiceController::class, 'update'])->name('services.update')->middleware('can:edit-services');
+            Route::delete('/{service}', [AdminServiceController::class, 'destroy'])->name('services.destroy')->middleware('can:delete-services');
+        });
+
+        // Service Categories Module
+        Route::prefix('service-categories')->name('service-categories.')->group(function () {
+            Route::get('/', [AdminServiceCategoryController::class, 'index'])->name('index')->middleware('can:view-services');
+            Route::get('/create', [AdminServiceCategoryController::class, 'create'])->name('create')->middleware('can:create-services');
+            Route::post('/', [AdminServiceCategoryController::class, 'store'])->name('store')->middleware('can:create-services');
+            Route::get('/{serviceCategory}/edit', [AdminServiceCategoryController::class, 'edit'])->name('edit')->middleware('can:edit-services');
+            Route::put('/{serviceCategory}', [AdminServiceCategoryController::class, 'update'])->name('update')->middleware('can:edit-services');
+            Route::delete('/{serviceCategory}', [AdminServiceCategoryController::class, 'destroy'])->name('destroy')->middleware('can:delete-services');
+        });
+
+        // Projects Module
+        Route::prefix('projects')->group(function () {
+            Route::get('/', [AdminProjectController::class, 'index'])->name('projects.index')->middleware('can:view-projects');
+            Route::get('/create', [AdminProjectController::class, 'create'])->name('projects.create')->middleware('can:create-projects');
+            Route::post('/', [AdminProjectController::class, 'store'])->name('projects.store')->middleware('can:create-projects');
+            Route::get('/{project}', [AdminProjectController::class, 'show'])->name('projects.show')->middleware('can:view-projects');
+            Route::get('/{project}/edit', [AdminProjectController::class, 'edit'])->name('projects.edit')->middleware('can:edit-projects');
+            Route::put('/{project}', [AdminProjectController::class, 'update'])->name('projects.update')->middleware('can:edit-projects');
+            Route::patch('/{project}/status', [AdminProjectController::class, 'updateStatus'])->name('projects.update-status')->middleware('can:edit-projects');
+            Route::delete('/{project}', [AdminProjectController::class, 'destroy'])->name('projects.destroy')->middleware('can:delete-projects');
+        });
+
+        // Case Studies Module
+        Route::prefix('case-studies')->name('case-studies.')->group(function () {
+            Route::get('/', [AdminCaseStudyController::class, 'index'])->name('index')->middleware('can:view-case-studies');
+            Route::get('/create', [AdminCaseStudyController::class, 'create'])->name('create')->middleware('can:create-case-studies');
+            Route::post('/', [AdminCaseStudyController::class, 'store'])->name('store')->middleware('can:create-case-studies');
+            Route::get('/{caseStudy}', [AdminCaseStudyController::class, 'show'])->name('show')->middleware('can:view-case-studies');
+            Route::get('/{caseStudy}/edit', [AdminCaseStudyController::class, 'edit'])->name('edit')->middleware('can:edit-case-studies');
+            Route::put('/{caseStudy}', [AdminCaseStudyController::class, 'update'])->name('update')->middleware('can:edit-case-studies');
+            Route::delete('/{caseStudy}', [AdminCaseStudyController::class, 'destroy'])->name('destroy')->middleware('can:delete-case-studies');
+        });
+
+        // Industries Module
+        Route::prefix('industries')->group(function () {
+            Route::get('/', [AdminIndustryController::class, 'index'])->name('industries')->middleware('can:view-industries');
+            Route::get('/create', [AdminIndustryController::class, 'create'])->name('industries.create')->middleware('can:create-industries');
+            Route::post('/', [AdminIndustryController::class, 'store'])->name('industries.store')->middleware('can:create-industries');
+            Route::get('/{industry}/edit', [AdminIndustryController::class, 'edit'])->name('industries.edit')->middleware('can:edit-industries');
+            Route::put('/{industry}', [AdminIndustryController::class, 'update'])->name('industries.update')->middleware('can:edit-industries');
+            Route::delete('/{industry}', [AdminIndustryController::class, 'destroy'])->name('industries.destroy')->middleware('can:delete-industries');
+        });
+
+        // CMS Pages Module
+        Route::prefix('pages')->name('pages.')->group(function () {
+            Route::get('/', [AdminPageController::class, 'index'])->name('index')->middleware('can:view-pages');
+            Route::get('/create', [AdminPageController::class, 'create'])->name('create')->middleware('can:create-pages');
+            Route::post('/', [AdminPageController::class, 'store'])->name('store')->middleware('can:create-pages');
+            Route::get('/{page}', [AdminPageController::class, 'show'])->name('show')->middleware('can:view-pages');
+            Route::get('/{page}/edit', [AdminPageController::class, 'edit'])->name('edit')->middleware('can:edit-pages');
+            Route::put('/{page}', [AdminPageController::class, 'update'])->name('update')->middleware('can:edit-pages');
+            Route::delete('/{page}', [AdminPageController::class, 'destroy'])->name('destroy')->middleware('can:delete-pages');
+        });
+
+        // Blog Module
+        Route::prefix('blog')->name('blog.')->group(function () {
+            Route::get('/', [AdminBlogController::class, 'index'])->name('index')->middleware('can:view-blogs');
+            Route::get('/create', [AdminBlogController::class, 'create'])->name('create')->middleware('can:create-blogs');
+            Route::post('/', [AdminBlogController::class, 'store'])->name('store')->middleware('can:create-blogs');
+            Route::get('/{blog}', [AdminBlogController::class, 'show'])->name('show')->middleware('can:view-blogs');
+            Route::get('/{blog}/edit', [AdminBlogController::class, 'edit'])->name('edit')->middleware('can:edit-blogs');
+            Route::put('/{blog}', [AdminBlogController::class, 'update'])->name('update')->middleware('can:edit-blogs');
+            Route::delete('/{blog}', [AdminBlogController::class, 'destroy'])->name('destroy')->middleware('can:delete-blogs');
+        });
+
+        Route::prefix('blog-categories')->name('blog-categories.')->group(function () {
+            Route::get('/', [BlogCategoryController::class, 'index'])->name('index')->middleware('can:view-blog-categories');
+            Route::get('/create', [BlogCategoryController::class, 'create'])->name('create')->middleware('can:create-blog-categories');
+            Route::post('/', [BlogCategoryController::class, 'store'])->name('store')->middleware('can:create-blog-categories');
+            Route::get('/{blog_category}/edit', [BlogCategoryController::class, 'edit'])->name('edit')->middleware('can:edit-blog-categories');
+            Route::put('/{blog_category}', [BlogCategoryController::class, 'update'])->name('update')->middleware('can:edit-blog-categories');
+            Route::delete('/{blog_category}', [BlogCategoryController::class, 'destroy'])->name('destroy')->middleware('can:delete-blog-categories');
+        });
+
+        Route::prefix('blog-tags')->name('blog-tags.')->group(function () {
+            Route::get('/', [BlogTagController::class, 'index'])->name('index')->middleware('can:view-blog-tags');
+            Route::get('/create', [BlogTagController::class, 'create'])->name('create')->middleware('can:create-blog-tags');
+            Route::post('/', [BlogTagController::class, 'store'])->name('store')->middleware('can:create-blog-tags');
+            Route::get('/{blog_tag}/edit', [BlogTagController::class, 'edit'])->name('edit')->middleware('can:edit-blog-tags');
+            Route::put('/{blog_tag}', [BlogTagController::class, 'update'])->name('update')->middleware('can:edit-blog-tags');
+            Route::delete('/{blog_tag}', [BlogTagController::class, 'destroy'])->name('destroy')->middleware('can:delete-blog-tags');
+        });
+
+        Route::prefix('blog-comments')->name('blog-comments.')->group(function () {
+            Route::get('/', [AdminBlogCommentController::class, 'index'])->name('index')->middleware('can:view-blogs');
+            Route::patch('/{comment}/status', [AdminBlogCommentController::class, 'updateStatus'])->name('update-status')->middleware('can:edit-blogs');
+            Route::post('/{comment}/reply', [AdminBlogCommentController::class, 'reply'])->name('reply')->middleware('can:edit-blogs');
+            Route::delete('/{comment}', [AdminBlogCommentController::class, 'destroy'])->name('destroy')->middleware('can:delete-blogs');
+        });
+        // Careers / Jobs Module
+        Route::prefix('jobs')->name('jobs.')->group(function () {
+            Route::get('/', [AdminJobController::class, 'index'])->name('index')->middleware('can:view-jobs');
+            Route::get('/create', [AdminJobController::class, 'create'])->name('create')->middleware('can:create-jobs');
+            Route::post('/', [AdminJobController::class, 'store'])->name('store')->middleware('can:create-jobs');
+            Route::get('/{job}/edit', [AdminJobController::class, 'edit'])->name('edit')->middleware('can:edit-jobs');
+            Route::put('/{job}', [AdminJobController::class, 'update'])->name('update')->middleware('can:edit-jobs');
+            Route::delete('/{job}', [AdminJobController::class, 'destroy'])->name('destroy')->middleware('can:delete-jobs');
+        });
+
+        Route::prefix('job-categories')->name('job-categories.')->group(function () {
+            Route::get('/', [AdminJobCategoryController::class, 'index'])->name('index')->middleware('can:view-jobs');
+            Route::get('/create', [AdminJobCategoryController::class, 'create'])->name('create')->middleware('can:create-jobs');
+            Route::post('/', [AdminJobCategoryController::class, 'store'])->name('store')->middleware('can:create-jobs');
+            Route::get('/{jobCategory}/edit', [AdminJobCategoryController::class, 'edit'])->name('edit')->middleware('can:edit-jobs');
+            Route::put('/{jobCategory}', [AdminJobCategoryController::class, 'update'])->name('update')->middleware('can:edit-jobs');
+            Route::delete('/{jobCategory}', [AdminJobCategoryController::class, 'destroy'])->name('destroy')->middleware('can:delete-jobs');
+        });
+
+        Route::prefix('job-applications')->name('job-applications.')->group(function () {
+            Route::get('/', [AdminJobApplicationController::class, 'index'])->name('index')->middleware('can:view-job-applications');
+            Route::get('/{jobApplication}', [AdminJobApplicationController::class, 'show'])->name('show')->middleware('can:view-job-applications');
+            Route::get('/{jobApplication}/edit', [AdminJobApplicationController::class, 'edit'])->name('edit')->middleware('can:edit-job-applications');
+            Route::put('/{jobApplication}', [AdminJobApplicationController::class, 'update'])->name('update')->middleware('can:edit-job-applications');
+            Route::delete('/{jobApplication}', [AdminJobApplicationController::class, 'destroy'])->name('destroy')->middleware('can:delete-job-applications');
+        });
+
+        // Users Module (Granular Capabilities)
+        Route::prefix('users')->group(function () {
+            Route::get('/', [AdminUserController::class, 'index'])->name('users')->middleware('can:view-users');
+            Route::get('/create', [AdminUserController::class, 'create'])->name('users.create')->middleware('can:create-users');
+            Route::post('/', [AdminUserController::class, 'store'])->name('users.store')->middleware('can:create-users');
+            Route::get('/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit')->middleware('can:edit-users');
+            Route::put('/{user}', [AdminUserController::class, 'update'])->name('users.update')->middleware('can:edit-users');
+            Route::delete('/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy')->middleware('can:delete-users');
+        });
+
+        // Roles Module
+        Route::prefix('roles')->group(function () {
+            Route::get('/', [AdminRoleController::class, 'index'])->name('roles.index')->middleware('can:view-roles');
+            Route::get('/create', [AdminRoleController::class, 'create'])->name('roles.create')->middleware('can:create-roles');
+            Route::post('/', [AdminRoleController::class, 'store'])->name('roles.store')->middleware('can:create-roles');
+            Route::get('/{role}/edit', [AdminRoleController::class, 'edit'])->name('roles.edit')->middleware('can:edit-roles');
+            Route::put('/{role}', [AdminRoleController::class, 'update'])->name('roles.update')->middleware('can:edit-roles');
+            Route::delete('/{role}', [AdminRoleController::class, 'destroy'])->name('roles.destroy')->middleware('can:delete-roles');
+        });
+
+        // Permissions Module
+        Route::prefix('permissions')->group(function () {
+            Route::get('/', [AdminPermissionController::class, 'index'])->name('permissions.index')->middleware('can:view-roles');
+        });
+
+        // Analytics Module
+        Route::prefix('analytics')->group(function () {
+            Route::get('/', [AdminAnalyticsController::class, 'index'])->name('analytics')->middleware('can:view-analytics');
+        });
+
+        // Settings Module
+        Route::prefix('settings')->group(function () {
+            Route::get('/', [AdminSettingController::class, 'index'])->name('settings')->middleware('can:view-settings');
+            Route::post('/', [AdminSettingController::class, 'update'])->name('settings.update')->middleware('can:edit-settings');
+        });
+    });
+});
