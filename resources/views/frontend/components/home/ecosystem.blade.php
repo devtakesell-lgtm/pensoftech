@@ -48,72 +48,47 @@
         </div>
 
         {{-- Left Cards --}}
-        <div id='card-l1' class='network-card absolute top-[6%] xl:top-[12%] left-[12%] xl:left-[20%] w-64 bg-white border-2 border-transparent rounded-2xl p-5 z-20 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'>
-            <svg class='absolute inset-0 w-full h-full pointer-events-none rounded-2xl' preserveAspectRatio='none'>
-                <rect width='100%' height='100%' rx='16' fill='none' stroke='url(#brandGradient)' stroke-width='3' class='card-trace-path opacity-0' style='stroke-linecap: round;'></rect>
-            </svg>
-            <div class='relative z-10'>
-                <div class='w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center mb-3 text-xl border border-gray-200'>🧠</div>
-                <h3 class='text-base font-bold mb-1 text-gray-900'>AI & Deep Tech</h3>
-                <p class='text-xs text-gray-500 leading-relaxed'>Intelligent algorithms that optimize operations and scale growth.</p>
-            </div>
-        </div>
+        @php
+            $leftCards = $ecosystems->take(3);
+            $rightCards = $ecosystems->skip(3)->take(3);
+            $positionsL = [
+                'top-[6%] xl:top-[12%] left-[12%] xl:left-[20%]',
+                'top-[50%] -translate-y-1/2 left-[2%] xl:left-[8%]',
+                'bottom-[6%] xl:bottom-[12%] left-[12%] xl:left-[20%]'
+            ];
+            $positionsR = [
+                'top-[6%] xl:top-[12%] right-[12%] xl:right-[20%]',
+                'top-[50%] -translate-y-1/2 right-[2%] xl:right-[8%]',
+                'bottom-[6%] xl:bottom-[12%] right-[12%] xl:right-[20%]'
+            ];
+        @endphp
 
-        <div id='card-l2' class='network-card absolute top-[50%] -translate-y-1/2 left-[2%] xl:left-[8%] w-64 bg-white border-2 border-transparent rounded-2xl p-5 z-20 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'>
+        @foreach($leftCards as $index => $eco)
+        <div id='card-l{{ $index + 1 }}' class='network-card absolute {{ $positionsL[$index] ?? $positionsL[0] }} w-64 bg-white border-2 border-transparent rounded-2xl p-5 z-20 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'>
             <svg class='absolute inset-0 w-full h-full pointer-events-none rounded-2xl' preserveAspectRatio='none'>
                 <rect width='100%' height='100%' rx='16' fill='none' stroke='url(#brandGradient)' stroke-width='3' class='card-trace-path opacity-0' style='stroke-linecap: round;'></rect>
             </svg>
             <div class='relative z-10'>
-                <div class='w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center mb-3 text-xl border border-gray-200'>🏭</div>
-                <h3 class='text-base font-bold mb-1 text-gray-900'>Real Estate</h3>
-                <p class='text-xs text-gray-500 leading-relaxed'>Digital twins and property management platforms.</p>
+                <div class='w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center mb-3 text-xl border border-gray-200'>{{ $eco->icon ?? '✨' }}</div>
+                <h3 class='text-base font-bold mb-1 text-gray-900'>{{ $eco->name }}</h3>
+                <p class='text-xs text-gray-500 leading-relaxed'>{{ Str::limit($eco->short_description, 60) }}</p>
             </div>
         </div>
-
-        <div id='card-l3' class='network-card absolute bottom-[6%] xl:bottom-[12%] left-[12%] xl:left-[20%] w-64 bg-white border-2 border-transparent rounded-2xl p-5 z-20 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'>
-            <svg class='absolute inset-0 w-full h-full pointer-events-none rounded-2xl' preserveAspectRatio='none'>
-                <rect width='100%' height='100%' rx='16' fill='none' stroke='url(#brandGradient)' stroke-width='3' class='card-trace-path opacity-0' style='stroke-linecap: round;'></rect>
-            </svg>
-            <div class='relative z-10'>
-                <div class='w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center mb-3 text-xl border border-gray-200'>🌍</div>
-                <h3 class='text-base font-bold mb-1 text-gray-900'>Enterprise Mobility</h3>
-                <p class='text-xs text-gray-500 leading-relaxed'>Secure, scalable applications for global enterprises.</p>
-            </div>
-        </div>
+        @endforeach
 
         {{-- Right Cards --}}
-        <div id='card-r1' class='network-card absolute top-[6%] xl:top-[12%] right-[12%] xl:right-[20%] w-64 bg-white border-2 border-transparent rounded-2xl p-5 z-20 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'>
+        @foreach($rightCards->values() as $index => $eco)
+        <div id='card-r{{ $index + 1 }}' class='network-card absolute {{ $positionsR[$index] ?? $positionsR[0] }} w-64 bg-white border-2 border-transparent rounded-2xl p-5 z-20 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'>
             <svg class='absolute inset-0 w-full h-full pointer-events-none rounded-2xl' preserveAspectRatio='none'>
                 <rect width='100%' height='100%' rx='16' fill='none' stroke='url(#brandGradient)' stroke-width='3' class='card-trace-path opacity-0' style='stroke-linecap: round;'></rect>
             </svg>
             <div class='relative z-10'>
-                <div class='w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center mb-3 text-xl border border-gray-200'>🛡️</div>
-                <h3 class='text-base font-bold mb-1 text-gray-900'>Agro & Health</h3>
-                <p class='text-xs text-gray-500 leading-relaxed'>Data-driven systems ensuring safety and high yield.</p>
+                <div class='w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center mb-3 text-xl border border-gray-200'>{{ $eco->icon ?? '✨' }}</div>
+                <h3 class='text-base font-bold mb-1 text-gray-900'>{{ $eco->name }}</h3>
+                <p class='text-xs text-gray-500 leading-relaxed'>{{ Str::limit($eco->short_description, 60) }}</p>
             </div>
         </div>
-
-        <div id='card-r2' class='network-card absolute top-[50%] -translate-y-1/2 right-[2%] xl:right-[8%] w-64 bg-white border-2 border-transparent rounded-2xl p-5 z-20 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'>
-            <svg class='absolute inset-0 w-full h-full pointer-events-none rounded-2xl' preserveAspectRatio='none'>
-                <rect width='100%' height='100%' rx='16' fill='none' stroke='url(#brandGradient)' stroke-width='3' class='card-trace-path opacity-0' style='stroke-linecap: round;'></rect>
-            </svg>
-            <div class='relative z-10'>
-                <div class='w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center mb-3 text-xl border border-gray-200'>☁️</div>
-                <h3 class='text-base font-bold mb-1 text-gray-900'>Cloud & Infra</h3>
-                <p class='text-xs text-gray-500 leading-relaxed'>High-availability cloud architecture for zero downtime.</p>
-            </div>
-        </div>
-
-        <div id='card-r3' class='network-card absolute bottom-[6%] xl:bottom-[12%] right-[12%] xl:right-[20%] w-64 bg-white border-2 border-transparent rounded-2xl p-5 z-20 shadow-[0_8px_30px_rgba(0,0,0,0.08)]'>
-            <svg class='absolute inset-0 w-full h-full pointer-events-none rounded-2xl' preserveAspectRatio='none'>
-                <rect width='100%' height='100%' rx='16' fill='none' stroke='url(#brandGradient)' stroke-width='3' class='card-trace-path opacity-0' style='stroke-linecap: round;'></rect>
-            </svg>
-            <div class='relative z-10'>
-                <div class='w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center mb-3 text-xl border border-gray-200'>🛍️</div>
-                <h3 class='text-base font-bold mb-1 text-gray-900'>Digital Platforms</h3>
-                <p class='text-xs text-gray-500 leading-relaxed'>Immersive e-commerce and customer experience portals.</p>
-            </div>
-        </div>
+        @endforeach
     </div>
 
     {{-- Mobile Layout (Centered Animated Circuit with Connecting Beams & Border Traces) --}}
@@ -207,131 +182,28 @@
 
         <div class="mobile-eco-section">
             
-            {{-- Top lead-in beam --}}
-            <div class="mobile-beam-track card-step-1">
+            @foreach($ecosystems as $index => $eco)
+            {{-- Top lead-in beam or Connector --}}
+            <div class="mobile-beam-track card-step-{{ $index + 1 }}">
                 <div class="mobile-beam-head"></div>
             </div>
 
-            {{-- Card 1: AI & Deep Tech --}}
-            <div class="relative w-full card-step-1">
+            {{-- Card --}}
+            <div class="relative w-full card-step-{{ $index + 1 }}">
                 <div class="relative w-full rounded-2xl bg-[#0B111E] p-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
                     <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" preserveAspectRatio="none">
                         <rect width="100%" height="100%" rx="16" fill="none" stroke="url(#mobileBrandGrad)" stroke-width="3" class="mobile-rect-trace"></rect>
                     </svg>
                     <div class="relative z-10 flex items-center gap-3.5 p-1">
-                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">🧠</div>
+                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">{{ $eco->icon ?? '✨' }}</div>
                         <div>
-                            <h3 class="text-base font-bold text-white leading-tight">AI & Deep Tech</h3>
-                            <p class="text-xs text-gray-400 mt-1 leading-normal">Intelligent algorithms that optimize operations and scale growth.</p>
+                            <h3 class="text-base font-bold text-white leading-tight">{{ $eco->name }}</h3>
+                            <p class="text-xs text-gray-400 mt-1 leading-normal">{{ Str::limit($eco->short_description, 50) }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-
-            {{-- Connector 1 -> 2 --}}
-            <div class="mobile-beam-track card-step-2">
-                <div class="mobile-beam-head"></div>
-            </div>
-
-            {{-- Card 2: Real Estate --}}
-            <div class="relative w-full card-step-2">
-                <div class="relative w-full rounded-2xl bg-[#0B111E] p-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
-                    <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" preserveAspectRatio="none">
-                        <rect width="100%" height="100%" rx="16" fill="none" stroke="url(#mobileBrandGrad)" stroke-width="3" class="mobile-rect-trace"></rect>
-                    </svg>
-                    <div class="relative z-10 flex items-center gap-3.5 p-1">
-                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">🏭</div>
-                        <div>
-                            <h3 class="text-base font-bold text-white leading-tight">Real Estate</h3>
-                            <p class="text-xs text-gray-400 mt-1 leading-normal">Digital twins and property management platforms.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Connector 2 -> 3 --}}
-            <div class="mobile-beam-track card-step-3">
-                <div class="mobile-beam-head"></div>
-            </div>
-
-            {{-- Card 3: Enterprise Mobility --}}
-            <div class="relative w-full card-step-3">
-                <div class="relative w-full rounded-2xl bg-[#0B111E] p-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
-                    <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" preserveAspectRatio="none">
-                        <rect width="100%" height="100%" rx="16" fill="none" stroke="url(#mobileBrandGrad)" stroke-width="3" class="mobile-rect-trace"></rect>
-                    </svg>
-                    <div class="relative z-10 flex items-center gap-3.5 p-1">
-                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">🌍</div>
-                        <div>
-                            <h3 class="text-base font-bold text-white leading-tight">Enterprise Mobility</h3>
-                            <p class="text-xs text-gray-400 mt-1 leading-normal">Secure, scalable applications for global enterprises.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Connector 3 -> 4 --}}
-            <div class="mobile-beam-track card-step-4">
-                <div class="mobile-beam-head"></div>
-            </div>
-
-            {{-- Card 4: Agro & Health --}}
-            <div class="relative w-full card-step-4">
-                <div class="relative w-full rounded-2xl bg-[#0B111E] p-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
-                    <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" preserveAspectRatio="none">
-                        <rect width="100%" height="100%" rx="16" fill="none" stroke="url(#mobileBrandGrad)" stroke-width="3" class="mobile-rect-trace"></rect>
-                    </svg>
-                    <div class="relative z-10 flex items-center gap-3.5 p-1">
-                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">🛡️</div>
-                        <div>
-                            <h3 class="text-base font-bold text-white leading-tight">Agro & Health</h3>
-                            <p class="text-xs text-gray-400 mt-1 leading-normal">Data-driven systems ensuring safety and high yield.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Connector 4 -> 5 --}}
-            <div class="mobile-beam-track card-step-5">
-                <div class="mobile-beam-head"></div>
-            </div>
-
-            {{-- Card 5: Cloud & Infra --}}
-            <div class="relative w-full card-step-5">
-                <div class="relative w-full rounded-2xl bg-[#0B111E] p-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
-                    <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" preserveAspectRatio="none">
-                        <rect width="100%" height="100%" rx="16" fill="none" stroke="url(#mobileBrandGrad)" stroke-width="3" class="mobile-rect-trace"></rect>
-                    </svg>
-                    <div class="relative z-10 flex items-center gap-3.5 p-1">
-                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">☁️</div>
-                        <div>
-                            <h3 class="text-base font-bold text-white leading-tight">Cloud & Infra</h3>
-                            <p class="text-xs text-gray-400 mt-1 leading-normal">High-availability cloud architecture for zero downtime.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Connector 5 -> 6 --}}
-            <div class="mobile-beam-track card-step-6">
-                <div class="mobile-beam-head"></div>
-            </div>
-
-            {{-- Card 6: Digital Platforms --}}
-            <div class="relative w-full card-step-6">
-                <div class="relative w-full rounded-2xl bg-[#0B111E] p-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.2)] overflow-hidden border border-white/10">
-                    <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" preserveAspectRatio="none">
-                        <rect width="100%" height="100%" rx="16" fill="none" stroke="url(#mobileBrandGrad)" stroke-width="3" class="mobile-rect-trace"></rect>
-                    </svg>
-                    <div class="relative z-10 flex items-center gap-3.5 p-1">
-                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-xl border border-white/15 shrink-0">🛍️</div>
-                        <div>
-                            <h3 class="text-base font-bold text-white leading-tight">Digital Platforms</h3>
-                            <p class="text-xs text-gray-400 mt-1 leading-normal">Immersive e-commerce and customer experience portals.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
 
             {{-- Bottom lead-out beam --}}
             <div class="mobile-beam-track card-step-1">

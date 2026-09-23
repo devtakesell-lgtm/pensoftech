@@ -21,10 +21,12 @@ class ServiceCategory extends Model
         'image',
         'sort_order',
         'is_active',
+        'is_ecosystem',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'is_ecosystem' => 'boolean',
     ];
 
     public function services(): HasMany

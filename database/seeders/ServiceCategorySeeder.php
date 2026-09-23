@@ -11,26 +11,27 @@ class ServiceCategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Web Development',
-            'Mobile Development',
-            'UI/UX Design',
-            'Digital Marketing',
-            'Branding & Identity',
-            'Cloud & DevOps',
-            'SEO & Content',
-            'E-Commerce Solutions',
+            ['name' => 'Web Development', 'icon' => '💻'],
+            ['name' => 'Mobile Development', 'icon' => '📱'],
+            ['name' => 'UI/UX Design', 'icon' => '🎨'],
+            ['name' => 'Digital Marketing', 'icon' => '📈'],
+            ['name' => 'Branding & Identity', 'icon' => '✨'],
+            ['name' => 'Cloud & DevOps', 'icon' => '☁️'],
+            ['name' => 'SEO & Content', 'icon' => '🔍'],
+            ['name' => 'E-Commerce Solutions', 'icon' => '🛍️'],
         ];
 
-        foreach ($categories as $index => $name) {
+        foreach ($categories as $index => $cat) {
             ServiceCategory::create([
-                'name' => $name,
-                'slug' => Str::slug($name),
+                'name' => $cat['name'],
+                'slug' => Str::slug($cat['name']),
                 'short_description' => fake()->sentence(),
                 'description' => fake()->paragraph(),
-                'icon' => null,
+                'icon' => $cat['icon'],
                 'image' => null,
                 'sort_order' => $index + 1,
                 'is_active' => true,
+                'is_ecosystem' => in_array($index, [0, 1, 2, 3, 5, 7]), // Set a few as ecosystem
             ]);
         }
     }
