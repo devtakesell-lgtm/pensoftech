@@ -37,6 +37,16 @@ class SettingSeeder extends Seeder
             ['key' => 'system_admin_email', 'value' => 'admin@pensofttech.com'],
             ['key' => 'slack_webhook_url', 'value' => ''],
             ['key' => 'auto_approve_comments', 'value' => '0'],
+
+            // Home Page Hero Section
+            ['key' => 'home_hero_video_url', 'value' => 'https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4'],
+            ['key' => 'home_hero_title_line_1', 'value' => 'Limitless,'],
+            ['key' => 'home_hero_title_line_2', 'value' => 'Together.'],
+            ['key' => 'home_hero_subtext', 'value' => 'Asia\'s fastest-growing IT ecosystem. We build custom software and digital marketing engines that scale enterprise revenue.'],
+            ['key' => 'home_hero_btn1_text', 'value' => 'Start a Project'],
+            ['key' => 'home_hero_btn1_url', 'value' => '/start-project'],
+            ['key' => 'home_hero_btn2_text', 'value' => 'View Our Work'],
+            ['key' => 'home_hero_btn2_url', 'value' => '#projects'],
         ];
 
         foreach ($settings as $setting) {

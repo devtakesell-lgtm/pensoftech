@@ -28,6 +28,9 @@
                 <a class="settings-nav-item selected" onclick="switchTab('general', this)">
                     <i class="bi bi-building"></i> General
                 </a>
+                <a class="settings-nav-item" onclick="switchTab('hero', this)">
+                    <i class="bi bi-camera-video"></i> Home Hero
+                </a>
                 <a class="settings-nav-item" onclick="switchTab('seo', this)">
                     <i class="bi bi-globe"></i> SEO & Meta
                 </a>
@@ -111,6 +114,65 @@
                                     :current="setting('company_logo')" aspect="square" />
                                 <span class="help-text d-block mt-2">Used in admin panel sidebar, frontend header, and
                                     ecosystem sections.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-action-bar">
+                        <button type="submit" class="btn primary px-4 py-2">Save Changes</button>
+                    </div>
+                </div>
+
+                <!-- Home Hero Settings -->
+                <div id="hero" class="settings-card">
+                    <h3>Home Hero Section</h3>
+                    <p>Manage the main hero banner on the frontend home page.</p>
+
+                    <div class="form-group">
+                        <label>Background Video URL</label>
+                        <input type="url" name="home_hero_video_url" value="{{ setting('home_hero_video_url') }}" placeholder="https://...">
+                        <span class="help-text">Direct link to a video file (.mp4) used as the background.</span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Title Line 1</label>
+                            <input type="text" name="home_hero_title_line_1" value="{{ setting('home_hero_title_line_1') }}" placeholder="Limitless,">
+                            <span class="help-text">First part of the headline (White text).</span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Title Line 2 (Highlight)</label>
+                            <input type="text" name="home_hero_title_line_2" value="{{ setting('home_hero_title_line_2') }}" placeholder="Together.">
+                            <span class="help-text">Second part of the headline (Teal highlight color).</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subtext Description</label>
+                        <textarea name="home_hero_subtext" rows="3">{{ setting('home_hero_subtext') }}</textarea>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h5 class="fs-6 mb-3">Primary Button</h5>
+                            <div class="form-group">
+                                <label>Button Text</label>
+                                <input type="text" name="home_hero_btn1_text" value="{{ setting('home_hero_btn1_text') }}" placeholder="Start a Project">
+                            </div>
+                            <div class="form-group">
+                                <label>Button URL</label>
+                                <input type="text" name="home_hero_btn1_url" value="{{ setting('home_hero_btn1_url') }}" placeholder="/start-project">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="fs-6 mb-3">Secondary Button</h5>
+                            <div class="form-group">
+                                <label>Button Text</label>
+                                <input type="text" name="home_hero_btn2_text" value="{{ setting('home_hero_btn2_text') }}" placeholder="View Our Work">
+                            </div>
+                            <div class="form-group">
+                                <label>Button URL</label>
+                                <input type="text" name="home_hero_btn2_url" value="{{ setting('home_hero_btn2_url') }}" placeholder="#projects">
                             </div>
                         </div>
                     </div>
