@@ -33,7 +33,7 @@
 
         {{-- 7. Industries (Dark) --}}
         <div id="industries">
-            @include('frontend.components.home.industries')
+            <x-frontend.home.industries />
         </div>
 
         {{-- 8. Blog (Light) --}}

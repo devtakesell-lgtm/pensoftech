@@ -13,18 +13,7 @@
         </p>
     </div>
 
-    @php
-        $industries = [
-            ['icon' => '🏦', 'title' => 'FinTech', 'desc' => 'Global FinTech: Payments & Security. Scalable platforms for the future of finance.'],
-            ['icon' => '⚕️', 'title' => 'Healthcare', 'desc' => 'HealthTech & MedTech. Innovating patient care with robust, compliant platforms.'],
-            ['icon' => '🛒', 'title' => 'E-Commerce', 'desc' => 'E-Commerce & Retail. Optimizing digital stores for hyper-growth and conversion.'],
-            ['icon' => '🏢', 'title' => 'B2B SaaS', 'desc' => 'B2B SaaS Excellence. Transforming businesses with scalable software solutions.'],
-            ['icon' => '🚚', 'title' => 'Logistics', 'desc' => 'Logistics & Supply Chain. Streamlining operations and tracking with technology.'],
-            ['icon' => '🧠', 'title' => 'AI & Data', 'desc' => 'AI, ML & Big Data. Leveraging data intelligence for smarter, predictive SaaS.'],
-            ['icon' => '🎓', 'title' => 'Education', 'desc' => 'EdTech & Learning. Engaging platforms for modern digital education.'],
-            ['icon' => '🏠', 'title' => 'Real Estate', 'desc' => 'PropTech Solutions. Digitizing property management and real estate transactions.']
-        ];
-    @endphp
+
 
     <div class="max-w-7xl mx-auto px-5 lg:px-12 relative z-10">
         {{-- Responsive 2-column mobile, 4-column desktop glass grid --}}
@@ -40,17 +29,17 @@
                     <div class="relative z-10">
                         {{-- Icon Box --}}
                         <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-xl sm:text-2xl md:text-3xl mb-3 md:mb-6 group-hover:border-[#4fd1c5]/40 group-hover:scale-110 group-hover:bg-[#4fd1c5]/10 transition-all duration-300">
-                            {{ $industry['icon'] }}
+                            {!! $industry->icon !!}
                         </div>
 
                         {{-- Title --}}
                         <h3 class="text-sm sm:text-base md:text-xl font-bold text-white mb-1.5 md:mb-3 group-hover:text-[#4fd1c5] transition-colors duration-300 tracking-tight">
-                            {{ $industry['title'] }}
+                            {{ $industry->name }}
                         </h3>
 
                         {{-- Description --}}
                         <p class="text-gray-400 text-[11px] sm:text-xs md:text-sm leading-relaxed group-hover:text-gray-300 transition-colors duration-300 line-clamp-2 md:line-clamp-none">
-                            {{ $industry['desc'] }}
+                            {{ $industry->short_description ?? $industry->description }}
                         </p>
                     </div>
 
