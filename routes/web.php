@@ -21,6 +21,7 @@ Route::get('/services/{category_slug}/{service_slug}', [PageController::class, '
 
 Route::get('/blog', [PageController::class, 'blogs'])->name('blogs.index');
 Route::get('/blog/{slug}', [PageController::class, 'singleBlog'])->name('blogs.single');
+Route::post('/blog/{blog}/comments', [PageController::class, 'storeComment'])->name('blogs.comments.store');
 
 // Public Client Authentication Routes (Guests only)
 Route::middleware('guest')->group(function () {
