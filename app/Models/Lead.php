@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Http;
 
 class Lead extends Model
 {
@@ -123,19 +124,20 @@ class Lead extends Model
      */
     public function getCountryFromIpAttribute(): ?string
     {
-        if (!$this->ip_address || $this->ip_address === '127.0.0.1' || $this->ip_address === '::1') {
+        if (! $this->ip_address || $this->ip_address === '127.0.0.1' || $this->ip_address === '::1') {
             return 'Localhost';
         }
 
-        return cache()->remember('ip_country_' . $this->ip_address, now()->addDays(30), function () {
+        return cache()->remember('ip_country_'.$this->ip_address, now()->addDays(30), function () {
             try {
-                $response = \Illuminate\Support\Facades\Http::timeout(3)->get("http://ip-api.com/json/{$this->ip_address}");
+                $response = Http::timeout(3)->get("http://ip-api.com/json/{$this->ip_address}");
                 if ($response->successful() && $response->json('status') === 'success') {
                     return $response->json('country');
                 }
             } catch (\Exception $e) {
                 // Return null if API fails
             }
+
             return null;
         });
     }

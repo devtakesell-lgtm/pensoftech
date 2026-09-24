@@ -15,9 +15,9 @@ class ImageUploadController extends Controller
 
         if ($request->hasFile('file')) {
             $path = $request->file('file')->store('tinymce-uploads', 'public');
-            
+
             return response()->json([
-                'location' => asset('storage/' . $path)
+                'location' => asset('storage/'.$path),
             ]);
         }
 

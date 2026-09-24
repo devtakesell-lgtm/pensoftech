@@ -47,9 +47,11 @@
         </div>
 
         {{-- 10. Leadership Team (Light) --}}
-        <div id="team">
-            @include('frontend.components.global.team')
-        </div>
+        @if ($teamMemberExists)
+            <div id="team">
+                <x-frontend.team />
+            </div>
+        @endif
 
         {{-- 11. Company Stats (Dark Bridge) --}}
         <div id="stats">

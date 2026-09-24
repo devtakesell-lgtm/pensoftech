@@ -71,6 +71,13 @@ class User extends Authenticatable
         return $this->hasRole('client');
     }
 
+    public static function hasTeamMembers(): bool
+    {
+        return self::whereHas('profile', function ($q) {
+                $q->where('show_on_team_page', true);
+            })->exists();
+    }
+
     public function client(): HasOne
     {
         return $this->hasOne(Client::class);
@@ -90,4 +97,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Blog::class, 'author_id');
     }
+
+    public function profile(): HasOne
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
+
 }

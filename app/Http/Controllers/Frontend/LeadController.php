@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Enums\LeadType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\StoreLeadRequest;
+use App\Models\Currency;
 use App\Models\Lead;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -14,8 +16,8 @@ class LeadController extends Controller
 {
     public function create(): View
     {
-        $leadTypes = \App\Enums\LeadType::options();
-        $defaultCurrency = \App\Models\Currency::where('is_default', true)->first();
+        $leadTypes = LeadType::options();
+        $defaultCurrency = Currency::where('is_default', true)->first();
 
         return view('frontend.pages.start-project')->with([
             'leadTypes' => $leadTypes,

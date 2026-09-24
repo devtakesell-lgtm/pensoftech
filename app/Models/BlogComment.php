@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Enums\CommentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class BlogComment extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'blog_id',
         'user_id',
@@ -19,7 +21,7 @@ class BlogComment extends Model
     ];
 
     protected $casts = [
-        'status' => \App\Enums\CommentStatus::class,
+        'status' => CommentStatus::class,
     ];
 
     public function blog()

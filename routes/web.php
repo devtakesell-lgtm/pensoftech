@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\Frontend\AuthController as FrontendAuthController;
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\LeadController;
 use App\Http\Controllers\Frontend\PageController;
-use App\Http\Controllers\Frontend\ServiceController;
-use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ProjectController;
+use App\Http\Controllers\Frontend\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 // Public Frontend Routes

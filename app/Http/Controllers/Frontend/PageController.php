@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class PageController extends Controller
 {
     public function about()
     {
-        return view('frontend.pages.about');
+        $teamMemberExists = User::hasTeamMembers();
+        return view('frontend.pages.about')->with([
+            'teamMemberExists' => $teamMemberExists,
+        ]);
     }
 
     public function contact()

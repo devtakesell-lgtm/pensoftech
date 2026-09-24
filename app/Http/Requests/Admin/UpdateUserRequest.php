@@ -36,6 +36,16 @@ class UpdateUserRequest extends FormRequest
             'role_id' => ['required', 'integer', 'exists:roles,id'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'is_active' => ['nullable', 'boolean'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'designation' => ['nullable', 'string', 'max:255'],
+            'short_bio' => ['nullable', 'string', 'max:1000'],
+            'social_links' => ['nullable', 'array'],
+            'social_links.facebook' => ['nullable', 'url', 'max:255'],
+            'social_links.linkedin' => ['nullable', 'url', 'max:255'],
+            'social_links.twitter' => ['nullable', 'url', 'max:255'],
+            'social_links.github' => ['nullable', 'url', 'max:255'],
+            'show_on_team_page' => ['nullable', 'boolean'],
+            'sort_order' => ['nullable', 'integer'],
         ];
     }
 }

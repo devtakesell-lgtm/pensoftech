@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\CommentStatus;
 use App\Http\Controllers\Controller;
 use App\Models\BlogComment;
-use App\Enums\CommentStatus;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class BlogCommentController extends Controller
 {
@@ -21,8 +21,8 @@ class BlogCommentController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('content', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
             });
         }
 
@@ -83,6 +83,7 @@ class BlogCommentController extends Controller
     {
         Gate::authorize('delete-blogs');
         $comment->delete();
+
         return back()->with('success', 'Comment deleted successfully.');
     }
 }

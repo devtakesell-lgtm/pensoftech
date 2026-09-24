@@ -2,12 +2,11 @@
 
 namespace App\Notifications;
 
+use App\Models\Lead;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-
-use App\Models\Lead;
 
 class NewLeadNotification extends Notification implements ShouldQueue
 {
@@ -37,14 +36,14 @@ class NewLeadNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('New Project Inquiry: ' . $this->lead->name)
+            ->subject('New Project Inquiry: '.$this->lead->name)
             ->greeting('Hello Admin,')
             ->line('A new project inquiry has been submitted via the Website Form.')
-            ->line('Name: ' . $this->lead->name)
-            ->line('Email: ' . $this->lead->email)
-            ->line('Service: ' . ($this->lead->lead_type ?? 'N/A'))
-            ->line('Budget: ' . ($this->lead->budget ?? 'N/A'))
-            ->action('View Lead Details', url('/admin/leads/' . $this->lead->id))
+            ->line('Name: '.$this->lead->name)
+            ->line('Email: '.$this->lead->email)
+            ->line('Service: '.($this->lead->lead_type ?? 'N/A'))
+            ->line('Budget: '.($this->lead->budget ?? 'N/A'))
+            ->action('View Lead Details', url('/admin/leads/'.$this->lead->id))
             ->line('Please check the admin panel for full details.');
     }
 
@@ -58,8 +57,8 @@ class NewLeadNotification extends Notification implements ShouldQueue
         return [
             'lead_id' => $this->lead->id,
             'name' => $this->lead->name,
-            'message' => 'New project inquiry received from ' . $this->lead->name,
-            'url' => url('/admin/leads/' . $this->lead->id),
+            'message' => 'New project inquiry received from '.$this->lead->name,
+            'url' => url('/admin/leads/'.$this->lead->id),
         ];
     }
 }

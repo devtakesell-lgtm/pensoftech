@@ -9,8 +9,10 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Spatie\Permission\PermissionRegistrar;
 
@@ -81,16 +83,33 @@ class UserController extends Controller
 
         $role = Role::findOrFail($request->validated('role_id'));
 
-        $user = User::create([
-            'role_id' => $role->id,
-            'name' => $request->validated('name'),
-            'email' => $request->validated('email'),
-            'phone' => $request->validated('phone'),
-            'password' => Hash::make($request->validated('password')),
-            'is_active' => $request->boolean('is_active', true),
-        ]);
+        DB::transaction(function () use ($request, $role, &$user) {
+            $avatarPath = null;
+            if ($request->hasFile('avatar')) {
+                $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            }
 
-        $user->syncRoles([$role]);
+            $user = User::create([
+                'role_id' => $role->id,
+                'name' => $request->validated('name'),
+                'email' => $request->validated('email'),
+                'phone' => $request->validated('phone'),
+                'password' => Hash::make($request->validated('password')),
+                'is_active' => $request->boolean('is_active', true),
+                'avatar' => $avatarPath,
+            ]);
+
+            $user->syncRoles([$role]);
+
+            // Save profile
+            $user->profile()->create([
+                'designation' => $request->validated('designation'),
+                'short_bio' => $request->validated('short_bio'),
+                'social_links' => $request->validated('social_links'),
+                'show_on_team_page' => $request->boolean('show_on_team_page', false),
+                'sort_order' => $request->validated('sort_order') ?? 0,
+            ]);
+        });
 
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
@@ -104,7 +123,7 @@ class UserController extends Controller
     {
         Gate::authorize('edit-users');
 
-        $user->load('roles');
+        $user->load(['roles', 'profile']);
         $roles = Role::where('name', '!=', 'client')->orderBy('name')->get();
 
         return view('admin.pages.users.edit')->with([
@@ -139,18 +158,39 @@ class UserController extends Controller
             }
         }
 
-        $user->name = $request->validated('name');
-        $user->email = $request->validated('email');
-        $user->phone = $request->validated('phone');
-        $user->is_active = $newIsActive;
-        $user->role_id = $newRole->id;
+        DB::transaction(function () use ($request, $user, $newRole, $newIsActive) {
+            $user->name = $request->validated('name');
+            $user->email = $request->validated('email');
+            $user->phone = $request->validated('phone');
+            $user->is_active = $newIsActive;
+            $user->role_id = $newRole->id;
 
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->validated('password'));
-        }
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->validated('password'));
+            }
 
-        $user->save();
-        $user->syncRoles([$newRole]);
+            if ($request->hasFile('avatar')) {
+                if ($user->avatar) {
+                    Storage::disk('public')->delete($user->avatar);
+                }
+                $user->avatar = $request->file('avatar')->store('avatars', 'public');
+            }
+
+            $user->save();
+            $user->syncRoles([$newRole]);
+
+            // Save or Update Profile
+            $user->profile()->updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'designation' => $request->validated('designation'),
+                    'short_bio' => $request->validated('short_bio'),
+                    'social_links' => $request->validated('social_links'),
+                    'show_on_team_page' => $request->boolean('show_on_team_page', false),
+                    'sort_order' => $request->validated('sort_order') ?? 0,
+                ]
+            );
+        });
 
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\CommentStatus;
+use App\Models\Blog;
 use App\Models\BlogComment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,11 +20,11 @@ class BlogCommentFactory extends Factory
     public function definition(): array
     {
         return [
-            'blog_id' => \App\Models\Blog::factory(),
+            'blog_id' => Blog::factory(),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'content' => fake()->paragraph(),
-            'status' => fake()->randomElement(\App\Enums\CommentStatus::cases()),
+            'status' => fake()->randomElement(CommentStatus::cases()),
         ];
     }
 }

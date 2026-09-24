@@ -19,7 +19,7 @@ class ServiceController extends Controller
 
         return view('frontend.pages.services')->with([
             'page' => $page,
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
@@ -32,7 +32,7 @@ class ServiceController extends Controller
             ->firstOrFail();
 
         return view('frontend.pages.service-category')->with([
-            'category' => $category
+            'category' => $category,
         ]);
     }
 

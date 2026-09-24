@@ -3,168 +3,261 @@
 @section('title', 'Edit User: ' . $user->name)
 
 @section('content')
-<div class="heading">
-    <div>
-        <small>TEAM MANAGEMENT</small>
-        <h1>Edit Team Member</h1>
-        <p>Update user credentials, adjust contact information, or re-assign agency roles.</p>
-    </div>
-    <div>
-        <a href="{{ route('admin.users') }}" class="btn light">
-            <i class="bi bi-arrow-left me-1"></i> Back to Users
-        </a>
-    </div>
-</div>
-
-{{-- Validation Errors --}}
-@if($errors->any())
-    <div class="alert-custom alert-custom-danger">
+    <div class="heading">
         <div>
-            <strong>Please resolve the following issues:</strong>
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <small>TEAM MANAGEMENT</small>
+            <h1>Edit Team Member</h1>
+            <p>Update user credentials, adjust contact information, or re-assign agency roles.</p>
         </div>
-    </div>
-@endif
-
-@if(session('error'))
-    <div class="alert-custom alert-custom-danger">
-        <i class="bi bi-exclamation-triangle-fill"></i>
-        <span>{{ session('error') }}</span>
-    </div>
-@endif
-
-<form action="{{ route('admin.users.update', $user) }}" method="POST">
-    @csrf
-    @method('PUT')
-
-    {{-- Card 1: Basic Information --}}
-    <div class="card form-card">
-        <h3 class="form-card-title">
-            User Profile Information
-        </h3>
-        
-        <div class="form-grid-3">
-            <div class="form-group">
-                <label class="form-label">Full Name *</label>
-                <input type="text" name="name" value="{{ old('name', $user->name) }}" required class="form-input">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Email Address *</label>
-                <input type="email" name="email" value="{{ old('email', $user->email) }}" required class="form-input">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Phone Number</label>
-                <input type="text" name="phone" value="{{ old('phone', $user->phone) }}" placeholder="+880 1700-000000" class="form-input">
-            </div>
-        </div>
-    </div>
-
-    {{-- Card 2: Professional Role Re-Assignment --}}
-    <div class="card form-card">
-        <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
-            <div>
-                <h3 class="form-card-title mb-1">
-                    Assigned Agency Role *
-                </h3>
-                <span class="form-card-subtitle mb-0">
-                    Switching roles immediately updates the user's permissions across the agency admin panel.
-                </span>
-            </div>
-            <a href="{{ route('admin.roles.index') }}" target="_blank" class="btn light">
-                View Roles Matrix <i class="bi bi-box-arrow-up-right ms-1"></i>
+        <div>
+            <a href="{{ route('admin.users') }}" class="btn light">
+                <i class="bi bi-arrow-left me-1"></i> Back to Users
             </a>
         </div>
+    </div>
 
-        @php
-            $currentRoleId = old('role_id', $user->roles->first()?->id ?? $user->role_id);
-        @endphp
+    {{-- Validation Errors --}}
+    @if ($errors->any())
+        <div class="alert-custom alert-custom-danger">
+            <div>
+                <strong>Please resolve the following issues:</strong>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
 
-        <div class="role-radio-grid">
-            @foreach($roles ?? [] as $role)
-                @php
-                    $isSelected = (int) $currentRoleId === (int) $role->id;
-                    $isSuperAdmin = $role->name === 'administrator';
-                @endphp
-                <label class="role-radio-card {{ $isSelected ? 'selected' : '' }}">
-                    <div class="role-radio-card-body">
-                        <input type="radio" name="role_id" value="{{ $role->id }}" {{ $isSelected ? 'checked' : '' }} required class="role-radio-input">
-                        <div class="flex-grow-1">
-                            <div class="role-radio-title-row">
-                                <strong class="role-radio-name">
-                                    {{ ucwords(str_replace('-', ' ', $role->name)) }}
-                                </strong>
-                                @if($isSuperAdmin)
-                                    <span class="role-badge role-badge-admin">
-                                        <i class="bi bi-star-fill me-1"></i> Full Access
-                                    </span>
-                                @else
-                                    <span class="badge-tag-custom">
-                                        Staff Role
-                                    </span>
-                                @endif
-                            </div>
-                            <p class="role-radio-desc">
-                                {{ $role->description ?: 'Standard agency staff permissions.' }}
-                            </p>
+    @if (session('error'))
+        <div class="alert-custom alert-custom-danger">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span>{{ session('error') }}</span>
+        </div>
+    @endif
+
+    <form action="{{ route('admin.users.update', $user) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+
+        {{-- Card 1: Basic Information --}}
+        <div class="card form-card">
+            <h3 class="form-card-title">
+                User Profile Information
+            </h3>
+
+            <div class="row">
+
+                <div class="col-md-9">
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" name="name" value="{{ old('name', $user->name) }}" required
+                                class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" name="email" value="{{ old('email', $user->email) }}" required
+                                class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" name="phone" value="{{ old('phone', $user->phone) }}"
+                                placeholder="+880 1700-000000" class="form-input">
                         </div>
                     </div>
-                </label>
-            @endforeach
-        </div>
-    </div>
+                </div>
 
-    {{-- Card 3: Password Update (Optional) --}}
-    <div class="card form-card">
-        <h3 class="form-card-title mb-1">
-            Change Password
-        </h3>
-        <span class="form-card-subtitle">
-            Leave these fields blank if you do not wish to change the user's password.
-        </span>
-
-        <div class="form-grid-2">
-            <div class="form-group">
-                <label class="form-label">New Password</label>
-                <input type="password" name="password" placeholder="Leave blank to keep existing" class="form-input">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Confirm New Password</label>
-                <input type="password" name="password_confirmation" placeholder="Re-type new password" class="form-input">
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <x-admin.components.forms.image-upload name="avatar" label="Profile Avatar" :current="$user->avatar ?? null"
+                        aspect="square" />
+                </div>
             </div>
         </div>
-    </div>
 
-    {{-- Card 4: Account Status --}}
-    <div class="card form-card">
-        <div class="form-toggle-card">
-            <input type="hidden" name="is_active" value="0">
-            <input type="checkbox" name="is_active" value="1" id="is_active" {{ old('is_active', $user->is_active ? '1' : '0') == '1' ? 'checked' : '' }} class="form-toggle-input">
-            <div>
-                <label for="is_active" class="form-toggle-label">
-                    Active Account Status
-                </label>
-                <small class="form-toggle-desc">
-                    Active members can authenticate and access the panel according to their assigned role.
-                </small>
+        {{-- Card 2: Team Profile Information --}}
+        <div class="card form-card">
+            <div class="d-flex justify-content-between align-items-start mb-4 flex-wrap gap-2">
+                <div class="d-flex flex-column">
+                    <h3 class="form-card-title mb-1">Team Profile Information <span
+                            style="font-weight:normal; font-size:14px; color:#6b7280;">(Optional)</span></h3>
+                    <p class="form-card-subtitle mb-0">Visible on the frontend Leadership/Team page and Blog Author
+                        sections.</p>
+                </div>
+            </div>
+
+            <div class="form-grid-2 mb-4">
+                <div class="form-group">
+                    <label class="form-label">Job Title / Designation</label>
+                    <input type="text" name="designation" value="{{ old('designation', $user->profile?->designation) }}"
+                        placeholder="e.g. Chief Executive Officer" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Sort Order</label>
+                    <input type="number" name="sort_order"
+                        value="{{ old('sort_order', $user->profile?->sort_order ?? 0) }}" placeholder="0"
+                        class="form-input">
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="form-label">Short Bio</label>
+                <textarea name="short_bio" rows="3" class="form-input" placeholder="Brief professional biography...">{{ old('short_bio', $user->profile?->short_bio) }}</textarea>
+            </div>
+
+            @php
+                $socials = $user->profile?->social_links ?? [];
+            @endphp
+
+            <div class="form-grid-2 mb-4">
+                <div class="form-group">
+                    <label class="form-label">LinkedIn URL</label>
+                    <input type="url" name="social_links[linkedin]"
+                        value="{{ old('social_links.linkedin', $socials['linkedin'] ?? '') }}"
+                        placeholder="https://linkedin.com/in/username" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Twitter/X URL</label>
+                    <input type="url" name="social_links[twitter]"
+                        value="{{ old('social_links.twitter', $socials['twitter'] ?? '') }}"
+                        placeholder="https://twitter.com/username" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Facebook URL</label>
+                    <input type="url" name="social_links[facebook]"
+                        value="{{ old('social_links.facebook', $socials['facebook'] ?? '') }}"
+                        placeholder="https://facebook.com/username" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">GitHub URL</label>
+                    <input type="url" name="social_links[github]"
+                        value="{{ old('social_links.github', $socials['github'] ?? '') }}"
+                        placeholder="https://github.com/username" class="form-input">
+                </div>
+            </div>
+
+            <div class="form-toggle-card">
+                <input type="hidden" name="show_on_team_page" value="0">
+                <input type="checkbox" name="show_on_team_page" value="1" id="show_on_team_page"
+                    {{ old('show_on_team_page', $user->profile?->show_on_team_page ? '1' : '0') == '1' ? 'checked' : '' }}
+                    class="form-toggle-input">
+                <div>
+                    <label for="show_on_team_page" class="form-toggle-label">Show on Frontend Team Page</label>
+                    <small class="form-toggle-desc">If enabled, this profile will be publicly listed on the leadership/team
+                        page.</small>
+                </div>
             </div>
         </div>
-    </div>
 
-    {{-- Actions --}}
-    <div class="form-actions">
-        <button type="submit" class="btn primary">
-            <i class="bi bi-check2 me-1"></i> Save Changes
-        </button>
-        <a href="{{ route('admin.users') }}" class="btn light">
-            Cancel
-        </a>
-    </div>
-</form>
+        {{-- Card 3: Professional Role Re-Assignment --}}
+        <div class="card form-card">
+            <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+                <div class="d-flex flex-column">
+                    <h3 class="form-card-title mb-1">
+                        Assigned Agency Role *
+                    </h3>
+                    <p class="form-card-subtitle mb-0">
+                        Switching roles immediately updates the user's permissions across the agency admin panel.
+                    </p>
+                </div>
+                <a href="{{ route('admin.roles.index') }}" target="_blank" class="btn light">
+                    View Roles Matrix <i class="bi bi-box-arrow-up-right ms-1"></i>
+                </a>
+            </div>
+
+            @php
+                $currentRoleId = old('role_id', $user->roles->first()?->id ?? $user->role_id);
+            @endphp
+
+            <div class="role-radio-grid">
+                @foreach ($roles ?? [] as $role)
+                    @php
+                        $isSelected = (int) $currentRoleId === (int) $role->id;
+                        $isSuperAdmin = $role->name === 'administrator';
+                    @endphp
+                    <label class="role-radio-card {{ $isSelected ? 'selected' : '' }}">
+                        <div class="role-radio-card-body">
+                            <input type="radio" name="role_id" value="{{ $role->id }}"
+                                {{ $isSelected ? 'checked' : '' }} required class="role-radio-input">
+                            <div class="flex-grow-1">
+                                <div class="role-radio-title-row">
+                                    <strong class="role-radio-name">
+                                        {{ ucwords(str_replace('-', ' ', $role->name)) }}
+                                    </strong>
+                                    @if ($isSuperAdmin)
+                                        <span class="role-badge role-badge-admin">
+                                            <i class="bi bi-star-fill me-1"></i> Full Access
+                                        </span>
+                                    @else
+                                        <span class="badge-tag-custom">
+                                            Staff Role
+                                        </span>
+                                    @endif
+                                </div>
+                                <p class="role-radio-desc">
+                                    {{ $role->description ?: 'Standard agency staff permissions.' }}
+                                </p>
+                            </div>
+                        </div>
+                    </label>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- Card 3: Password Update (Optional) --}}
+        <div class="card form-card">
+            <h3 class="form-card-title mb-1">
+                Change Password
+            </h3>
+            <span class="form-card-subtitle">
+                Leave these fields blank if you do not wish to change the user's password.
+            </span>
+
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label class="form-label">New Password</label>
+                    <input type="password" name="password" placeholder="Leave blank to keep existing"
+                        class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Confirm New Password</label>
+                    <input type="password" name="password_confirmation" placeholder="Re-type new password"
+                        class="form-input">
+                </div>
+            </div>
+        </div>
+
+        {{-- Card 4: Account Status --}}
+        <div class="card form-card">
+            <div class="form-toggle-card">
+                <input type="hidden" name="is_active" value="0">
+                <input type="checkbox" name="is_active" value="1" id="is_active"
+                    {{ old('is_active', $user->is_active ? '1' : '0') == '1' ? 'checked' : '' }}
+                    class="form-toggle-input">
+                <div>
+                    <label for="is_active" class="form-toggle-label">
+                        Active Account Status
+                    </label>
+                    <small class="form-toggle-desc">
+                        Active members can authenticate and access the panel according to their assigned role.
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        {{-- Actions --}}
+        <div class="form-actions">
+            <button type="submit" class="btn primary">
+                <i class="bi bi-check2 me-1"></i> Save Changes
+            </button>
+            <a href="{{ route('admin.users') }}" class="btn light">
+                Cancel
+            </a>
+        </div>
+    </form>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ContentStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreBlogRequest;
 use App\Http\Requests\Admin\UpdateBlogRequest;
@@ -9,10 +10,11 @@ use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\BlogTag;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class BlogController extends Controller
 {
@@ -24,7 +26,7 @@ class BlogController extends Controller
         ];
     }
 
-    public function index(\Illuminate\Http\Request $request): View
+    public function index(Request $request): View
     {
         Gate::authorize('view-blogs');
 
@@ -32,15 +34,15 @@ class BlogController extends Controller
 
         // Stats
         $totalCount = Blog::count();
-        $publishedCount = Blog::where('status', \App\Enums\ContentStatus::Published->value)->count();
-        $draftCount = Blog::where('status', \App\Enums\ContentStatus::Draft->value)->count();
+        $publishedCount = Blog::where('status', ContentStatus::Published->value)->count();
+        $draftCount = Blog::where('status', ContentStatus::Draft->value)->count();
         $totalViews = Blog::sum('views');
 
         // Search
         if ($search = $request->input('search')) {
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('excerpt', 'like', "%{$search}%");
+                    ->orWhere('excerpt', 'like', "%{$search}%");
             });
         }
 
@@ -63,7 +65,7 @@ class BlogController extends Controller
             'publishedCount' => $publishedCount,
             'draftCount' => $draftCount,
             'totalViews' => $totalViews,
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
@@ -83,7 +85,7 @@ class BlogController extends Controller
         $data['author_id'] = Auth::id();
 
         // Handle publishing logic
-        if ($data['status'] === \App\Enums\ContentStatus::Published->value) {
+        if ($data['status'] === ContentStatus::Published->value) {
             $data['published_at'] = now();
         }
 
@@ -140,9 +142,9 @@ class BlogController extends Controller
         }
 
         // Handle publishing logic
-        if ($data['status'] === \App\Enums\ContentStatus::Published->value && !$blog->published_at) {
+        if ($data['status'] === ContentStatus::Published->value && ! $blog->published_at) {
             $data['published_at'] = now();
-        } elseif ($data['status'] === \App\Enums\ContentStatus::Draft->value) {
+        } elseif ($data['status'] === ContentStatus::Draft->value) {
             $data['published_at'] = null;
         }
 

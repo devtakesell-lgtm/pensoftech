@@ -196,26 +196,41 @@
 
         @canany(['view-users', 'view-roles', 'view-analytics', 'view-settings'])
             <div class="label">SYSTEM</div>
-            @can('view-users')
-                <a class="nav {{ request()->routeIs('admin.users*') ? 'active' : '' }}" href="{{ route('admin.users') }}"
-                    title="Users">
-                    <i class="bi bi-people-fill"></i>
-                    <span class="nav-title">Users</span>
-                </a>
-            @endcan
-
-            @can('view-roles')
-                <a class="nav {{ request()->routeIs('admin.roles*') ? 'active' : '' }}"
-                    href="{{ route('admin.roles.index') }}" title="Roles">
-                    <i class="bi bi-shield-lock-fill"></i>
-                    <span class="nav-title">Roles</span>
-                </a>
-                <a class="nav {{ request()->routeIs('admin.permissions*') ? 'active' : '' }}"
-                    href="{{ route('admin.permissions.index') }}" title="Permissions">
-                    <i class="bi bi-key-fill"></i>
-                    <span class="nav-title">Permissions</span>
-                </a>
-            @endcan
+            @canany(['view-users', 'view-roles'])
+                @php
+                    $isAdministratorActive =
+                        request()->routeIs('admin.users*') ||
+                        request()->routeIs('admin.roles*') ||
+                        request()->routeIs('admin.permissions*');
+                @endphp
+                <div class="nav-item-dropdown {{ $isAdministratorActive ? 'open' : '' }}">
+                    <a class="nav nav-parent {{ $isAdministratorActive ? 'parent-active' : 'collapsed' }}" data-bs-toggle="collapse"
+                        href="#administratorSubmenu" role="button" aria-expanded="{{ $isAdministratorActive ? 'true' : 'false' }}"
+                        aria-controls="administratorSubmenu" title="Administrator">
+                        <i class="bi bi-shield-lock"></i>
+                        <span class="nav-title">Administrator</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                    <div class="collapse {{ $isAdministratorActive ? 'show' : '' }} nav-submenu" id="administratorSubmenu">
+                        @can('view-users')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}" href="{{ route('admin.users') }}">
+                                <i class="bi bi-people-fill"></i>
+                                <span>Users & Profile</span>
+                            </a>
+                        @endcan
+                        @can('view-roles')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.roles*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}">
+                                <i class="bi bi-person-badge"></i>
+                                <span>Roles</span>
+                            </a>
+                            <a class="nav-sub-link {{ request()->routeIs('admin.permissions*') ? 'active' : '' }}" href="{{ route('admin.permissions.index') }}">
+                                <i class="bi bi-key-fill"></i>
+                                <span>Permissions</span>
+                            </a>
+                        @endcan
+                    </div>
+                </div>
+            @endcanany
 
             @can('view-analytics')
                 <a class="nav {{ request()->routeIs('admin.analytics*') ? 'active' : '' }}"

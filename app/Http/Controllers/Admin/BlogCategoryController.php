@@ -7,13 +7,14 @@ use App\Http\Requests\Admin\StoreBlogCategoryRequest;
 use App\Http\Requests\Admin\UpdateBlogCategoryRequest;
 use App\Models\BlogCategory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class BlogCategoryController extends Controller
 {
-    public function index(\Illuminate\Http\Request $request): View
+    public function index(Request $request): View
     {
         Gate::authorize('view-blog-categories');
 
@@ -27,7 +28,7 @@ class BlogCategoryController extends Controller
         // Search
         if ($search = $request->input('search')) {
             $query->where('name', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
+                ->orWhere('description', 'like', "%{$search}%");
         }
 
         // Filters
@@ -41,7 +42,7 @@ class BlogCategoryController extends Controller
             'categories' => $categories,
             'totalCount' => $totalCount,
             'activeCount' => $activeCount,
-            'inactiveCount' => $inactiveCount
+            'inactiveCount' => $inactiveCount,
         ]);
     }
 

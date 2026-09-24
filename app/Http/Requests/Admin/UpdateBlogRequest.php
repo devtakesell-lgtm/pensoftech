@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Enums\ContentStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
-use App\Enums\ContentStatus;
 
 class UpdateBlogRequest extends FormRequest
 {
@@ -20,17 +21,17 @@ class UpdateBlogRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255', \Illuminate\Validation\Rule::unique('blogs', 'title')->ignore($this->route('blog'))],
+            'title' => ['required', 'string', 'max:255', Rule::unique('blogs', 'title')->ignore($this->route('blog'))],
             'blog_category_id' => ['required', 'exists:blog_categories,id'],
             'excerpt' => ['nullable', 'string', 'max:1000'],
             'content' => ['nullable', 'string'],
             'featured_image' => ['nullable', 'image', 'max:2048'],
-            'status' => ['required', new Enum (ContentStatus::class)],
+            'status' => ['required', new Enum(ContentStatus::class)],
             'tags' => ['nullable', 'array'],
             'tags.*' => ['exists:blog_tags,id'],
             'meta_title' => ['nullable', 'string', 'max:255'],

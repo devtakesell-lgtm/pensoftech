@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateBlogCategoryRequest extends FormRequest
 {
@@ -18,12 +19,12 @@ class UpdateBlogCategoryRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', \Illuminate\Validation\Rule::unique('blog_categories', 'name')->ignore($this->route('blog_category'))],
+            'name' => ['required', 'string', 'max:255', Rule::unique('blog_categories', 'name')->ignore($this->route('blog_category'))],
             'description' => ['nullable', 'string', 'max:1000'],
             'is_active' => ['boolean'],
         ];

@@ -7,13 +7,14 @@ use App\Http\Requests\Admin\StoreBlogTagRequest;
 use App\Http\Requests\Admin\UpdateBlogTagRequest;
 use App\Models\BlogTag;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class BlogTagController extends Controller
 {
-    public function index(\Illuminate\Http\Request $request): View
+    public function index(Request $request): View
     {
         Gate::authorize('view-blog-tags');
 
@@ -21,7 +22,6 @@ class BlogTagController extends Controller
 
         // Stats
         $totalCount = BlogTag::count();
-
 
         // Search
         if ($search = $request->input('search')) {

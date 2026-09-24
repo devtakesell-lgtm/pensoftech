@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateBlogTagRequest extends FormRequest
 {
@@ -18,12 +19,12 @@ class UpdateBlogTagRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100', \Illuminate\Validation\Rule::unique('blog_tags', 'name')->ignore($this->route('blog_tag'))],
+            'name' => ['required', 'string', 'max:100', Rule::unique('blog_tags', 'name')->ignore($this->route('blog_tag'))],
         ];
     }
 }
