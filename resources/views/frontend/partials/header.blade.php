@@ -10,8 +10,9 @@
         <a href="{{ route('home') }}"
             class="text-white font-bold text-xl md:text-2xl tracking-tighter flex items-center gap-2.5 group"
             data-cursor-expand>
-            @if(setting('company_logo'))
-                <img src="{{ asset(setting('company_logo')) }}" alt="{{ setting('company_name', 'Logo') }}" class="h-10 w-auto object-contain rounded-md">
+            @if (setting('company_logo'))
+                <img src="{{ asset(setting('company_logo')) }}" alt="{{ setting('company_name', 'Logo') }}"
+                    class="h-10 w-auto object-contain rounded-md">
             @else
                 <span
                     class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-extrabold group-hover:bg-[#4fd1c5] transition-colors">{{ substr(setting('company_name', 'P'), 0, 1) }}</span>
@@ -22,13 +23,17 @@
         {{-- Desktop Nav links --}}
         <ul class="hidden md:flex items-center gap-8 text-white/80 font-medium text-sm">
             <li><a href="{{ route('services') }}" data-cursor-expand
-                    class="{{ request()->routeIs('services') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Services</a>
+                    class="{{ request()->routeIs('services.*') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Services</a>
             </li>
-            <li><a href="{{ route('about') }}" data-cursor-expand
-                    class="{{ request()->routeIs('about') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">About Us</a>
+            <li><a href="{{ route('projects.index') }}" data-cursor-expand
+                    class="{{ request()->routeIs('projects.*') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Projects</a>
             </li>
             <li><a href="{{ route('blogs.index') }}" data-cursor-expand
                     class="{{ request()->routeIs('blogs.*') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Blog</a>
+            </li>
+            <li><a href="{{ route('about') }}" data-cursor-expand
+                    class="{{ request()->routeIs('about') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">About
+                    Us</a>
             </li>
             <li><a href="{{ route('contact') }}" data-cursor-expand
                     class="{{ request()->routeIs('contact') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Contact</a>
@@ -102,7 +107,8 @@
                     class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
                     <span class="text-lg font-semibold text-white tracking-wide">Leadership</span>
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                        </path>
                     </svg>
                 </a>
                 <a href="{{ route('blogs.index') }}" @click="mobileMenuOpen = false"

@@ -28,6 +28,16 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        return view('frontend.pages.home', compact('ecosystems', 'serviceCategories', 'blogs'));
+        $featuredProjects = \App\Models\Project::with(['industry', 'services'])
+            ->where('is_featured', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('frontend.pages.home')->with([
+            'ecosystems' => $ecosystems,
+            'serviceCategories' => $serviceCategories,
+            'blogs' => $blogs,
+            'featuredProjects' => $featuredProjects,
+        ]);
     }
 }

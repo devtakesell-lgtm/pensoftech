@@ -3,7 +3,10 @@
 use App\Http\Controllers\Frontend\AuthController as FrontendAuthController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\LeadController;
-use App\Http\Controllers\PageController;
+use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Frontend\ServiceController;
+use App\Http\Controllers\Frontend\BlogController;
+use App\Http\Controllers\Frontend\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 // Public Frontend Routes
@@ -15,13 +18,17 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/digital-marketing', [PageController::class, 'digitalMarketing'])->name('digital-marketing');
 Route::get('/software-development', [PageController::class, 'softwareDevelopment'])->name('software-development');
-Route::get('/services', [PageController::class, 'services'])->name('services');
-Route::get('/services/{category_slug}', [PageController::class, 'serviceCategory'])->name('services.category');
-Route::get('/services/{category_slug}/{service_slug}', [PageController::class, 'singleService'])->name('services.single');
 
-Route::get('/blog', [PageController::class, 'blogs'])->name('blogs.index');
-Route::get('/blog/{slug}', [PageController::class, 'singleBlog'])->name('blogs.single');
-Route::post('/blog/{blog}/comments', [PageController::class, 'storeComment'])->name('blogs.comments.store');
+Route::get('/services', [ServiceController::class, 'index'])->name('services');
+Route::get('/services/{category_slug}', [ServiceController::class, 'category'])->name('services.category');
+Route::get('/services/{category_slug}/{service_slug}', [ServiceController::class, 'show'])->name('services.single');
+
+Route::get('/blog', [BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blogs.single');
+Route::post('/blog/{blog}/comments', [BlogController::class, 'storeComment'])->name('blogs.comments.store');
+
+Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+Route::get('/projects/{project:slug}', [ProjectController::class, 'show'])->name('projects.single');
 
 // Public Client Authentication Routes (Guests only)
 Route::middleware('guest')->group(function () {
