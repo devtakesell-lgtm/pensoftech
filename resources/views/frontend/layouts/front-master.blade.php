@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', setting('seo_meta_title', setting('company_name', 'PenSoftTech') . ' — Scalable Software & Digital Transformation'))</title>
-    <meta name="description"
-        content="@yield('description', setting('seo_meta_description', 'PenSoftTech specializes in launching and scaling world-class B2B SaaS platforms with expert product, engineering, and growth strategies.'))">
+    <meta name="description" content="@yield('description', setting('seo_meta_description', 'PenSoftTech specializes in launching and scaling world-class B2B SaaS platforms with expert product, engineering, and growth strategies.'))">
     <link rel="canonical" href="{{ config('app.url') }}">
 
     <!-- Open Graph / Meta -->
@@ -45,7 +44,7 @@
     @yield('content')
 
     {{-- Footer (Dark Mode) --}}
-    @include('frontend.partials.footer')
+    <x-frontend.footer />
 
     {{-- Alpine JS for UI state --}}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
