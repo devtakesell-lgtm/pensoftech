@@ -98,12 +98,13 @@ class RoleSeeder extends Seeder
             'view-services',
         ]);
 
-        // Content Writer: Admin access + blogs + pages + case studies
+        // Content Writer: Admin access + blogs + pages + case studies + reviews
         $createdRoles['content-writer']->syncPermissions([
             'access-admin',
             'view-blogs', 'create-blogs', 'edit-blogs', 'delete-blogs',
             'view-pages', 'create-pages', 'edit-pages',
             'view-case-studies', 'create-case-studies', 'edit-case-studies',
+            'view-reviews', 'create-reviews', 'edit-reviews',
         ]);
 
         // Client: External portal only, zero admin permissions

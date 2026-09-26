@@ -1,7 +1,8 @@
 <aside class="sidebar" id="sidebar">
     <a href="{{ route('admin.dashboard') }}" class="brand text-decoration-none d-flex align-items-center gap-2">
-        @if(setting('company_logo'))
-            <img src="{{ setting('company_logo') }}" alt="Logo" style="width: 32px; height: 32px; object-fit: contain; border-radius: 6px;">
+        @if (setting('company_logo'))
+            <img src="{{ setting('company_logo') }}" alt="Logo"
+                style="width: 32px; height: 32px; object-fit: contain; border-radius: 6px;">
         @else
             <b class="logo">{{ substr(setting('company_name', 'P'), 0, 1) }}</b>
         @endif
@@ -103,13 +104,21 @@
             @endcan
         @endcanany
 
-        @canany(['view-pages', 'view-blogs', 'view-jobs'])
+        @canany(['view-pages', 'view-reviews', 'view-blogs', 'view-jobs'])
             <div class="label">CONTENT</div>
             @can('view-pages')
                 <a class="nav {{ request()->routeIs('admin.pages*') ? 'active' : '' }}"
                     href="{{ route('admin.pages.index') }}" title="Pages">
                     <i class="bi bi-file-richtext"></i>
                     <span class="nav-title">Pages</span>
+                </a>
+            @endcan
+
+            @can('view-reviews')
+                <a class="nav {{ request()->routeIs('admin.reviews*') ? 'active' : '' }}"
+                    href="{{ route('admin.reviews.index') }}" title="Reviews">
+                    <i class="bi bi-star"></i>
+                    <span class="nav-title">Reviews</span>
                 </a>
             @endcan
 
@@ -204,26 +213,30 @@
                         request()->routeIs('admin.permissions*');
                 @endphp
                 <div class="nav-item-dropdown {{ $isAdministratorActive ? 'open' : '' }}">
-                    <a class="nav nav-parent {{ $isAdministratorActive ? 'parent-active' : 'collapsed' }}" data-bs-toggle="collapse"
-                        href="#administratorSubmenu" role="button" aria-expanded="{{ $isAdministratorActive ? 'true' : 'false' }}"
-                        aria-controls="administratorSubmenu" title="Administrator">
+                    <a class="nav nav-parent {{ $isAdministratorActive ? 'parent-active' : 'collapsed' }}"
+                        data-bs-toggle="collapse" href="#administratorSubmenu" role="button"
+                        aria-expanded="{{ $isAdministratorActive ? 'true' : 'false' }}" aria-controls="administratorSubmenu"
+                        title="Administrator">
                         <i class="bi bi-shield-lock"></i>
                         <span class="nav-title">Administrator</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
                     </a>
                     <div class="collapse {{ $isAdministratorActive ? 'show' : '' }} nav-submenu" id="administratorSubmenu">
                         @can('view-users')
-                            <a class="nav-sub-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}" href="{{ route('admin.users') }}">
+                            <a class="nav-sub-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}"
+                                href="{{ route('admin.users') }}">
                                 <i class="bi bi-people-fill"></i>
                                 <span>Users & Profile</span>
                             </a>
                         @endcan
                         @can('view-roles')
-                            <a class="nav-sub-link {{ request()->routeIs('admin.roles*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}">
+                            <a class="nav-sub-link {{ request()->routeIs('admin.roles*') ? 'active' : '' }}"
+                                href="{{ route('admin.roles.index') }}">
                                 <i class="bi bi-person-badge"></i>
                                 <span>Roles</span>
                             </a>
-                            <a class="nav-sub-link {{ request()->routeIs('admin.permissions*') ? 'active' : '' }}" href="{{ route('admin.permissions.index') }}">
+                            <a class="nav-sub-link {{ request()->routeIs('admin.permissions*') ? 'active' : '' }}"
+                                href="{{ route('admin.permissions.index') }}">
                                 <i class="bi bi-key-fill"></i>
                                 <span>Permissions</span>
                             </a>

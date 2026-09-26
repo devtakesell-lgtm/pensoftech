@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\CaseStudy;
 use App\Models\Project;
+use App\Models\Review;
 use App\Models\ServiceCategory;
 use App\Models\User;
 use Illuminate\View\View;
@@ -46,6 +47,11 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
+        $reviews = Review::active()
+            ->orderBy('sort_order', 'asc')
+            ->latest()
+            ->get();
+
         $teamMemberExists = User::hasTeamMembers();
 
         return view('frontend.pages.home')->with([
@@ -54,6 +60,7 @@ class HomeController extends Controller
             'blogs' => $blogs,
             'featuredProjects' => $featuredProjects,
             'caseStudies' => $caseStudies,
+            'reviews' => $reviews,
             'teamMemberExists' => $teamMemberExists,
         ]);
     }

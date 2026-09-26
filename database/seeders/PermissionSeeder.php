@@ -38,6 +38,7 @@ class PermissionSeeder extends Seeder
             'users' => 'Staff users and team members',
             'roles' => 'Roles and permission matrix management',
             'settings' => 'System and agency settings',
+            'reviews' => 'Client reviews and testimonials',
         ];
 
         $actions = ['view', 'create', 'edit', 'delete'];

@@ -12,7 +12,7 @@ class PermissionFactory extends Factory
 {
     public function definition(): array
     {
-        $modules = ['clients', 'leads', 'projects', 'quotes', 'blogs', 'jobs', 'users', 'roles', 'settings'];
+        $modules = ['clients', 'leads', 'projects', 'quotes', 'blogs', 'jobs', 'users', 'roles', 'settings', 'reviews'];
         $actions = ['view', 'create', 'edit', 'delete'];
 
         $module = fake()->randomElement($modules);

@@ -66,5 +66,8 @@ class DatabaseSeeder extends Seeder
 
         // ── Step 13: Settings ─────────────────────────────────────────────────
         $this->call(SettingSeeder::class);
+
+        // ── Step 14: Reviews ──────────────────────────────────────────────────
+        $this->call(ReviewSeeder::class);
     }
 }

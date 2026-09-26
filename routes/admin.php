@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PermissionController as AdminPermissionController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\QuoteController as AdminQuoteController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\ServiceCategoryController as AdminServiceCategoryController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
@@ -143,6 +144,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{page}/edit', [AdminPageController::class, 'edit'])->name('edit')->middleware('can:edit-pages');
             Route::put('/{page}', [AdminPageController::class, 'update'])->name('update')->middleware('can:edit-pages');
             Route::delete('/{page}', [AdminPageController::class, 'destroy'])->name('destroy')->middleware('can:delete-pages');
+        });
+
+        // Reviews Module
+        Route::prefix('reviews')->name('reviews.')->group(function () {
+            Route::get('/', [AdminReviewController::class, 'index'])->name('index')->middleware('can:view-reviews');
+            Route::get('/create', [AdminReviewController::class, 'create'])->name('create')->middleware('can:create-reviews');
+            Route::post('/', [AdminReviewController::class, 'store'])->name('store')->middleware('can:create-reviews');
+            Route::get('/{review}/edit', [AdminReviewController::class, 'edit'])->name('edit')->middleware('can:edit-reviews');
+            Route::put('/{review}', [AdminReviewController::class, 'update'])->name('update')->middleware('can:edit-reviews');
+            Route::delete('/{review}', [AdminReviewController::class, 'destroy'])->name('destroy')->middleware('can:delete-reviews');
         });
 
         // Blog Module
