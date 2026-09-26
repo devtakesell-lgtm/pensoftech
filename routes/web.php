@@ -16,6 +16,7 @@ Route::post('/start-project', [LeadController::class, 'store'])->name('start-pro
 
 Route::get('/about-us', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::post('/contact', [PageController::class, 'storeContact'])->name('contact.store');
 Route::get('/digital-marketing', [PageController::class, 'digitalMarketing'])->name('digital-marketing');
 Route::get('/software-development', [PageController::class, 'softwareDevelopment'])->name('software-development');
 

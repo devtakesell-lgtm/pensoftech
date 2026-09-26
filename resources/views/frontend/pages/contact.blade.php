@@ -1,6 +1,6 @@
 @extends('frontend.layouts.front-master')
 
-@section('title', 'Contact Us — PenSoftTech')
+@section('title', ($page->title ?? 'Contact Us') . ' — PenSoftTech')
 
 @section('content')
 
