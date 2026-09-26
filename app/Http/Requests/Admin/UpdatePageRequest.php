@@ -18,12 +18,16 @@ class UpdatePageRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'subtitle' => ['nullable', 'string', 'max:255'],
             'content' => ['nullable', 'string'],
             'template' => ['required', 'string', 'max:50'],
             'status' => ['required', Rule::enum(ContentStatus::class)],
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'image' => ['nullable', 'image', 'max:2048', 'mimes:jpeg,png,jpg,webp'],
+            'hero_title' => ['nullable', 'string', 'max:255'],
+            'hero_description' => ['nullable', 'string'],
+            'content_title' => ['nullable', 'string', 'max:255'],
+            'content_subtitle' => ['nullable', 'string', 'max:255'],
+            'hero_banner_file' => ['nullable', 'image', 'max:2048', 'mimes:jpeg,png,jpg,webp'],
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string', 'max:500'],
             'meta_keywords' => ['nullable', 'string', 'max:255'],

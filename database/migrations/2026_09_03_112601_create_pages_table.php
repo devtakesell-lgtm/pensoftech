@@ -12,7 +12,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('subtitle')->nullable();
+            $table->string('hero_title')->nullable(); 
+            $table->string('hero_banner')->nullable(); 
+            $table->text('hero_description')->nullable();
+            $table->string('content_title')->nullable();
+            $table->string('content_subtitle')->nullable();
             $table->longText('content')->nullable();
             $table->string('featured_image')->nullable();
             $table->string('template')->default('default'); // maps to a Blade view per page type

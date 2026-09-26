@@ -21,11 +21,35 @@ class PageSeeder extends Seeder
         ];
 
         foreach ($pages as $index => $page) {
+            $heroTitle = fake()->sentence(4);
+            $heroDesc = fake()->paragraph();
+            $contentTitle = fake()->sentence(3);
+            $contentSubtitle = fake()->sentence();
+            $content = fake()->paragraphs(4, true);
+
+            if ($page['slug'] === 'about-us') {
+                $heroTitle = 'We Are [PenSoftTech]';
+                $heroDesc = 'A collective of engineers, designers, and strategists driven by a singular mission: to build digital products that define the future.';
+                $contentTitle = 'Our Journey';
+                $contentSubtitle = 'From a small idea to an <span class="text-black italic border-b-4 border-[#4fd1c5]">industry leader.</span>';
+                $content = "PenSoftTech was founded on a simple premise: technology should solve problems, not create them. What started as a small team of passionate developers has grown into a full-scale digital agency serving enterprise clients globally.\n\nWe believe in craftsmanship over shortcuts. Every line of code, every pixel designed, and every strategy formulated is done with deep intent and a commitment to excellence.\n\nToday, we are proud to be the engineering backbone for fast-growing startups and established Fortune 500 companies alike, helping them navigate the complexities of the digital age.";
+            } elseif ($page['slug'] === 'contact') {
+                $heroTitle = '[Get in Touch]';
+                $heroDesc = 'Have a project in mind? Let\'s build something great together.';
+                $contentTitle = 'Contact Us';
+                $contentSubtitle = 'We would love to hear from you.';
+                $content = 'Fill out the form or drop us an email, and we will get back to you as soon as possible.';
+            }
+
             Page::create([
                 'title' => $page['title'],
                 'slug' => $page['slug'],
-                'subtitle' => fake()->sentence(),
-                'content' => fake()->paragraphs(4, true),
+                'content_subtitle' => $contentSubtitle,
+                'hero_title' => $heroTitle,
+                'hero_banner' => 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2850&q=80',
+                'hero_description' => $heroDesc,
+                'content_title' => $contentTitle,
+                'content' => $content,
                 'featured_image' => null,
                 'template' => $page['template'],
                 'status' => ContentStatus::Published,

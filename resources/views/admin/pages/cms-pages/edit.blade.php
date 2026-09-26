@@ -39,9 +39,33 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="subtitle" class="form-label fw-semibold">Subtitle</label>
-                            <input type="text" name="subtitle" id="subtitle" class="form-control" value="{{ old('subtitle', $page->subtitle) }}">
-                            @error('subtitle')
+                            <label for="hero_title" class="form-label fw-semibold">Hero Title</label>
+                            <input type="text" name="hero_title" id="hero_title" class="form-control" value="{{ old('hero_title', $page->hero_title) }}">
+                            @error('hero_title')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="hero_description" class="form-label fw-semibold">Hero Description</label>
+                            <textarea name="hero_description" id="hero_description" class="form-control" rows="3">{{ old('hero_description', $page->hero_description) }}</textarea>
+                            @error('hero_description')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="content_title" class="form-label fw-semibold">Content Title</label>
+                            <input type="text" name="content_title" id="content_title" class="form-control" value="{{ old('content_title', $page->content_title) }}">
+                            @error('content_title')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="content_subtitle" class="form-label fw-semibold">Content Subtitle</label>
+                            <input type="text" name="content_subtitle" id="content_subtitle" class="form-control" value="{{ old('content_subtitle', $page->content_subtitle) }}">
+                            @error('content_subtitle')
                                 <div class="text-danger small mt-1">{{ $message }}</div>
                             @enderror
                         </div>
@@ -136,6 +160,13 @@
                             name="image" 
                             label="Featured Image" 
                             :current="$page->featured_image"
+                            aspect="banner" 
+                        />
+                        
+                        <x-admin.components.forms.image-upload 
+                            name="hero_banner_file" 
+                            label="Hero Banner" 
+                            :current="$page->hero_banner"
                             aspect="banner" 
                         />
                     </div>

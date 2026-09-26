@@ -48,6 +48,10 @@ class PageController extends Controller
             $validated['featured_image'] = $this->handleImageUpload($request->file('image'), 'pages', 1200);
         }
 
+        if ($request->hasFile('hero_banner_file')) {
+            $validated['hero_banner'] = $this->handleImageUpload($request->file('hero_banner_file'), 'pages/heroes', 2850);
+        }
+
         $pageService->storePage($validated);
 
         return redirect()->route('admin.pages.index')
@@ -79,6 +83,10 @@ class PageController extends Controller
 
         if ($request->hasFile('image')) {
             $validated['featured_image'] = $this->handleImageUpload($request->file('image'), 'pages', 1200, $page->featured_image);
+        }
+
+        if ($request->hasFile('hero_banner_file')) {
+            $validated['hero_banner'] = $this->handleImageUpload($request->file('hero_banner_file'), 'pages/heroes', 2850, $page->hero_banner);
         }
 
         $pageService->updatePage($page, $validated);

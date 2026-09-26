@@ -39,8 +39,31 @@
                 <div class="card-body">
                     <h2 class="h4 text-dark mb-2">{{ $page->title }}</h2>
 
-                    @if ($page->subtitle)
-                        <h3 class="h6 text-muted fw-normal mb-4">{{ $page->subtitle }}</h3>
+                    @if ($page->content_subtitle)
+                        <h3 class="h6 text-muted fw-normal mb-4">{{ $page->content_subtitle }}</h3>
+                    @endif
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <strong>Hero Title:</strong>
+                            <p>{{ $page->hero_title ?? '—' }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Content Title:</strong>
+                            <p>{{ $page->content_title ?? '—' }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <strong>Hero Description:</strong>
+                        <p>{{ $page->hero_description ?? '—' }}</p>
+                    </div>
+
+                    @if ($page->hero_banner)
+                        <div class="mb-4 rounded overflow-hidden">
+                            <h6 class="mb-2">Hero Banner:</h6>
+                            <img src="{{ Str::startsWith($page->hero_banner, ['http://', 'https://']) ? $page->hero_banner : Storage::url($page->hero_banner) }}"
+                                alt="Hero Banner" class="img-fluid w-100" style="max-height: 400px; object-fit: cover;">
+                        </div>
                     @endif
 
                     @if ($page->featured_image)

@@ -10,14 +10,21 @@ class PageController extends Controller
     public function about()
     {
         $teamMemberExists = User::hasTeamMembers();
+        $page = \App\Models\Page::where('slug', 'about-us')->firstOrFail();
+        
         return view('frontend.pages.about')->with([
             'teamMemberExists' => $teamMemberExists,
+            'page' => $page,
         ]);
     }
 
     public function contact()
     {
-        return view('frontend.pages.contact');
+        $page = \App\Models\Page::where('slug', 'contact')->firstOrFail();
+        
+        return view('frontend.pages.contact')->with([
+            'page' => $page,
+        ]);
     }
 
     public function digitalMarketing()
