@@ -64,7 +64,8 @@
                                 class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
                         <li><a href="{{ route('contact') }}"
                                 class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Case Studies</a>
+                        <li><a href="{{ route('case-studies.index') }}"
+                                class="text-gray-400 hover:text-white transition-colors">Case Studies</a>
                         </li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Careers</a></li>
                         <li><a href="{{ route('about') }}/#team"
@@ -72,101 +73,101 @@
                     </ul>
                 </div>
 
-            {{-- Links: Services --}}
-            <div>
-                <h4
-                    class="text-white font-bold tracking-wider uppercase text-xs md:text-sm mb-4 flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#4fd1c5]"></span> Services
-                </h4>
-                <ul class="space-y-2.5 text-xs sm:text-sm">
-                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">SaaS Design</a>
-                    </li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Web Dev</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Cloud
-                            Architecture</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Backend API</a>
-                    </li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">DevOps</a></li>
-                </ul>
+                {{-- Links: Services --}}
+                <div>
+                    <h4
+                        class="text-white font-bold tracking-wider uppercase text-xs md:text-sm mb-4 flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#4fd1c5]"></span> Services
+                    </h4>
+                    <ul class="space-y-2.5 text-xs sm:text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">SaaS Design</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Web Dev</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Cloud
+                                Architecture</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Backend API</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">DevOps</a></li>
+                    </ul>
+                </div>
+
+                {{-- Links: Resources --}}
+                <div>
+                    <h4
+                        class="text-white font-bold tracking-wider uppercase text-xs md:text-sm mb-4 flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#4fd1c5]"></span> Resources
+                    </h4>
+                    <ul class="space-y-2.5 text-xs sm:text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Whitepapers</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Webinars</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documentation</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">API Portal</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
-            {{-- Links: Resources --}}
-            <div>
-                <h4
-                    class="text-white font-bold tracking-wider uppercase text-xs md:text-sm mb-4 flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#4fd1c5]"></span> Resources
-                </h4>
-                <ul class="space-y-2.5 text-xs sm:text-sm">
-                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Whitepapers</a>
-                    </li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Webinars</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documentation</a>
-                    </li>
-                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">API Portal</a>
-                    </li>
-                </ul>
+        </div>
+
+        {{-- Bottom Copyright Bar --}}
+        <div
+            class="border-t border-white/10 pt-6 md:pt-8 flex flex-col-reverse sm:flex-row justify-between items-center gap-4">
+            <p class="text-gray-500 text-xs sm:text-sm text-center sm:text-left">
+                &copy; {{ date('Y') }} {{ setting('company_name', 'Pensoftech Inc.') }} All Rights Reserved.
+                <span class="mx-1.5">|</span> <a href="#" class="hover:text-white transition-colors">Privacy
+                    Policy</a>
+                <span class="mx-1.5">|</span> <a href="#" class="hover:text-white transition-colors">Terms of
+                    Service</a>
+            </p>
+
+            <div class="flex items-center gap-3">
+                @if (setting('facebook_url'))
+                    <a href="{{ setting('facebook_url') }}"
+                        class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#4fd1c5] hover:border-[#4fd1c5]/30 hover:bg-white/10 transition-all">
+                        <span class="sr-only">Facebook</span>
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                @endif
+                @if (setting('twitter_url'))
+                    <a href="{{ setting('twitter_url') }}"
+                        class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#4fd1c5] hover:border-[#4fd1c5]/30 hover:bg-white/10 transition-all">
+                        <span class="sr-only">Twitter</span>
+                        <i class="bi bi-twitter-x"></i>
+                    </a>
+                @endif
+                @if (setting('linkedin_url'))
+                    <a href="{{ setting('linkedin_url') }}"
+                        class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#4fd1c5] hover:border-[#4fd1c5]/30 hover:bg-white/10 transition-all">
+                        <span class="sr-only">LinkedIn</span>
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+                @endif
+                @if (setting('instagram_url'))
+                    <a href="{{ setting('instagram_url') }}"
+                        class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#4fd1c5] hover:border-[#4fd1c5]/30 hover:bg-white/10 transition-all">
+                        <span class="sr-only">Instagram</span>
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                @endif
+                @if (setting('youtube_url'))
+                    <a href="{{ setting('youtube_url') }}"
+                        class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#4fd1c5] hover:border-[#4fd1c5]/30 hover:bg-white/10 transition-all">
+                        <span class="sr-only">YouTube</span>
+                        <i class="bi bi-youtube"></i>
+                    </a>
+                @endif
+                @if (setting('github_url'))
+                    <a href="{{ setting('github_url') }}"
+                        class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#4fd1c5] hover:border-[#4fd1c5]/30 hover:bg-white/10 transition-all">
+                        <span class="sr-only">GitHub</span>
+                        <i class="bi bi-github"></i>
+                    </a>
+                @endif
             </div>
         </div>
-
-    </div>
-
-    {{-- Bottom Copyright Bar --}}
-    <div
-        class="border-t border-white/10 pt-6 md:pt-8 flex flex-col-reverse sm:flex-row justify-between items-center gap-4">
-        <p class="text-gray-500 text-xs sm:text-sm text-center sm:text-left">
-            &copy; {{ date('Y') }} {{ setting('company_name', 'Pensoftech Inc.') }} All Rights Reserved.
-            <span class="mx-1.5">|</span> <a href="#" class="hover:text-white transition-colors">Privacy
-                Policy</a>
-            <span class="mx-1.5">|</span> <a href="#" class="hover:text-white transition-colors">Terms of
-                Service</a>
-        </p>
-
-        <div class="flex items-center gap-3">
-            @if (setting('facebook_url'))
-                <a href="{{ setting('facebook_url') }}"
-                    class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#4fd1c5] hover:border-[#4fd1c5]/30 hover:bg-white/10 transition-all">
-                    <span class="sr-only">Facebook</span>
-                    <i class="bi bi-facebook"></i>
-                </a>
-            @endif
-            @if (setting('twitter_url'))
-                <a href="{{ setting('twitter_url') }}"
-                    class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#4fd1c5] hover:border-[#4fd1c5]/30 hover:bg-white/10 transition-all">
-                    <span class="sr-only">Twitter</span>
-                    <i class="bi bi-twitter-x"></i>
-                </a>
-            @endif
-            @if (setting('linkedin_url'))
-                <a href="{{ setting('linkedin_url') }}"
-                    class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#4fd1c5] hover:border-[#4fd1c5]/30 hover:bg-white/10 transition-all">
-                    <span class="sr-only">LinkedIn</span>
-                    <i class="bi bi-linkedin"></i>
-                </a>
-            @endif
-            @if (setting('instagram_url'))
-                <a href="{{ setting('instagram_url') }}"
-                    class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#4fd1c5] hover:border-[#4fd1c5]/30 hover:bg-white/10 transition-all">
-                    <span class="sr-only">Instagram</span>
-                    <i class="bi bi-instagram"></i>
-                </a>
-            @endif
-            @if (setting('youtube_url'))
-                <a href="{{ setting('youtube_url') }}"
-                    class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#4fd1c5] hover:border-[#4fd1c5]/30 hover:bg-white/10 transition-all">
-                    <span class="sr-only">YouTube</span>
-                    <i class="bi bi-youtube"></i>
-                </a>
-            @endif
-            @if (setting('github_url'))
-                <a href="{{ setting('github_url') }}"
-                    class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#4fd1c5] hover:border-[#4fd1c5]/30 hover:bg-white/10 transition-all">
-                    <span class="sr-only">GitHub</span>
-                    <i class="bi bi-github"></i>
-                </a>
-            @endif
-        </div>
-    </div>
 
     </div>
 </footer>

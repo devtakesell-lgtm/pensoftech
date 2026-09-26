@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\AuthController as FrontendAuthController;
 use App\Http\Controllers\Frontend\BlogController;
+use App\Http\Controllers\Frontend\CaseStudyController;
+use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\LeadController;
 use App\Http\Controllers\Frontend\PageController;
@@ -14,9 +17,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/start-project', [LeadController::class, 'create'])->name('start-project');
 Route::post('/start-project', [LeadController::class, 'store'])->name('start-project.store');
 
-Route::get('/about-us', [PageController::class, 'about'])->name('about');
-Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::post('/contact', [PageController::class, 'storeContact'])->name('contact.store');
+Route::get('/about-us', [AboutController::class, 'index'])->name('about');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'storeContact'])->name('contact.store');
 Route::get('/digital-marketing', [PageController::class, 'digitalMarketing'])->name('digital-marketing');
 Route::get('/software-development', [PageController::class, 'softwareDevelopment'])->name('software-development');
 
@@ -30,6 +33,9 @@ Route::post('/blog/{blog}/comments', [BlogController::class, 'storeComment'])->n
 
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/projects/{project:slug}', [ProjectController::class, 'show'])->name('projects.single');
+
+Route::get('/case-studies', [CaseStudyController::class, 'index'])->name('case-studies.index');
+Route::get('/case-studies/{caseStudy:slug}', [CaseStudyController::class, 'show'])->name('case-studies.show');
 
 // Public Client Authentication Routes (Guests only)
 Route::middleware('guest')->group(function () {

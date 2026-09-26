@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Frontend;
 use App\Enums\ContentStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use App\Models\CaseStudy;
 use App\Models\Project;
 use App\Models\ServiceCategory;
 use App\Models\User;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $ecosystems = ServiceCategory::where('is_ecosystem', true)
             ->where('is_active', true)
@@ -38,6 +40,12 @@ class HomeController extends Controller
             ->orderBy('sort_order')
             ->get();
 
+        $caseStudies = CaseStudy::with(['project.client', 'project.industry', 'metrics'])
+            ->where('status', ContentStatus::Published)
+            ->latest('published_at')
+            ->take(6)
+            ->get();
+
         $teamMemberExists = User::hasTeamMembers();
 
         return view('frontend.pages.home')->with([
@@ -45,6 +53,7 @@ class HomeController extends Controller
             'serviceCategories' => $serviceCategories,
             'blogs' => $blogs,
             'featuredProjects' => $featuredProjects,
+            'caseStudies' => $caseStudies,
             'teamMemberExists' => $teamMemberExists,
         ]);
     }
