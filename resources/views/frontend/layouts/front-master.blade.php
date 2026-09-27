@@ -4,16 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{-- 1. Browser Tab Title --}}
     <title>@yield('title', setting('seo_meta_title', setting('company_name', 'PenSoftTech') . ' — Scalable Software & Digital Transformation'))</title>
-    <meta name="description" content="@yield('description', setting('seo_meta_description', 'PenSoftTech specializes in launching and scaling world-class B2B SaaS platforms with expert product, engineering, and growth strategies.'))">
-    <link rel="canonical" href="{{ config('app.url') }}">
 
-    <!-- Open Graph / Meta -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="@yield('title', setting('seo_meta_title', setting('company_name', 'PenSoftTech') . ' — Scalable Software Solutions'))">
-    <meta property="og:description" content="@yield('description', setting('seo_meta_description', 'Crafting exceptional digital experiences that drive exponential growth.'))">
-    <meta property="og:image" content="{{ url(setting('seo_og_image', '/default-og.jpg')) }}">
-    <meta property="og:url" content="{{ config('app.url') }}">
+    {{-- 2. Search Engine Meta Tags --}}
+    <meta name="title" content="@yield('meta_title', View::yieldContent('title', setting('seo_meta_title', setting('company_name', 'PenSoftTech'))))">
+    <meta name="description" content="@yield('meta_description', View::yieldContent('description', setting('seo_meta_description', 'PenSoftTech specializes in launching and scaling world-class B2B SaaS platforms with expert product, engineering, and growth strategies.')))">
+    <meta name="keywords" content="@yield('meta_keywords', View::yieldContent('keywords', setting('seo_meta_keywords', 'software development, SaaS, cloud architecture, UI/UX design, digital transformation')))">
+    <meta name="robots" content="@yield('robots', 'index, follow')">
+    <link rel="canonical" href="@yield('canonical_url', View::yieldContent('canonical', url()->current()))">
+
+    {{-- 3. Open Graph / Social Sharing (Facebook, LinkedIn, Discord) --}}
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:title" content="@yield('og_title', View::yieldContent('meta_title', View::yieldContent('title', setting('seo_meta_title', setting('company_name', 'PenSoftTech')))))">
+    <meta property="og:description" content="@yield('og_description', View::yieldContent('meta_description', View::yieldContent('description', setting('seo_meta_description', 'Crafting exceptional digital experiences that drive exponential growth.'))))">
+    <meta property="og:image" content="@yield('og_image', url(setting('seo_og_image', '/default-og.jpg')))">
+    <meta property="og:url" content="@yield('og_url', url()->current())">
+
+    {{-- 4. Twitter Cards (X / Twitter) --}}
+    <meta name="twitter:card" content="@yield('twitter_card', 'summary_large_image')">
+    <meta name="twitter:title" content="@yield('og_title', View::yieldContent('meta_title', View::yieldContent('title', setting('seo_meta_title', setting('company_name', 'PenSoftTech')))))">
+    <meta name="twitter:description" content="@yield('og_description', View::yieldContent('meta_description', View::yieldContent('description', setting('seo_meta_description', 'Crafting exceptional digital experiences that drive exponential growth.'))))">
+    <meta name="twitter:image" content="@yield('og_image', url(setting('seo_og_image', '/default-og.jpg')))">
+
+    {{-- 5. Structured Data (JSON-LD Schema) --}}
+    @yield('seo_schema')
 
     <!-- Fonts: Plus Jakarta Sans + Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

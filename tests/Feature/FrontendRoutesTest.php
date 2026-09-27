@@ -17,4 +17,5 @@ test('all frontend routes return a successful response', function (string $route
     'contact',
     'digital-marketing',
     'software-development',
+    'careers.index',
 ]);

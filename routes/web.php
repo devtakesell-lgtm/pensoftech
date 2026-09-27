@@ -3,6 +3,7 @@
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\AuthController as FrontendAuthController;
 use App\Http\Controllers\Frontend\BlogController;
+use App\Http\Controllers\Frontend\CareerController;
 use App\Http\Controllers\Frontend\CaseStudyController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -36,6 +37,11 @@ Route::get('/projects/{project:slug}', [ProjectController::class, 'show'])->name
 
 Route::get('/case-studies', [CaseStudyController::class, 'index'])->name('case-studies.index');
 Route::get('/case-studies/{caseStudy:slug}', [CaseStudyController::class, 'show'])->name('case-studies.show');
+
+// Careers & Job Openings
+Route::get('/careers', [CareerController::class, 'index'])->name('careers.index');
+Route::get('/careers/{slug}', [CareerController::class, 'show'])->name('careers.show');
+Route::post('/careers/{slug}/apply', [CareerController::class, 'apply'])->name('careers.apply');
 
 // Public Client Authentication Routes (Guests only)
 Route::middleware('guest')->group(function () {

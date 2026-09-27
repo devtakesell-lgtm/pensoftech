@@ -102,7 +102,10 @@
                                 </span>
                             </td>
                             <td>
-                                @if ($job->status === 'open')
+                                <span class="badge status category-status-active">
+                                    <i class="bi bi-check2-circle me-1"></i> {{ $job->status }}
+                                </span>
+                                {{-- @if ($job->status === 'open')
                                     <span class="badge status category-status-active">
                                         <i class="bi bi-check2-circle me-1"></i> Open
                                     </span>
@@ -115,7 +118,7 @@
                                         style="background-color: #fee2e2; color: #b91c1c;">
                                         <i class="bi bi-x-circle me-1"></i> Closed
                                     </span>
-                                @endif
+                                @endif --}}
                             </td>
                             <td class="text-end-align">
                                 <div class="table-actions">

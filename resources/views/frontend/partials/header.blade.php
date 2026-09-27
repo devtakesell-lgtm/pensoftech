@@ -28,6 +28,13 @@
             <li><a href="{{ route('projects.index') }}" data-cursor-expand
                     class="{{ request()->routeIs('projects.*') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Projects</a>
             </li>
+            <li><a href="{{ route('case-studies.index') }}" data-cursor-expand
+                    class="{{ request()->routeIs('case-studies.*') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Case
+                    Studies</a>
+            </li>
+            <li><a href="{{ route('careers.index') }}" data-cursor-expand
+                    class="{{ request()->routeIs('careers.*') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Careers</a>
+            </li>
             <li><a href="{{ route('blogs.index') }}" data-cursor-expand
                     class="{{ request()->routeIs('blogs.*') ? 'text-[#4fd1c5]' : 'hover:text-[#4fd1c5]' }} transition-colors">Blog</a>
             </li>
