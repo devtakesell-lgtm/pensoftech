@@ -6,6 +6,8 @@
 
     <main class="bg-black">
         {{-- 1. Cinematic Video Hero (Dark) --}}
+
+        <h1>PenSoftTech Manchur</h1>
         @include('frontend.components.home.hero')
 
         {{-- 2. Ecosystem (Light) --}}
