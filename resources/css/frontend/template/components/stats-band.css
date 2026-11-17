@@ -1,0 +1,12 @@
+.stats-band{background:var(--ink);color:var(--white);}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;}
+.stat b{
+  font-family:var(--font-display);font-size:clamp(34px,4vw,52px);font-weight:700;
+  display:block;
+  background:linear-gradient(90deg,#8C9BFF,#FF8F6E);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.stat span{font-size:14.5px;color:rgba(255,255,255,.6);}
+@media (max-width:760px){
+  .stats-grid{grid-template-columns:1fr 1fr;row-gap:36px;}
+}

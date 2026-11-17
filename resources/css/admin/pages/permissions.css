@@ -1,0 +1,165 @@
+/* ==========================================================================
+   PERMISSIONS AUDIT & MATRIX MODULE (PAGE-SPECIFIC STYLES)
+   ========================================================================== */
+
+/* Permissions Matrix Grid */
+.perm-matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.perm-module-card {
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #edf0f7;
+}
+
+.perm-module-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.perm-module-title {
+    text-transform: uppercase;
+    font-size: 13px;
+    color: #334155;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
+
+.perm-select-all-btn {
+    background: none;
+    border: none;
+    color: #6d4aff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.15s ease;
+}
+
+.perm-select-all-btn:hover {
+    background: rgba(109, 74, 255, 0.08);
+    text-decoration: underline;
+}
+
+.perm-item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.perm-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #1e293b;
+    padding: 3px 0;
+    user-select: none;
+}
+
+.perm-checkbox-input {
+    width: 16px;
+    height: 16px;
+    accent-color: #6d4aff;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* Permissions Audit Rows */
+.perm-audit-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #f1f5f9;
+}
+
+.perm-audit-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.perm-code-pill {
+    font-size: 12px;
+    background: #f8fafc;
+    color: #0f172a;
+    padding: 3px 7px;
+    border-radius: 4px;
+    font-weight: 600;
+    border: 1px solid #e2e8f0;
+}
+
+.perm-role-tag-list {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: 180px;
+}
+
+/* ==========================================================================
+   PERMISSIONS MOBILE RESPONSIVE RULES (WORLD STANDARD)
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+    .perm-matrix-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 20px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .perm-matrix-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .perm-matrix-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+
+    .perm-checkbox-label {
+        padding: 6px 0 !important;
+        min-height: 36px !important;
+    }
+
+    .perm-select-all-btn {
+        padding: 4px 8px !important;
+        font-size: 12.5px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .perm-audit-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+        padding: 10px 0 !important;
+    }
+
+    .perm-role-tag-list {
+        width: 100% !important;
+        max-width: 100% !important;
+        justify-content: flex-start !important;
+        gap: 4px !important;
+    }
+
+    .perm-code-pill {
+        font-size: 11.5px !important;
+    }
+}

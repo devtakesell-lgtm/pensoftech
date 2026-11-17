@@ -1,0 +1,30 @@
+/* Contact page */
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;}
+.contact-info-item{padding:22px 0;border-top:1px solid var(--line);}
+.contact-info-item:last-child{border-bottom:1px solid var(--line);}
+.contact-info-item span.label{font-size:13.5px;color:var(--slate);display:block;margin-bottom:6px;}
+.contact-info-item a, .contact-info-item p{font-family:var(--font-display);font-size:17px;font-weight:600;}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.field{margin-bottom:20px;}
+.field label{display:block;font-size:13.5px;color:var(--slate);margin-bottom:8px;}
+.field input, .field textarea, .field select{
+  width:100%;padding:14px 16px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);
+  background:var(--white);font-size:15px;transition:border-color .18s var(--ease);
+}
+.field input:focus, .field textarea:focus, .field select:focus{border-color:var(--indigo);}
+.field textarea{resize:vertical;min-height:120px;}
+.field.has-error input, .field.has-error textarea, .field.has-error select{border-color:var(--coral-deep);}
+.field .err-msg{display:none;color:var(--coral-deep);font-size:13px;margin-top:6px;}
+.field.has-error .err-msg{display:block;}
+.form-success{
+  display:none;padding:18px 20px;background:var(--indigo-tint);border-radius:var(--radius-sm);
+  font-size:14.5px;color:var(--indigo-deep);margin-top:18px;
+}
+.form-success.is-visible{display:block;}
+@media (max-width:900px){
+  .contact-grid{grid-template-columns:1fr;}
+}
+@media (max-width:560px){
+  .form-row{grid-template-columns:1fr;}
+}

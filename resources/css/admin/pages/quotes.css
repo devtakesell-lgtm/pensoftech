@@ -1,0 +1,46 @@
+
+
+/* ── Table Column Dimensions ────────────────────────────────────────────── */
+th.col-quote-info {
+    min-width: 250px;
+}
+
+/* ── Quote Number Pill ─────────────────────────────────────────────────── */
+.quote-number-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 600;
+}
+
+/* ── Quote Status Badges ────────────────────────────────────────────────── */
+.quote-status-draft {
+    background: rgba(100, 116, 139, 0.12);
+    color: #475569;
+}
+
+.quote-status-sent {
+    background: rgba(14, 165, 233, 0.12);
+    color: #0284c7;
+}
+
+.quote-status-accepted {
+    background: rgba(16, 185, 129, 0.12);
+    color: #059669;
+}
+
+.quote-status-rejected {
+    background: rgba(239, 68, 68, 0.12);
+    color: #dc2626;
+}
+
+.quote-status-expired {
+    background: rgba(245, 158, 11, 0.12);
+    color: #d97706;
+}

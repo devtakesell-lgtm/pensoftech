@@ -1,0 +1,56 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: 🚀 Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚚 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: 📦 Install Node Dependencies
+        run: npm ci
+
+      - name: 🔨 Build Vite Assets
+        run: npm run build
+
+      - name: 🧹 Clean Development Files
+        run: |
+          rm -f public/hot
+          rm -rf public/storage
+
+      - name: 📂 Sync Files via FTP to Server
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/vendor/**
+            .env*
+            storage/app/**
+            storage/logs/**
+            storage/framework/**
+            public/hot
+            public/storage
+            tests/**
+            deploy.zip
+            *.sql
+            database/*.sql
+            create_deploy_zip.ps1

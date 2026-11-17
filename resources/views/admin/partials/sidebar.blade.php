@@ -1,0 +1,283 @@
+<aside class="sidebar" id="sidebar">
+    <a href="{{ route('admin.dashboard') }}" class="brand text-decoration-none d-flex align-items-center gap-2">
+        @if (setting('company_logo'))
+            <img src="{{ setting('company_logo') }}" alt="Logo"
+                style="width: 32px; height: 32px; object-fit: contain; border-radius: 6px;">
+        @else
+            <b class="logo">{{ substr(setting('company_name', 'P'), 0, 1) }}</b>
+        @endif
+        <div class="brand-info">
+            <strong>{{ setting('company_name', 'PenSoftTech') }}</strong>
+            <small>AGENCY</small>
+        </div>
+    </a>
+
+    <div class="nav-section">
+        <div class="label">MAIN</div>
+        @can('access-admin')
+            <a class="nav {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"
+                title="Dashboard">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span class="nav-title">Dashboard</span>
+            </a>
+        @endcan
+
+        @can('view-leads')
+            <a class="nav {{ request()->routeIs('admin.leads*') ? 'active' : '' }}" href="{{ route('admin.leads') }}"
+                title="Leads">
+                <i class="bi bi-people"></i>
+                <span class="nav-title">Leads</span>
+                @if (($newLeadsCount ?? 0) > 0)
+                    <span class="nav-badge" title="{{ $newLeadsCount }} new inquiries">{{ $newLeadsCount }}</span>
+                @endif
+            </a>
+        @endcan
+
+        @can('view-clients')
+            <a class="nav {{ request()->routeIs('admin.clients*') ? 'active' : '' }}" href="{{ route('admin.clients') }}"
+                title="Clients">
+                <i class="bi bi-building"></i>
+                <span class="nav-title">Clients</span>
+            </a>
+        @endcan
+
+        @can('view-quotes')
+            <a class="nav {{ request()->routeIs('admin.quotes*') ? 'active' : '' }}" href="{{ route('admin.quotes') }}"
+                title="Quotes">
+                <i class="bi bi-file-earmark-text"></i>
+                <span class="nav-title">Quotes</span>
+            </a>
+        @endcan
+
+        @canany(['view-services', 'view-projects', 'view-case-studies', 'view-industries'])
+            <div class="label">SERVICES</div>
+            @can('view-services')
+                @php
+                    $isServicesActive =
+                        request()->routeIs('admin.services*') || request()->routeIs('admin.service-categories*');
+                @endphp
+                <div class="nav-item-dropdown {{ $isServicesActive ? 'open' : '' }}">
+                    <a class="nav nav-parent {{ $isServicesActive ? 'parent-active' : 'collapsed' }}" data-bs-toggle="collapse"
+                        href="#servicesSubmenu" role="button" aria-expanded="{{ $isServicesActive ? 'true' : 'false' }}"
+                        aria-controls="servicesSubmenu" title="Services">
+                        <i class="bi bi-layers"></i>
+                        <span class="nav-title">Services</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                    <div class="collapse {{ $isServicesActive ? 'show' : '' }} nav-submenu" id="servicesSubmenu">
+                        <a class="nav-sub-link {{ request()->routeIs('admin.services*') && !request()->routeIs('admin.service-categories*') ? 'active' : '' }}"
+                            href="{{ route('admin.services') }}">
+                            <i class="bi bi-layers"></i>
+                            <span>All Services</span>
+                        </a>
+                        <a class="nav-sub-link {{ request()->routeIs('admin.service-categories*') ? 'active' : '' }}"
+                            href="{{ route('admin.service-categories.index') }}">
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Categories</span>
+                        </a>
+                    </div>
+                </div>
+            @endcan
+
+            @can('view-projects')
+                <a class="nav {{ request()->routeIs('admin.projects*') ? 'active' : '' }}"
+                    href="{{ route('admin.projects.index') }}" title="Projects">
+                    <i class="bi bi-kanban"></i>
+                    <span class="nav-title">Projects</span>
+                </a>
+            @endcan
+
+            @can('view-case-studies')
+                <a class="nav {{ request()->routeIs('admin.case-studies*') ? 'active' : '' }}"
+                    href="{{ route('admin.case-studies.index') }}" title="Case Studies">
+                    <i class="bi bi-bar-chart"></i>
+                    <span class="nav-title">Case Studies</span>
+                </a>
+            @endcan
+
+            @can('view-industries')
+                <a class="nav {{ request()->routeIs('admin.industries*') ? 'active' : '' }}"
+                    href="{{ route('admin.industries') }}" title="Industries">
+                    <i class="bi bi-diagram-3"></i>
+                    <span class="nav-title">Industries</span>
+                </a>
+            @endcan
+        @endcanany
+
+        @canany(['view-pages', 'view-reviews', 'view-blogs', 'view-jobs'])
+            <div class="label">CONTENT</div>
+            @can('view-pages')
+                <a class="nav {{ request()->routeIs('admin.pages*') ? 'active' : '' }}"
+                    href="{{ route('admin.pages.index') }}" title="Pages">
+                    <i class="bi bi-file-richtext"></i>
+                    <span class="nav-title">Pages</span>
+                </a>
+            @endcan
+
+            @can('view-reviews')
+                <a class="nav {{ request()->routeIs('admin.reviews*') ? 'active' : '' }}"
+                    href="{{ route('admin.reviews.index') }}" title="Reviews">
+                    <i class="bi bi-star"></i>
+                    <span class="nav-title">Reviews</span>
+                </a>
+            @endcan
+
+            @can('view-blogs')
+                @php
+                    $isBlogActive =
+                        request()->routeIs('admin.blog*') ||
+                        request()->routeIs('admin.blog-categories*') ||
+                        request()->routeIs('admin.blog-tags*') ||
+                        request()->routeIs('admin.blog-comments*');
+                @endphp
+                <div class="nav-item-dropdown {{ $isBlogActive ? 'open' : '' }}">
+                    <a class="nav nav-parent {{ $isBlogActive ? 'parent-active' : 'collapsed' }}" data-bs-toggle="collapse"
+                        href="#blogSubmenu" role="button" aria-expanded="{{ $isBlogActive ? 'true' : 'false' }}"
+                        aria-controls="blogSubmenu" title="Blog">
+                        <i class="bi bi-journal-text"></i>
+                        <span class="nav-title">Blog</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                    <div class="collapse {{ $isBlogActive ? 'show' : '' }} nav-submenu" id="blogSubmenu">
+                        <a class="nav-sub-link {{ request()->routeIs('admin.blog.index') ? 'active' : '' }}"
+                            href="{{ route('admin.blog.index') }}">
+                            <i class="bi bi-pencil-square"></i>
+                            <span>All Posts</span>
+                        </a>
+                        @can('view-blog-categories')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.blog-categories*') ? 'active' : '' }}"
+                                href="{{ route('admin.blog-categories.index') }}">
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Categories</span>
+                            </a>
+                        @endcan
+                        @can('view-blog-tags')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.blog-tags*') ? 'active' : '' }}"
+                                href="{{ route('admin.blog-tags.index') }}">
+                                <i class="bi bi-tags"></i>
+                                <span>Tags</span>
+                            </a>
+                        @endcan
+                        <a class="nav-sub-link {{ request()->routeIs('admin.blog-comments*') ? 'active' : '' }}"
+                            href="{{ route('admin.blog-comments.index') }}">
+                            <i class="bi bi-chat-dots"></i>
+                            <span>Comments</span>
+                        </a>
+                    </div>
+                </div>
+            @endcan
+
+            @can('view-jobs')
+                @php
+                    $isJobsActive =
+                        request()->routeIs('admin.jobs*') ||
+                        request()->routeIs('admin.job-categories*') ||
+                        request()->routeIs('admin.job-applications*');
+                @endphp
+                <div class="nav-item-dropdown {{ $isJobsActive ? 'open' : '' }}">
+                    <a class="nav nav-parent {{ $isJobsActive ? 'parent-active' : 'collapsed' }}" data-bs-toggle="collapse"
+                        href="#jobsSubmenu" role="button" aria-expanded="{{ $isJobsActive ? 'true' : 'false' }}"
+                        aria-controls="jobsSubmenu" title="Careers">
+                        <i class="bi bi-briefcase"></i>
+                        <span class="nav-title">Careers</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                    <div class="collapse {{ $isJobsActive ? 'show' : '' }} nav-submenu" id="jobsSubmenu">
+                        <a class="nav-sub-link {{ request()->routeIs('admin.jobs*') ? 'active' : '' }}"
+                            href="{{ route('admin.jobs.index') }}">
+                            <i class="bi bi-briefcase"></i>
+                            <span>All Jobs</span>
+                        </a>
+                        <a class="nav-sub-link {{ request()->routeIs('admin.job-categories*') ? 'active' : '' }}"
+                            href="{{ route('admin.job-categories.index') }}">
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Categories</span>
+                        </a>
+                        <a class="nav-sub-link {{ request()->routeIs('admin.job-applications*') ? 'active' : '' }}"
+                            href="{{ route('admin.job-applications.index') }}">
+                            <i class="bi bi-file-earmark-person"></i>
+                            <span>Applications</span>
+                        </a>
+                    </div>
+                </div>
+            @endcan
+        @endcanany
+
+        @canany(['view-users', 'view-roles', 'view-analytics', 'view-settings'])
+            <div class="label">SYSTEM</div>
+            @canany(['view-users', 'view-roles'])
+                @php
+                    $isAdministratorActive =
+                        request()->routeIs('admin.users*') ||
+                        request()->routeIs('admin.roles*') ||
+                        request()->routeIs('admin.permissions*');
+                @endphp
+                <div class="nav-item-dropdown {{ $isAdministratorActive ? 'open' : '' }}">
+                    <a class="nav nav-parent {{ $isAdministratorActive ? 'parent-active' : 'collapsed' }}"
+                        data-bs-toggle="collapse" href="#administratorSubmenu" role="button"
+                        aria-expanded="{{ $isAdministratorActive ? 'true' : 'false' }}" aria-controls="administratorSubmenu"
+                        title="Administrator">
+                        <i class="bi bi-shield-lock"></i>
+                        <span class="nav-title">Administrator</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                    <div class="collapse {{ $isAdministratorActive ? 'show' : '' }} nav-submenu" id="administratorSubmenu">
+                        @can('view-users')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}"
+                                href="{{ route('admin.users') }}">
+                                <i class="bi bi-people-fill"></i>
+                                <span>Users & Profile</span>
+                            </a>
+                        @endcan
+                        @can('view-roles')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.roles*') ? 'active' : '' }}"
+                                href="{{ route('admin.roles.index') }}">
+                                <i class="bi bi-person-badge"></i>
+                                <span>Roles</span>
+                            </a>
+                            <a class="nav-sub-link {{ request()->routeIs('admin.permissions*') ? 'active' : '' }}"
+                                href="{{ route('admin.permissions.index') }}">
+                                <i class="bi bi-key-fill"></i>
+                                <span>Permissions</span>
+                            </a>
+                        @endcan
+                    </div>
+                </div>
+            @endcanany
+
+            @can('view-analytics')
+                <a class="nav {{ request()->routeIs('admin.analytics*') ? 'active' : '' }}"
+                    href="{{ route('admin.analytics') }}" title="Analytics">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span class="nav-title">Analytics</span>
+                </a>
+            @endcan
+
+            @can('view-settings')
+                <a class="nav {{ request()->routeIs('admin.settings*') ? 'active' : '' }}"
+                    href="{{ route('admin.settings') }}" title="Settings">
+                    <i class="bi bi-gear"></i>
+                    <span class="nav-title">Settings</span>
+                </a>
+            @endcan
+        @endcanany
+    </div>
+
+    <div class="sidebottom">
+        <div class="grow">
+            <b>✦ Grow your agency</b>
+            <small>Track leads, sales and projects in one place.</small>
+            <button type="button">View Reports</button>
+        </div>
+        <div class="admin">
+            <div class="avatar-wrap">
+                <b class="avatar">{{ strtoupper(substr(auth()->user()?->name ?? 'AD', 0, 2)) }}</b>
+                <span class="status-indicator"></span>
+            </div>
+            <div class="admin-info">
+                <strong>{{ auth()->user()?->name ?? 'Admin' }}</strong>
+                <small>{{ auth()->user()?->roles->first()?->name ? ucwords(str_replace('-', ' ', auth()->user()->roles->first()->name)) : 'Staff' }}</small>
+            </div>
+        </div>
+    </div>
+</aside>
