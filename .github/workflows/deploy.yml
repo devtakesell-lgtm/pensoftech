@@ -49,6 +49,7 @@ jobs:
             storage/framework/**
             public/hot
             public/storage
+            public/.htaccess
             tests/**
             deploy.zip
             *.sql
