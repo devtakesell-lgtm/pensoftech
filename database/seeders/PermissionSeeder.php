@@ -39,6 +39,10 @@ class PermissionSeeder extends Seeder
             'roles' => 'Roles and permission matrix management',
             'settings' => 'System and agency settings',
             'reviews' => 'Client reviews and testimonials',
+            'courses' => 'Training courses and skill buildup',
+            'course-applications' => 'Course enrollments, screening, and interview pipeline',
+            'coupons' => 'Course discount coupons',
+            'instructors' => 'Mentors and course instructors',
         ];
 
         $actions = ['view', 'create', 'edit', 'delete'];
