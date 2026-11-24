@@ -69,5 +69,10 @@ class DatabaseSeeder extends Seeder
 
         // ── Step 14: Reviews ──────────────────────────────────────────────────
         $this->call(ReviewSeeder::class);
+
+        // ── Step 15: Courses & Academy ────────────────────────────────────────
+        $this->call(CourseCategorySeeder::class);
+        $this->call(InstructorSeeder::class);
+        $this->call(CourseSeeder::class);
     }
 }
