@@ -11,6 +11,7 @@ use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\Currency;
 use App\Models\Instructor;
+use App\Traits\HandlesImageUploads;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -18,6 +19,8 @@ use Illuminate\View\View;
 
 class CourseController extends Controller
 {
+    use HandlesImageUploads;
+
     public function index(Request $request): View
     {
         Gate::authorize('view-courses');
@@ -94,6 +97,10 @@ class CourseController extends Controller
             $validated['what_you_will_learn'] = array_values(array_filter(array_map('trim', $validated['what_you_will_learn'])));
         }
 
+        if ($request->hasFile('thumbnail')) {
+            $validated['thumbnail'] = $this->handleImageUpload($request->file('thumbnail'), 'courses', 1200);
+        }
+
         $course = Course::create($validated);
 
         return redirect()->route('admin.courses.index')
@@ -119,6 +126,10 @@ class CourseController extends Controller
 
         if (isset($validated['what_you_will_learn']) && is_array($validated['what_you_will_learn'])) {
             $validated['what_you_will_learn'] = array_values(array_filter(array_map('trim', $validated['what_you_will_learn'])));
+        }
+
+        if ($request->hasFile('thumbnail')) {
+            $validated['thumbnail'] = $this->handleImageUpload($request->file('thumbnail'), 'courses', 1200, $course->thumbnail);
         }
 
         $course->update($validated);

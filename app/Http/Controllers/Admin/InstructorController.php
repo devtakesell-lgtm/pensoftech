@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreInstructorRequest;
 use App\Http\Requests\Admin\UpdateInstructorRequest;
 use App\Models\Instructor;
 use App\Models\User;
+use App\Traits\HandlesImageUploads;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -14,6 +15,8 @@ use Illuminate\View\View;
 
 class InstructorController extends Controller
 {
+    use HandlesImageUploads;
+
     public function index(Request $request): View
     {
         Gate::authorize('view-instructors');
@@ -57,6 +60,10 @@ class InstructorController extends Controller
             $validated['skills'] = array_map('trim', explode(',', $validated['skills']));
         }
 
+        if ($request->hasFile('avatar')) {
+            $validated['avatar'] = $this->handleImageUpload($request->file('avatar'), 'instructors', 400);
+        }
+
         $instructor = Instructor::create($validated);
 
         return redirect()->route('admin.instructors.index')
@@ -77,6 +84,10 @@ class InstructorController extends Controller
         $validated = $request->validated();
         if (! empty($validated['skills']) && is_string($validated['skills'])) {
             $validated['skills'] = array_map('trim', explode(',', $validated['skills']));
+        }
+
+        if ($request->hasFile('avatar')) {
+            $validated['avatar'] = $this->handleImageUpload($request->file('avatar'), 'instructors', 400, $instructor->avatar);
         }
 
         $instructor->update($validated);

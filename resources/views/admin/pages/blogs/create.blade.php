@@ -95,7 +95,7 @@
             </h3>
 
             <div class="form-group mb-4">
-                {{-- <x-forms.image-upload
+                {{-- <x-admin.components.forms.image-upload
                 name="featured_image"
                 label="Featured Image"
                 aspect="banner"

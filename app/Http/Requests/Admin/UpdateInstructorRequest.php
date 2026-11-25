@@ -22,7 +22,7 @@ class UpdateInstructorRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'designation' => ['required', 'string', 'max:255'],
             'bio' => ['nullable', 'string'],
-            'avatar' => ['nullable', 'string', 'max:500'],
+            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:2048'],
             'skills' => ['nullable', 'string'],
             'social_links' => ['nullable', 'array'],
             'social_links.linkedin' => ['nullable', 'url', 'max:255'],

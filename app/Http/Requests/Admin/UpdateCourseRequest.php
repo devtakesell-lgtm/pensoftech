@@ -31,7 +31,7 @@ class UpdateCourseRequest extends FormRequest
             'slug' => ['nullable', 'string', 'max:255', Rule::unique('courses', 'slug')->ignore($courseId)],
             'subtitle' => ['nullable', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'thumbnail' => ['nullable', 'string', 'max:500'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:2048'],
             'banner' => ['nullable', 'string', 'max:500'],
             'delivery_mode' => ['required', 'string', Rule::enum(CourseDeliveryMode::class)],
             'venue' => ['nullable', 'string', 'max:255'],

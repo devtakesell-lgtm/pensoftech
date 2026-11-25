@@ -120,4 +120,17 @@ class Course extends Model
 
         return (float) ($this->discount_price ?? $this->price ?? 0.0);
     }
+
+    public function getThumbnailUrlAttribute(): ?string
+    {
+        if (! $this->thumbnail) {
+            return null;
+        }
+
+        if (str_starts_with($this->thumbnail, 'http://') || str_starts_with($this->thumbnail, 'https://')) {
+            return $this->thumbnail;
+        }
+
+        return asset('storage/'.$this->thumbnail);
+    }
 }

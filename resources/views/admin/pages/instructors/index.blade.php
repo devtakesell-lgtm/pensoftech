@@ -64,8 +64,8 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center gap-2">
-                                    @if ($instructor->avatar)
-                                        <img src="{{ $instructor->avatar }}" alt="{{ $instructor->name }}"
+                                    @if ($instructor->avatar_url)
+                                        <img src="{{ $instructor->avatar_url }}" alt="{{ $instructor->name }}"
                                             style="width: 38px; height: 38px; object-fit: cover; border-radius: 50%;">
                                     @else
                                         <div class="avatar-placeholder" style="width: 38px; height: 38px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #475569;">

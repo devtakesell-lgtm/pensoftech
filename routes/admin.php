@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\CaseStudyController as AdminCaseStudyController;
 use App\Http\Controllers\Admin\ClientController as AdminClientController;
 use App\Http\Controllers\Admin\CourseCategoryController as AdminCourseCategoryController;
 use App\Http\Controllers\Admin\CourseController as AdminCourseController;
+use App\Http\Controllers\Admin\CourseCurriculumController as AdminCourseCurriculumController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ImageUploadController;
 use App\Http\Controllers\Admin\IndustryController as AdminIndustryController;
@@ -229,6 +230,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{course}/edit', [AdminCourseController::class, 'edit'])->name('edit')->middleware('can:edit-courses');
             Route::put('/{course}', [AdminCourseController::class, 'update'])->name('update')->middleware('can:edit-courses');
             Route::delete('/{course}', [AdminCourseController::class, 'destroy'])->name('destroy')->middleware('can:delete-courses');
+
+            // Curriculum Builder (Modules & Lessons)
+            Route::get('/{course}/curriculum', [AdminCourseCurriculumController::class, 'index'])->name('curriculum')->middleware('can:edit-courses');
+            Route::post('/{course}/modules', [AdminCourseCurriculumController::class, 'storeModule'])->name('modules.store')->middleware('can:edit-courses');
+            Route::put('/{course}/modules/{module}', [AdminCourseCurriculumController::class, 'updateModule'])->name('modules.update')->middleware('can:edit-courses');
+            Route::delete('/{course}/modules/{module}', [AdminCourseCurriculumController::class, 'destroyModule'])->name('modules.destroy')->middleware('can:edit-courses');
+            Route::post('/{course}/modules/{module}/lessons', [AdminCourseCurriculumController::class, 'storeLesson'])->name('lessons.store')->middleware('can:edit-courses');
+            Route::put('/{course}/lessons/{lesson}', [AdminCourseCurriculumController::class, 'updateLesson'])->name('lessons.update')->middleware('can:edit-courses');
+            Route::delete('/{course}/lessons/{lesson}', [AdminCourseCurriculumController::class, 'destroyLesson'])->name('lessons.destroy')->middleware('can:edit-courses');
         });
 
         Route::prefix('course-categories')->name('course-categories.')->group(function () {

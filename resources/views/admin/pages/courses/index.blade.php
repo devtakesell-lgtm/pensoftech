@@ -42,7 +42,8 @@
                 <select name="category_id" onchange="this.form.submit()" class="filter-select">
                     <option value="">All Categories</option>
                     @foreach ($categories ?? [] as $cat)
-                        <option value="{{ $cat->id }}" {{ (string) ($currentCategory ?? '') === (string) $cat->id ? 'selected' : '' }}>
+                        <option value="{{ $cat->id }}"
+                            {{ (string) ($currentCategory ?? '') === (string) $cat->id ? 'selected' : '' }}>
                             {{ $cat->name }}
                         </option>
                     @endforeach
@@ -93,11 +94,12 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center gap-2">
-                                    @if ($course->thumbnail)
-                                        <img src="{{ $course->thumbnail }}" alt="{{ $course->title }}"
+                                    @if ($course->thumbnail_url)
+                                        <img src="{{ $course->thumbnail_url }}" alt="{{ $course->title }}"
                                             style="width: 44px; height: 32px; object-fit: cover; border-radius: 4px;">
                                     @else
-                                        <div style="width: 44px; height: 32px; border-radius: 4px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: #94a3b8;">
+                                        <div
+                                            style="width: 44px; height: 32px; border-radius: 4px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: #94a3b8;">
                                             <i class="bi bi-image"></i>
                                         </div>
                                     @endif
@@ -105,14 +107,16 @@
                                         <strong class="category-name-text">{{ $course->title }}</strong>
                                         <div class="d-flex align-items-center gap-1 mt-1">
                                             @if ($course->batch_no)
-                                                <span class="badge bg-secondary-subtle text-secondary border small">{{ $course->batch_no }}</span>
+                                                <span
+                                                    class="badge bg-secondary-subtle text-secondary border small">{{ $course->batch_no }}</span>
                                             @endif
                                             <span class="{{ $course->delivery_mode->badgeClass() }} small">
                                                 <i class="bi {{ $course->delivery_mode->icon() }} me-1"></i>
                                                 {{ $course->delivery_mode->label() }}
                                             </span>
                                             @if ($course->is_featured)
-                                                <span class="badge bg-warning-subtle text-warning border small"><i class="bi bi-star-fill"></i></span>
+                                                <span class="badge bg-warning-subtle text-warning border small"><i
+                                                        class="bi bi-star-fill"></i></span>
                                             @endif
                                         </div>
                                     </div>
@@ -126,7 +130,8 @@
                             </td>
                             <td>
                                 @if ($course->is_free)
-                                    <span class="badge bg-success-subtle text-success border border-success-subtle">Free Course</span>
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle">Free
+                                        Course</span>
                                 @else
                                     <strong>{{ $course->currency?->symbol ?? '৳' }}{{ number_format($course->price, 2) }}</strong>
                                     @if ($course->discount_price)
@@ -143,7 +148,8 @@
                                     </span>
                                 </div>
                                 @if ($course->class_schedule)
-                                    <div class="text-muted small mt-1"><i class="bi bi-clock me-1"></i>{{ $course->class_schedule }}</div>
+                                    <div class="text-muted small mt-1"><i
+                                            class="bi bi-clock me-1"></i>{{ $course->class_schedule }}</div>
                                 @endif
                             </td>
                             <td>
@@ -155,13 +161,19 @@
                             <td class="text-end-align">
                                 <div class="d-inline-flex gap-1">
                                     @can('edit-courses')
-                                        <a href="{{ route('admin.courses.edit', $course) }}" class="btn light icon-btn" title="Edit Course">
+                                        <a href="{{ route('admin.courses.curriculum', $course) }}" class="btn light icon-btn text-primary"
+                                            title="Manage Curriculum ({{ $course->modules_count ?? 0 }} Modules)">
+                                            <i class="bi bi-list-check"></i>
+                                        </a>
+                                        <a href="{{ route('admin.courses.edit', $course) }}" class="btn light icon-btn"
+                                            title="Edit Course">
                                             <i class="bi bi-pencil"></i>
                                         </a>
                                     @endcan
                                     @can('delete-courses')
                                         <form action="{{ route('admin.courses.destroy', $course) }}" method="POST"
-                                            onsubmit="return confirm('Are you sure you want to delete this course?');" class="d-inline">
+                                            onsubmit="return confirm('Are you sure you want to delete this course?');"
+                                            class="d-inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn light icon-btn text-danger" title="Delete Course">
@@ -183,7 +195,7 @@
             </table>
         </div>
 
-        @if(isset($courses) && $courses->hasPages())
+        @if (isset($courses) && $courses->hasPages())
             <div class="p-3">
                 {{ $courses->links() }}
             </div>
