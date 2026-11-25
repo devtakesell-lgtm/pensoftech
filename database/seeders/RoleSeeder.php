@@ -68,6 +68,9 @@ class RoleSeeder extends Seeder
             'view-case-studies',
             'view-industries',
             'view-analytics',
+            'view-courses',
+            'view-course-applications',
+            'edit-course-applications',
         ]);
 
         // Project Manager: Admin access, projects, clients, and view leads/quotes/services/case studies

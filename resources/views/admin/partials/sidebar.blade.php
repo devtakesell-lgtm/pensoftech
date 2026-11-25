@@ -203,6 +203,62 @@
             @endcan
         @endcanany
 
+        @canany(['view-courses', 'view-instructors', 'view-course-applications', 'view-coupons'])
+            <div class="label">ACADEMY</div>
+            @can('view-courses')
+                @php
+                    $isCoursesActive =
+                        request()->routeIs('admin.courses*') ||
+                        request()->routeIs('admin.course-categories*') ||
+                        request()->routeIs('admin.instructors*') ||
+                        request()->routeIs('admin.course-applications*') ||
+                        request()->routeIs('admin.coupons*');
+                @endphp
+                <div class="nav-item-dropdown {{ $isCoursesActive ? 'open' : '' }}">
+                    <a class="nav nav-parent {{ $isCoursesActive ? 'parent-active' : 'collapsed' }}" data-bs-toggle="collapse"
+                        href="#coursesSubmenu" role="button" aria-expanded="{{ $isCoursesActive ? 'true' : 'false' }}"
+                        aria-controls="coursesSubmenu" title="Academy">
+                        <i class="bi bi-mortarboard"></i>
+                        <span class="nav-title">Courses</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                    <div class="collapse {{ $isCoursesActive ? 'show' : '' }} nav-submenu" id="coursesSubmenu">
+                        <a class="nav-sub-link {{ request()->routeIs('admin.courses*') && !request()->routeIs('admin.course-categories*') ? 'active' : '' }}"
+                            href="{{ route('admin.courses.index') }}">
+                            <i class="bi bi-book"></i>
+                            <span>All Courses</span>
+                        </a>
+                        <a class="nav-sub-link {{ request()->routeIs('admin.course-categories*') ? 'active' : '' }}"
+                            href="{{ route('admin.course-categories.index') }}">
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Categories</span>
+                        </a>
+                        @can('view-instructors')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.instructors*') ? 'active' : '' }}"
+                                href="{{ route('admin.instructors.index') }}">
+                                <i class="bi bi-person-video3"></i>
+                                <span>Instructors</span>
+                            </a>
+                        @endcan
+                        @can('view-course-applications')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.course-applications*') ? 'active' : '' }}"
+                                href="{{ route('admin.course-applications.index') }}">
+                                <i class="bi bi-person-check"></i>
+                                <span>Applications</span>
+                            </a>
+                        @endcan
+                        @can('view-coupons')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.coupons*') ? 'active' : '' }}"
+                                href="{{ route('admin.coupons.index') }}">
+                                <i class="bi bi-ticket-perforated"></i>
+                                <span>Coupons</span>
+                            </a>
+                        @endcan
+                    </div>
+                </div>
+            @endcan
+        @endcanany
+
         @canany(['view-users', 'view-roles', 'view-analytics', 'view-settings'])
             <div class="label">SYSTEM</div>
             @canany(['view-users', 'view-roles'])
