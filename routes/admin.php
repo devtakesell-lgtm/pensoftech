@@ -8,9 +8,12 @@ use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\BlogTagController;
 use App\Http\Controllers\Admin\CaseStudyController as AdminCaseStudyController;
 use App\Http\Controllers\Admin\ClientController as AdminClientController;
+use App\Http\Controllers\Admin\CourseCategoryController as AdminCourseCategoryController;
+use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ImageUploadController;
 use App\Http\Controllers\Admin\IndustryController as AdminIndustryController;
+use App\Http\Controllers\Admin\InstructorController as AdminInstructorController;
 use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
 use App\Http\Controllers\Admin\JobCategoryController as AdminJobCategoryController;
 use App\Http\Controllers\Admin\JobController as AdminJobController;
@@ -216,6 +219,34 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{jobApplication}/edit', [AdminJobApplicationController::class, 'edit'])->name('edit')->middleware('can:edit-job-applications');
             Route::put('/{jobApplication}', [AdminJobApplicationController::class, 'update'])->name('update')->middleware('can:edit-job-applications');
             Route::delete('/{jobApplication}', [AdminJobApplicationController::class, 'destroy'])->name('destroy')->middleware('can:delete-job-applications');
+        });
+
+        // Academy / Courses Module
+        Route::prefix('courses')->name('courses.')->group(function () {
+            Route::get('/', [AdminCourseController::class, 'index'])->name('index')->middleware('can:view-courses');
+            Route::get('/create', [AdminCourseController::class, 'create'])->name('create')->middleware('can:create-courses');
+            Route::post('/', [AdminCourseController::class, 'store'])->name('store')->middleware('can:create-courses');
+            Route::get('/{course}/edit', [AdminCourseController::class, 'edit'])->name('edit')->middleware('can:edit-courses');
+            Route::put('/{course}', [AdminCourseController::class, 'update'])->name('update')->middleware('can:edit-courses');
+            Route::delete('/{course}', [AdminCourseController::class, 'destroy'])->name('destroy')->middleware('can:delete-courses');
+        });
+
+        Route::prefix('course-categories')->name('course-categories.')->group(function () {
+            Route::get('/', [AdminCourseCategoryController::class, 'index'])->name('index')->middleware('can:view-courses');
+            Route::get('/create', [AdminCourseCategoryController::class, 'create'])->name('create')->middleware('can:create-courses');
+            Route::post('/', [AdminCourseCategoryController::class, 'store'])->name('store')->middleware('can:create-courses');
+            Route::get('/{courseCategory}/edit', [AdminCourseCategoryController::class, 'edit'])->name('edit')->middleware('can:edit-courses');
+            Route::put('/{courseCategory}', [AdminCourseCategoryController::class, 'update'])->name('update')->middleware('can:edit-courses');
+            Route::delete('/{courseCategory}', [AdminCourseCategoryController::class, 'destroy'])->name('destroy')->middleware('can:delete-courses');
+        });
+
+        Route::prefix('instructors')->name('instructors.')->group(function () {
+            Route::get('/', [AdminInstructorController::class, 'index'])->name('index')->middleware('can:view-instructors');
+            Route::get('/create', [AdminInstructorController::class, 'create'])->name('create')->middleware('can:create-instructors');
+            Route::post('/', [AdminInstructorController::class, 'store'])->name('store')->middleware('can:create-instructors');
+            Route::get('/{instructor}/edit', [AdminInstructorController::class, 'edit'])->name('edit')->middleware('can:edit-instructors');
+            Route::put('/{instructor}', [AdminInstructorController::class, 'update'])->name('update')->middleware('can:edit-instructors');
+            Route::delete('/{instructor}', [AdminInstructorController::class, 'destroy'])->name('destroy')->middleware('can:delete-instructors');
         });
 
         // Users Module (Granular Capabilities)
