@@ -210,7 +210,9 @@
                     $isCoursesActive =
                         request()->routeIs('admin.courses*') ||
                         request()->routeIs('admin.course-categories*') ||
-                        request()->routeIs('admin.instructors*');
+                        request()->routeIs('admin.instructors*') ||
+                        request()->routeIs('admin.course-applications*') ||
+                        request()->routeIs('admin.coupons*');
                 @endphp
                 <div class="nav-item-dropdown {{ $isCoursesActive ? 'open' : '' }}">
                     <a class="nav nav-parent {{ $isCoursesActive ? 'parent-active' : 'collapsed' }}" data-bs-toggle="collapse"
@@ -236,6 +238,20 @@
                                 href="{{ route('admin.instructors.index') }}">
                                 <i class="bi bi-person-video3"></i>
                                 <span>Instructors</span>
+                            </a>
+                        @endcan
+                        @can('view-course-applications')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.course-applications*') ? 'active' : '' }}"
+                                href="{{ route('admin.course-applications.index') }}">
+                                <i class="bi bi-person-check"></i>
+                                <span>Applications</span>
+                            </a>
+                        @endcan
+                        @can('view-coupons')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.coupons*') ? 'active' : '' }}"
+                                href="{{ route('admin.coupons.index') }}">
+                                <i class="bi bi-ticket-perforated"></i>
+                                <span>Coupons</span>
                             </a>
                         @endcan
                     </div>

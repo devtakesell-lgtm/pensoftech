@@ -74,5 +74,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CourseCategorySeeder::class);
         $this->call(InstructorSeeder::class);
         $this->call(CourseSeeder::class);
+        $this->call(CourseApplicationSeeder::class);
     }
 }

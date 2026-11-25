@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\BlogTagController;
 use App\Http\Controllers\Admin\CaseStudyController as AdminCaseStudyController;
 use App\Http\Controllers\Admin\ClientController as AdminClientController;
+use App\Http\Controllers\Admin\CouponController as AdminCouponController;
+use App\Http\Controllers\Admin\CourseApplicationController as AdminCourseApplicationController;
 use App\Http\Controllers\Admin\CourseCategoryController as AdminCourseCategoryController;
 use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 use App\Http\Controllers\Admin\CourseCurriculumController as AdminCourseCurriculumController;
@@ -257,6 +259,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{instructor}/edit', [AdminInstructorController::class, 'edit'])->name('edit')->middleware('can:edit-instructors');
             Route::put('/{instructor}', [AdminInstructorController::class, 'update'])->name('update')->middleware('can:edit-instructors');
             Route::delete('/{instructor}', [AdminInstructorController::class, 'destroy'])->name('destroy')->middleware('can:delete-instructors');
+        });
+
+        Route::prefix('course-applications')->name('course-applications.')->group(function () {
+            Route::get('/', [AdminCourseApplicationController::class, 'index'])->name('index')->middleware('can:view-course-applications');
+            Route::get('/{courseApplication}', [AdminCourseApplicationController::class, 'show'])->name('show')->middleware('can:view-course-applications');
+            Route::put('/{courseApplication}', [AdminCourseApplicationController::class, 'update'])->name('update')->middleware('can:edit-course-applications');
+            Route::delete('/{courseApplication}', [AdminCourseApplicationController::class, 'destroy'])->name('destroy')->middleware('can:delete-course-applications');
+        });
+
+        Route::prefix('coupons')->name('coupons.')->group(function () {
+            Route::get('/', [AdminCouponController::class, 'index'])->name('index')->middleware('can:view-coupons');
+            Route::get('/create', [AdminCouponController::class, 'create'])->name('create')->middleware('can:create-coupons');
+            Route::post('/', [AdminCouponController::class, 'store'])->name('store')->middleware('can:create-coupons');
+            Route::get('/{coupon}/edit', [AdminCouponController::class, 'edit'])->name('edit')->middleware('can:edit-coupons');
+            Route::put('/{coupon}', [AdminCouponController::class, 'update'])->name('update')->middleware('can:edit-coupons');
+            Route::delete('/{coupon}', [AdminCouponController::class, 'destroy'])->name('destroy')->middleware('can:delete-coupons');
         });
 
         // Users Module (Granular Capabilities)
