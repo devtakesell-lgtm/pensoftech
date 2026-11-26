@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CourseApplicationController as AdminCourseApplica
 use App\Http\Controllers\Admin\CourseCategoryController as AdminCourseCategoryController;
 use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 use App\Http\Controllers\Admin\CourseCurriculumController as AdminCourseCurriculumController;
+use App\Http\Controllers\Admin\CourseEnrollmentController as AdminCourseEnrollmentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ImageUploadController;
 use App\Http\Controllers\Admin\IndustryController as AdminIndustryController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationCo
 use App\Http\Controllers\Admin\JobCategoryController as AdminJobCategoryController;
 use App\Http\Controllers\Admin\JobController as AdminJobController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
+use App\Http\Controllers\Admin\LearnerController as AdminLearnerController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PermissionController as AdminPermissionController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
@@ -265,7 +267,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/', [AdminCourseApplicationController::class, 'index'])->name('index')->middleware('can:view-course-applications');
             Route::get('/{courseApplication}', [AdminCourseApplicationController::class, 'show'])->name('show')->middleware('can:view-course-applications');
             Route::put('/{courseApplication}', [AdminCourseApplicationController::class, 'update'])->name('update')->middleware('can:edit-course-applications');
+            Route::post('/{courseApplication}/enroll', [AdminCourseApplicationController::class, 'enroll'])->name('enroll')->middleware('can:edit-course-applications');
             Route::delete('/{courseApplication}', [AdminCourseApplicationController::class, 'destroy'])->name('destroy')->middleware('can:delete-course-applications');
+        });
+
+        Route::prefix('learners')->name('learners.')->group(function () {
+            Route::get('/', [AdminLearnerController::class, 'index'])->name('index')->middleware('can:view-learners');
+            Route::get('/{learner}', [AdminLearnerController::class, 'show'])->name('show')->middleware('can:view-learners');
+            Route::patch('/{learner}/toggle-status', [AdminLearnerController::class, 'toggleStatus'])->name('toggle-status')->middleware('can:edit-learners');
+        });
+
+        Route::prefix('course-enrollments')->name('course-enrollments.')->group(function () {
+            Route::get('/', [AdminCourseEnrollmentController::class, 'index'])->name('index')->middleware('can:view-course-enrollments');
+            Route::patch('/{courseEnrollment}/status', [AdminCourseEnrollmentController::class, 'updateStatus'])->name('update-status')->middleware('can:edit-course-enrollments');
         });
 
         Route::prefix('coupons')->name('coupons.')->group(function () {

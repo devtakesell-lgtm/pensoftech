@@ -87,6 +87,11 @@ class Course extends Model
         return $this->hasMany(CourseApplication::class);
     }
 
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(CourseEnrollment::class);
+    }
+
     public function coupons(): HasMany
     {
         return $this->hasMany(Coupon::class);

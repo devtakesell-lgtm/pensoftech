@@ -43,6 +43,8 @@ class PermissionSeeder extends Seeder
             'course-applications' => 'Course enrollments, screening, and interview pipeline',
             'coupons' => 'Course discount coupons',
             'instructors' => 'Mentors and course instructors',
+            'learners' => 'Enrolled student learner profiles',
+            'course-enrollments' => 'Active course enrollments and progress',
         ];
 
         $actions = ['view', 'create', 'edit', 'delete'];

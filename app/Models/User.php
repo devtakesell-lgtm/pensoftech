@@ -71,16 +71,29 @@ class User extends Authenticatable
         return $this->hasRole('client');
     }
 
+    /**
+     * Determine whether user is a learner account.
+     */
+    public function isLearner(): bool
+    {
+        return $this->hasRole('learner');
+    }
+
     public static function hasTeamMembers(): bool
     {
         return self::whereHas('profile', function ($q) {
-                $q->where('show_on_team_page', true);
-            })->exists();
+            $q->where('show_on_team_page', true);
+        })->exists();
     }
 
     public function client(): HasOne
     {
         return $this->hasOne(Client::class);
+    }
+
+    public function learner(): HasOne
+    {
+        return $this->hasOne(Learner::class);
     }
 
     public function assignedLeads(): HasMany
@@ -102,6 +115,4 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserProfile::class);
     }
-
-
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CareerController;
 use App\Http\Controllers\Frontend\CaseStudyController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\LeadController;
 use App\Http\Controllers\Frontend\PageController;
@@ -42,6 +43,10 @@ Route::get('/case-studies/{caseStudy:slug}', [CaseStudyController::class, 'show'
 Route::get('/careers', [CareerController::class, 'index'])->name('careers.index');
 Route::get('/careers/{slug}', [CareerController::class, 'show'])->name('careers.show');
 Route::post('/careers/{slug}/apply', [CareerController::class, 'apply'])->name('careers.apply');
+
+// Academy & Skill Buildup Courses
+Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+Route::get('/courses/{slug}', [CourseController::class, 'show'])->name('courses.show');
 
 // Public Client Authentication Routes (Guests only)
 Route::middleware('guest')->group(function () {

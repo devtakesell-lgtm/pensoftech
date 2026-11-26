@@ -40,6 +40,10 @@ class RoleSeeder extends Seeder
                 'name' => 'client',
                 'description' => 'External client account for portal and project tracking.',
             ],
+            [
+                'name' => 'learner',
+                'description' => 'Enrolled student learner account for courses and academy portal.',
+            ],
         ];
 
         $createdRoles = [];
@@ -71,6 +75,8 @@ class RoleSeeder extends Seeder
             'view-courses',
             'view-course-applications',
             'edit-course-applications',
+            'view-learners',
+            'view-course-enrollments',
         ]);
 
         // Project Manager: Admin access, projects, clients, and view leads/quotes/services/case studies
@@ -112,5 +118,8 @@ class RoleSeeder extends Seeder
 
         // Client: External portal only, zero admin permissions
         $createdRoles['client']->syncPermissions([]);
+
+        // Learner: External academy portal only, zero admin permissions
+        $createdRoles['learner']->syncPermissions([]);
     }
 }
