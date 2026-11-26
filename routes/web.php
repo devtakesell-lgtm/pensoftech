@@ -12,6 +12,8 @@ use App\Http\Controllers\Frontend\LeadController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\ProjectController;
 use App\Http\Controllers\Frontend\ServiceController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 // Public Frontend Routes
@@ -62,3 +64,72 @@ Route::middleware('guest')->group(function () {
 
 // Client Logout
 Route::post('/logout', [FrontendAuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+// Secure Database & Cache Update Helper (Run once on server then delete or keep secured)
+Route::get('/run-db-update', function (Request $request) {
+    if ($request->query('key') !== 'pensofttech_migrate_2026') {
+        abort(403, 'Unauthorized access');
+    }
+
+    $output = [];
+
+    // 1. Run pending migrations
+    Artisan::call('migrate', ['--force' => true]);
+    $output['migrate'] = trim(Artisan::output());
+
+    // 2. Update permissions & roles
+    Artisan::call('db:seed', ['--class' => 'PermissionSeeder', '--force' => true]);
+    Artisan::call('db:seed', ['--class' => 'RoleSeeder', '--force' => true]);
+
+    // 3. Seed new course & academy data
+    Artisan::call('db:seed', ['--class' => 'CourseCategorySeeder', '--force' => true]);
+    Artisan::call('db:seed', ['--class' => 'InstructorSeeder', '--force' => true]);
+    Artisan::call('db:seed', ['--class' => 'CourseSeeder', '--force' => true]);
+    Artisan::call('db:seed', ['--class' => 'CourseApplicationSeeder', '--force' => true]);
+    $output['seed'] = 'Course seeders executed successfully!';
+
+    // 4. Clear all caches
+    Artisan::call('optimize:clear');
+    $output['cache'] = 'All caches cleared successfully!';
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Database migrations, seeders, and cache cleared!',
+        'details' => $output,
+    ]);
+});
+
+// Secure Database & Cache Update Helper (Run once on server then delete or keep secured)
+Route::get('/run-db-update', function (\Illuminate\Http\Request $request) {
+    if ($request->query('key') !== 'pensofttech_migrate_2026') {
+        abort(403, 'Unauthorized access');
+    }
+
+    $output = [];
+
+    // 1. Run pending migrations
+    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    $output['migrate'] = trim(\Illuminate\Support\Facades\Artisan::output());
+
+    // 2. Update permissions & roles
+    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'PermissionSeeder', '--force' => true]);
+    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'RoleSeeder', '--force' => true]);
+
+    // 3. Seed new course & academy data
+    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'CourseCategorySeeder', '--force' => true]);
+    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'InstructorSeeder', '--force' => true]);
+    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'CourseSeeder', '--force' => true]);
+    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'CourseApplicationSeeder', '--force' => true]);
+    $output['seed'] = 'Course seeders executed successfully!';
+
+    // 4. Clear all caches
+    \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+    $output['cache'] = 'All caches cleared successfully!';
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Database migrations, seeders, and cache cleared!',
+        'details' => $output,
+    ]);
+});
+
