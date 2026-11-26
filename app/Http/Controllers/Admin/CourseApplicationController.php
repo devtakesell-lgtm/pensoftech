@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateCourseApplicationRequest;
 use App\Models\Course;
 use App\Models\CourseApplication;
+use App\Services\CourseEnrollmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -70,7 +71,7 @@ class CourseApplicationController extends Controller
     {
         Gate::authorize('view-course-applications');
 
-        $courseApplication->load(['course.category', 'coupon', 'currency']);
+        $courseApplication->load(['course.category', 'coupon', 'currency', 'learner', 'enrollment']);
 
         return view('admin.pages.course-applications.show')->with([
             'application' => $courseApplication,
@@ -79,12 +80,31 @@ class CourseApplicationController extends Controller
         ]);
     }
 
-    public function update(UpdateCourseApplicationRequest $request, CourseApplication $courseApplication): RedirectResponse
+    public function update(UpdateCourseApplicationRequest $request, CourseApplication $courseApplication, CourseEnrollmentService $service): RedirectResponse
     {
-        $courseApplication->update($request->validated());
+        $validated = $request->validated();
+        $courseApplication->update($validated);
+
+        if ($validated['status'] === CourseApplicationStatus::Enrolled->value && ! $courseApplication->learner_id) {
+            $service->enroll($courseApplication);
+        }
 
         return redirect()->route('admin.course-applications.show', $courseApplication)
             ->with('success', "Application {$courseApplication->application_no} updated successfully.");
+    }
+
+    public function enroll(CourseApplication $courseApplication, CourseEnrollmentService $service): RedirectResponse
+    {
+        Gate::authorize('edit-course-applications');
+
+        if ($courseApplication->learner_id && $courseApplication->enrollment) {
+            return back()->with('error', 'This applicant is already enrolled as a learner.');
+        }
+
+        $enrollment = $service->enroll($courseApplication);
+
+        return redirect()->route('admin.course-applications.show', $courseApplication)
+            ->with('success', "Applicant enrolled successfully! Learner Code: {$enrollment->learner->learner_code}");
     }
 
     public function destroy(CourseApplication $courseApplication): RedirectResponse

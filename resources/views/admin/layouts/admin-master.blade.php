@@ -20,6 +20,15 @@
     <div class="app">
         <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
         @include('admin.partials.sidebar')
+        <script>
+            (function () {
+                const sidebar = document.getElementById('sidebar');
+                const savedScroll = sessionStorage.getItem('admin_sidebar_scroll');
+                if (sidebar && savedScroll !== null) {
+                    sidebar.scrollTop = parseInt(savedScroll, 10) || 0;
+                }
+            })();
+        </script>
         <main class="main">
             @include('admin.partials.topbar')
             <section class="content">

@@ -19,6 +19,7 @@ class CourseApplication extends Model
     protected $fillable = [
         'course_id',
         'user_id',
+        'learner_id',
         'coupon_id',
         'currency_id',
         'application_no',
@@ -66,6 +67,16 @@ class CourseApplication extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function learner(): BelongsTo
+    {
+        return $this->belongsTo(Learner::class);
+    }
+
+    public function enrollment(): HasOne
+    {
+        return $this->hasOne(CourseEnrollment::class);
     }
 
     public function coupon(): BelongsTo

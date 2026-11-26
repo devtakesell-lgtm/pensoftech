@@ -203,7 +203,7 @@
             @endcan
         @endcanany
 
-        @canany(['view-courses', 'view-instructors', 'view-course-applications', 'view-coupons'])
+        @canany(['view-courses', 'view-instructors', 'view-course-applications', 'view-coupons', 'view-learners', 'view-course-enrollments'])
             <div class="label">ACADEMY</div>
             @can('view-courses')
                 @php
@@ -212,6 +212,8 @@
                         request()->routeIs('admin.course-categories*') ||
                         request()->routeIs('admin.instructors*') ||
                         request()->routeIs('admin.course-applications*') ||
+                        request()->routeIs('admin.learners*') ||
+                        request()->routeIs('admin.course-enrollments*') ||
                         request()->routeIs('admin.coupons*');
                 @endphp
                 <div class="nav-item-dropdown {{ $isCoursesActive ? 'open' : '' }}">
@@ -245,6 +247,20 @@
                                 href="{{ route('admin.course-applications.index') }}">
                                 <i class="bi bi-person-check"></i>
                                 <span>Applications</span>
+                            </a>
+                        @endcan
+                        @can('view-learners')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.learners*') ? 'active' : '' }}"
+                                href="{{ route('admin.learners.index') }}">
+                                <i class="bi bi-people"></i>
+                                <span>Learners</span>
+                            </a>
+                        @endcan
+                        @can('view-course-enrollments')
+                            <a class="nav-sub-link {{ request()->routeIs('admin.course-enrollments*') ? 'active' : '' }}"
+                                href="{{ route('admin.course-enrollments.index') }}">
+                                <i class="bi bi-journal-check"></i>
+                                <span>Enrollments</span>
                             </a>
                         @endcan
                         @can('view-coupons')

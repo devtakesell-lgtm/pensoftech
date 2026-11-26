@@ -14,6 +14,7 @@ class CourseCertificate extends Model
         'course_id',
         'course_application_id',
         'user_id',
+        'learner_id',
         'certificate_number',
         'student_name',
         'issue_date',
@@ -40,5 +41,10 @@ class CourseCertificate extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function learner(): BelongsTo
+    {
+        return $this->belongsTo(Learner::class);
     }
 }

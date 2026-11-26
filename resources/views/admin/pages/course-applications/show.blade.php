@@ -15,7 +15,20 @@
                 @endif
             </p>
         </div>
-        <div>
+        <div class="d-flex gap-2">
+            @if ($application->learner)
+                <a href="{{ route('admin.learners.show', $application->learner) }}" class="btn primary">
+                    <i class="bi bi-person-badge me-1"></i> View Learner ({{ $application->learner->learner_code }})
+                </a>
+            @elseif (auth()->user()?->can('edit-course-applications'))
+                <form action="{{ route('admin.course-applications.enroll', $application) }}" method="POST"
+                    onsubmit="return confirm('Convert this applicant into a Learner and enroll them into this course?');">
+                    @csrf
+                    <button type="submit" class="btn primary">
+                        <i class="bi bi-person-plus me-1"></i> Enroll as Learner
+                    </button>
+                </form>
+            @endif
             <a href="{{ route('admin.course-applications.index') }}" class="btn light">
                 <i class="bi bi-arrow-left me-1"></i> Back to Applications
             </a>
