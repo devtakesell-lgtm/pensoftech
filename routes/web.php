@@ -46,7 +46,11 @@ Route::post('/careers/{slug}/apply', [CareerController::class, 'apply'])->name('
 
 // Academy & Skill Buildup Courses
 Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+Route::get('/courses/application-success/{applicationNo}', [CourseController::class, 'applicationSuccess'])->name('courses.apply.success');
 Route::get('/courses/{slug}', [CourseController::class, 'show'])->name('courses.show');
+Route::get('/courses/{slug}/apply', [CourseController::class, 'apply'])->name('courses.apply');
+Route::post('/courses/{slug}/apply', [CourseController::class, 'storeApplication'])->name('courses.apply.store');
+Route::post('/courses/{slug}/validate-coupon', [CourseController::class, 'validateCoupon'])->name('courses.validate-coupon');
 
 // Public Client Authentication Routes (Guests only)
 Route::middleware('guest')->group(function () {
